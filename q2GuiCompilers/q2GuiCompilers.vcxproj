@@ -59,9 +59,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -79,9 +80,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -96,7 +98,10 @@
   <ItemGroup>
     <ClInclude Include="external\glad\include\glad\glad.h" />
     <ClInclude Include="external\glad\include\KHR\khrplatform.h" />
+    <ClInclude Include="external\json\single_include\nlohmann\json.hpp" />
     <ClInclude Include="external\microui\src\microui.h" />
+    <ClInclude Include="src\data\CompilerData.h" />
+    <ClInclude Include="src\data\Config.h" />
     <ClInclude Include="src\gui\MuGui.h" />
     <ClInclude Include="src\render\atlas\Atlas.inl" />
     <ClInclude Include="src\render\Renderer.h" />
@@ -109,6 +114,8 @@
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="external\microui\src\microui.c" />
+    <ClCompile Include="src\data\CompilerData.cpp" />
+    <ClCompile Include="src\data\Config.cpp" />
     <ClCompile Include="src\gui\MuGui.cpp" />
     <ClCompile Include="src\render\Renderer.cpp" />
     <ClCompile Include="src\log\Log.cpp" />

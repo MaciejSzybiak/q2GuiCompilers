@@ -12,25 +12,41 @@ namespace Q2Compilers {
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());
 		_gui = new MuGui(Renderer::GetTextWidth, props.width, props.height, props.title);
+		_config = new Config();
+		_compilerData = new CompilerData();
+
+		std::string last = _config->GetCurrentData()->profile_last;
+
+		if (last.length() > 0) {
+			LoadProfile(last);
+		}
 	}
 
 	Application::~Application()
 	{
+		SaveProfile("cached.json");
+
 		delete _gui;
 		delete _renderer;
 		delete _window;
+		delete _compilerData;
 	}
 
 	void Application::Run()
 	{
+		MuGuiData guiData;
+
 		//main loop
 		while (!_window->WindowShouldClose()) {
 			DispatchEvents();
-			if (!_gui->MakeCommands()) {
+			if (!_gui->MakeCommands(&guiData)) {
 				break;
 			}
 			_renderer->ProcessCommands(_gui->GetContext(), mu_color(128, 128, 128, 255));
 			_renderer->Finish();
+
+			ProcessGuiData(&guiData);
+
 			_window->OnUpdate();
 		}
 	}
@@ -48,6 +64,51 @@ namespace Q2Compilers {
 			_gui->HandleEvent(e);
 
 			_events.pop();
+		}
+	}
+
+	void Application::LoadProfile(std::string filename)
+	{
+		_config->SetLastProfile(filename);
+		_compilerData->LoadFromFile(filename);
+	}
+
+	void Application::SaveProfile(std::string filename) 
+	{
+		_config->SetLastProfile(filename);
+		_compilerData->SaveFile(filename);
+	}
+
+	void Application::ProcessGuiData(MuGuiData* data)
+	{
+		data->data = _compilerData->GetCurrentData();
+
+		if (data->saveProfile) {
+			SaveProfile(data->profileName);
+			data->saveProfile = false;
+		}
+		if (data->loadProfile) {
+			LoadProfile(data->profileName);
+			data->loadProfile = false;
+		}
+		if (data->updateProfileList) {
+			data->updateProfileList = false;
+		}
+	}
+
+	void Application::GetProfileNames(std::vector<std::string>* vec)
+	{
+		vec->clear();
+
+		if (!std::filesystem::exists("profiles/")) {
+			LOG_WARNING("Directory \"profiles\" doesn't exist");
+			return;
+		}
+
+		for (const auto& entry : std::filesystem::directory_iterator("profiles/")) {
+			std::string str = entry.path().string();
+			size_t start = str.find_last_of('/');
+			vec->push_back(str.substr(start + 1));
 		}
 	}
 }

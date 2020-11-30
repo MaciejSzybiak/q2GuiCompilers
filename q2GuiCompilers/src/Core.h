@@ -7,6 +7,9 @@
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <fstream>
+#include <iomanip>
+#include <filesystem>
 
 #define _WIN32_WINNT 0x0500
 #include <Windows.h>

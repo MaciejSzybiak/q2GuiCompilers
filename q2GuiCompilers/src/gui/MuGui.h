@@ -2,17 +2,28 @@
 
 #include "Core.h"
 #include "microui.h"
+#include "data/CompilerData.h"
 
 #define WINDOW_BORDER 2
 
 namespace Q2Compilers {
 	
+	struct MuGuiData {
+		CData* data;
+		std::vector<std::string> profileFiles;
+		std::string profileName;
+
+		bool saveProfile;
+		bool loadProfile;
+		bool updateProfileList;
+	};
+
 	class MuGui
 	{
 	public:
 		MuGui(TextWidthFunc widthFunc, int xSize, int ySize, std::string name);
 		void HandleEvent(std::shared_ptr<Event> e);
-		bool MakeCommands();
+		bool MakeCommands(MuGuiData* data);
 		mu_Context* GetContext() {
 			return _context;
 		}

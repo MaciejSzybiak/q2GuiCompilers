@@ -100,7 +100,7 @@ namespace Q2Compilers {
 		}
 	}
 
-	bool MuGui::MakeCommands()
+	bool MuGui::MakeCommands(MuGuiData* data)
 	{
 		mu_begin(_context);
 		mu_Container* win = mu_get_container(_context, _name.c_str());
