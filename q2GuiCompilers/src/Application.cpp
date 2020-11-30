@@ -7,23 +7,30 @@ namespace Q2Compilers {
 
 	Application::Application(std::string name)
 	{
-		WindowProps props = WindowProps(name, 600, 600);
+		WindowProps props = WindowProps(name, 600, 800);
 		
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());
+		_gui = new MuGui(Renderer::GetTextWidth, props.width, props.height, props.title);
 	}
 
 	Application::~Application()
 	{
+		delete _gui;
 		delete _renderer;
 		delete _window;
 	}
 
 	void Application::Run()
 	{
+		//main loop
 		while (!_window->WindowShouldClose()) {
 			DispatchEvents();
-			_renderer->ProcessCommands(NULL, mu_color(128, 128, 128, 255));
+			if (!_gui->MakeCommands()) {
+				break;
+			}
+			_renderer->ProcessCommands(_gui->GetContext(), mu_color(128, 128, 128, 255));
+			_renderer->Finish();
 			_window->OnUpdate();
 		}
 	}
@@ -37,47 +44,8 @@ namespace Q2Compilers {
 	{
 		while (!_events.empty()) {
 			std::shared_ptr<Event> e = _events.front();
-			//LOG_TRACE("Handling event: %s", e->ToString().c_str());
-
-			switch (e->GetType())
-			{
-			case EventType::MouseButtonPressed:
-			{
-				auto event = std::dynamic_pointer_cast<MouseButtonPressedEvent>(e);
-				break;
-			}
-			case EventType::MouseButtonReleased:
-			{
-				auto event = std::dynamic_pointer_cast<MouseButtonReleasedEvent>(e);
-				break;
-			}
-			case EventType::MouseScrolled:
-			{
-				auto event = std::dynamic_pointer_cast<MouseScrolledEvent>(e);
-				break;
-			}
-			case EventType::MouseMoved:
-			{
-				auto event = std::dynamic_pointer_cast<MouseMovedEvent>(e);
-				break;
-			}
-			case EventType::KeyPressed:
-			{
-				auto event = std::dynamic_pointer_cast<KeyPressedEvent>(e);
-				break;
-			}
-			case EventType::KeyReleased:
-			{
-				auto event = std::dynamic_pointer_cast<KeyReleasedEvent>(e);
-				break;
-			}
-			default:
-			{
-				LOG_ERROR("Unhandled event type");
-				__debugbreak();
-				break;
-			}
-			}
+			
+			_gui->HandleEvent(e);
 
 			_events.pop();
 		}

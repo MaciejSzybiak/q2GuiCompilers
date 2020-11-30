@@ -8,12 +8,12 @@
 #include <unordered_map>
 #include <vector>
 
+#define _WIN32_WINNT 0x0500
+#include <Windows.h>
+
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
-#define _WIN32_WINNT 0x0500
-#include <Windows.h>
 
 #include "log/Log.h"
 #include "events/Event.h"
@@ -28,4 +28,5 @@
 
 namespace Q2Compilers {
 	typedef void (*EventCallbackFunc)(std::shared_ptr<Event>);
+	typedef int (*TextWidthFunc)(const char* text, int len);
 }

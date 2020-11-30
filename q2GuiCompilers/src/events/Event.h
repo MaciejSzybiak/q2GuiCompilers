@@ -22,17 +22,26 @@ namespace Q2Compilers {
 
 	class MouseButtonEvent : public Event {
 	public:
-		MouseButtonEvent(int button) : _button(button) {}
+		MouseButtonEvent(int button, int x, int y) : _button(button), _xPos(x), _yPos(y) {}
+
 		int GetButton() {
 			return _button;
 		}
+		int GetX() {
+			return _xPos;
+		}
+		int GetY() {
+			return _yPos;
+		}
 	protected:
 		int _button;
+		int _xPos;
+		int _yPos;
 	};
 
 	class MouseButtonPressedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonPressedEvent(int btn) : MouseButtonEvent(btn) {}
+		MouseButtonPressedEvent(int btn, int x, int y) : MouseButtonEvent(btn, x, y) {}
 
 		virtual EventType GetType() const override {
 			return EventType::MouseButtonPressed;
@@ -46,7 +55,7 @@ namespace Q2Compilers {
 
 	class MouseButtonReleasedEvent : public MouseButtonEvent {
 	public:
-		MouseButtonReleasedEvent(int btn) : MouseButtonEvent(btn) {}
+		MouseButtonReleasedEvent(int btn, int x, int y) : MouseButtonEvent(btn, x, y) {}
 
 		virtual EventType GetType() const override {
 			return EventType::MouseButtonReleased;
@@ -60,7 +69,7 @@ namespace Q2Compilers {
 
 	class MouseMovedEvent : public Event {
 	public:
-		MouseMovedEvent(float x, float y) : _xPos(x), _yPos(y) {}
+		MouseMovedEvent(int x, int y) : _xPos(x), _yPos(y) {}
 
 		virtual EventType GetType() const override {
 			return EventType::MouseMoved;
@@ -71,15 +80,15 @@ namespace Q2Compilers {
 			return stream.str();
 		}
 
-		float GetX() {
+		int GetX() {
 			return _xPos;
 		}
-		float GetY() {
+		int GetY() {
 			return _yPos;
 		}
 	private:
-		float _xPos;
-		float _yPos;
+		int _xPos;
+		int _yPos;
 	};
 
 	class MouseScrolledEvent : public Event {
@@ -127,6 +136,10 @@ namespace Q2Compilers {
 			std::stringstream stream;
 			stream << "KeyPressed: " << ((char)_keyCode) << " repeats: " << _repeats;
 			return stream.str();
+		}
+
+		bool IsRepeating() {
+			return _repeats;
 		}
 	private:
 		bool _repeats;

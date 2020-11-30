@@ -97,6 +97,7 @@
     <ClInclude Include="external\glad\include\glad\glad.h" />
     <ClInclude Include="external\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="external\microui\src\microui.h" />
+    <ClInclude Include="src\gui\MuGui.h" />
     <ClInclude Include="src\render\atlas\Atlas.inl" />
     <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\events\Event.h" />
@@ -108,6 +109,7 @@
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="external\microui\src\microui.c" />
+    <ClCompile Include="src\gui\MuGui.cpp" />
     <ClCompile Include="src\render\Renderer.cpp" />
     <ClCompile Include="src\log\Log.cpp" />
     <ClCompile Include="src\main.cpp" />

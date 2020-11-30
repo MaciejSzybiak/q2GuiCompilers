@@ -2,6 +2,8 @@
 
 namespace Q2Compilers {
 
+	int GlWindow::_width;
+	int GlWindow::_height;
 	EventCallbackFunc GlWindow::eventPushCallback;
 
 	GlWindow::GlWindow(WindowProps& props, EventCallbackFunc pushFunc)
@@ -11,11 +13,18 @@ namespace Q2Compilers {
 
 		glfwSetErrorCallback(ErrorCallback);
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+		_width = props.width;
+		_height = props.height;
 
-		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), NULL, NULL);
+		glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+
+		_window = glfwCreateWindow(_width, _height, props.title.c_str(), NULL, NULL);
 		ASSERT(_window, "Failed to initialize glfw window");
+
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		int w = (mode->width / 2) - (_width / 2);
+		int h = (mode->height / 2) - (_height / 2);
+		glfwSetWindowPos(_window, w, h);
 
 		glfwMakeContextCurrent(_window);
 

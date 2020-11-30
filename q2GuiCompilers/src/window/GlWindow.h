@@ -28,19 +28,22 @@ namespace Q2Compilers {
 			LOG_ERROR("GLFW ERROR %d: %s", error, description);
 		}
 		inline static void OnMouseButton(GLFWwindow* window, int button, int action, int mods) {
+			double x, y;
+			glfwGetCursorPos(window, &x, &y);
+
 			if (action == GLFW_PRESS) {
-				eventPushCallback(std::make_shared<MouseButtonPressedEvent>(button));
+				eventPushCallback(std::make_shared<MouseButtonPressedEvent>(button, (int)(x), (int)(y)));
 			}
 			else
 			{
-				eventPushCallback(std::make_shared<MouseButtonReleasedEvent>(button));
+				eventPushCallback(std::make_shared<MouseButtonReleasedEvent>(button, (int)(x), (int)(y)));
 			}
 		}
 		inline static void OnMouseScroll(GLFWwindow* window, double xOffset, double yOffset) {
-			eventPushCallback(std::make_shared<MouseScrolledEvent>(xOffset, yOffset));
+			eventPushCallback(std::make_shared<MouseScrolledEvent>((float)(xOffset), (float)(yOffset)));
 		}
 		inline static void OnMouseMoved(GLFWwindow* window, double xPos, double yPos) {
-			eventPushCallback(std::make_shared<MouseMovedEvent>(xPos, yPos));
+			eventPushCallback(std::make_shared<MouseMovedEvent>((int)(xPos), (int)(yPos)));
 		}
 		inline static void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods) {
 			switch (action) {
@@ -54,6 +57,8 @@ namespace Q2Compilers {
 		}
 
 		GLFWwindow* _window;
+		static int _width;
+		static int _height;
 		static EventCallbackFunc eventPushCallback;
 	};
 }

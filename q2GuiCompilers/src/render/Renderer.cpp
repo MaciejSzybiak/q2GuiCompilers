@@ -43,22 +43,43 @@ namespace Q2Compilers {
 		}
 
 		mu_Command *cmd = NULL;
-
 		while (mu_next_command(context, &cmd)) {
 			switch (cmd->type)
 			{
 			case MU_COMMAND_TEXT:
+				CmdText(cmd->text.str, cmd->text.pos, cmd->text.color);
 				break;
 			case MU_COMMAND_RECT:
+				CmdRect(cmd->rect.rect, cmd->rect.color);
 				break;
 			case MU_COMMAND_ICON:
+				CmdIcon(cmd->icon.id, cmd->icon.rect, cmd->icon.color);
 				break;
 			case MU_COMMAND_CLIP:
+				CmdClip(cmd->clip.rect);
 				break;
 			default:
 				break;
 			}
 		}
+	}
+
+	int Renderer::GetTextWidth(const char* text, int len)
+	{
+		int res = 0;
+		for (const char* p = text; *p && len--; p++) {
+			if ((*p & 0xc0) == 0x80) {
+				continue;
+			}
+			int chr = mu_min((unsigned char)*p, 127);
+			res += atlas_map.at(ATLAS_FONT + chr).w;
+		}
+		return res;
+	}
+
+	void Renderer::Finish()
+	{
+		Flush();
 	}
 
 	void Renderer::CmdText(const char* text, mu_Vec2 pos, mu_Color color)
@@ -70,6 +91,7 @@ namespace Q2Compilers {
 				continue;
 			}
 			int chr = mu_min((unsigned char)*p, 127);
+			ASSERT(atlas_map.find(ATLAS_FONT + chr) != atlas_map.end(), "Atlas: index not found");
 			mu_Rect src = atlas_map.at(ATLAS_FONT + chr);
 			dst.w = src.w;
 			dst.h = src.h;
@@ -109,6 +131,9 @@ namespace Q2Compilers {
 		int   index_idx = buf.i * 6;
 		buf.i++;
 
+#pragma warning( push )
+#pragma warning( disable : 6386 )
+
 		//update texture buffer
 		float x = src.x / (float)ATLAS_WIDTH;
 		float y = src.y / (float)ATLAS_HEIGHT;
@@ -124,14 +149,14 @@ namespace Q2Compilers {
 		buf.texture[texvert_idx + 7] = y + h;
 
 		//update vertex buffer
-		buf.vertices[texvert_idx + 0] = dst.x;
-		buf.vertices[texvert_idx + 1] = dst.y;
-		buf.vertices[texvert_idx + 2] = dst.x + dst.w;
-		buf.vertices[texvert_idx + 3] = dst.y;
-		buf.vertices[texvert_idx + 4] = dst.x;
-		buf.vertices[texvert_idx + 5] = dst.y + dst.h;
-		buf.vertices[texvert_idx + 6] = dst.x + dst.w;
-		buf.vertices[texvert_idx + 7] = dst.y + dst.h;
+		buf.vertices[texvert_idx + 0] = (GLfloat)dst.x;
+		buf.vertices[texvert_idx + 1] = (GLfloat)dst.y;
+		buf.vertices[texvert_idx + 2] = (GLfloat)(dst.x + dst.w);
+		buf.vertices[texvert_idx + 3] = (GLfloat)dst.y;
+		buf.vertices[texvert_idx + 4] = (GLfloat)dst.x;
+		buf.vertices[texvert_idx + 5] = (GLfloat)(dst.y + dst.h);
+		buf.vertices[texvert_idx + 6] = (GLfloat)(dst.x + dst.w);
+		buf.vertices[texvert_idx + 7] = (GLfloat)(dst.y + dst.h);
 
 		//update color buffer
 		memcpy(buf.color + color_idx + 0, &color, 4);
@@ -146,10 +171,14 @@ namespace Q2Compilers {
 		buf.index[index_idx + 3] = element_idx + 2;
 		buf.index[index_idx + 4] = element_idx + 3;
 		buf.index[index_idx + 5] = element_idx + 1;
+#pragma warning( pop )
+		//LOG_TRACE("Pushed quad buf.i=%d", buf.i);
 	}
 
 	void Renderer::Flush()
 	{
+		//LOG_TRACE("Atempted flush with buf.i=%d", buf.i);
+
 		if (buf.i == 0) {
 			return;
 		}

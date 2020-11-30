@@ -2,6 +2,7 @@
 
 #include "window/GlWindow.h"
 #include "render/Renderer.h"
+#include "gui/MuGui.h"
 
 namespace Q2Compilers {
 
@@ -16,6 +17,7 @@ namespace Q2Compilers {
 	private:
 		GlWindow* _window;
 		Renderer* _renderer;
+		MuGui* _gui;
 		static std::queue<std::shared_ptr<Event>> _events;
 	};
 }
