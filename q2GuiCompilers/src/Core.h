@@ -5,6 +5,8 @@
 #include <queue>
 #include <functional>
 #include <sstream>
+#include <unordered_map>
+#include <vector>
 
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h>

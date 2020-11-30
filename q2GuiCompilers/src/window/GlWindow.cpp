@@ -11,6 +11,9 @@ namespace Q2Compilers {
 
 		glfwSetErrorCallback(ErrorCallback);
 
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+
 		_window = glfwCreateWindow(props.width, props.height, props.title.c_str(), NULL, NULL);
 		ASSERT(_window, "Failed to initialize glfw window");
 
@@ -41,6 +44,7 @@ namespace Q2Compilers {
 
 	void GlWindow::OnUpdate()
 	{
+		glfwSwapBuffers(_window);
 		glfwWaitEvents();
 	}
 }

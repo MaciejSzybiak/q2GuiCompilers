@@ -7,21 +7,24 @@ namespace Q2Compilers {
 
 	Application::Application(std::string name)
 	{
-		WindowProps props = WindowProps(name, 1280, 720);
+		WindowProps props = WindowProps(name, 600, 600);
 		
 		_window = new GlWindow(props, Application::PushEvent);
+		_renderer = new Renderer(_window->GetGlfwWindow());
 	}
 
 	Application::~Application()
 	{
+		delete _renderer;
 		delete _window;
 	}
 
 	void Application::Run()
 	{
 		while (!_window->WindowShouldClose()) {
-			_window->OnUpdate();
 			DispatchEvents();
+			_renderer->ProcessCommands(NULL, mu_color(128, 128, 128, 255));
+			_window->OnUpdate();
 		}
 	}
 
@@ -34,7 +37,7 @@ namespace Q2Compilers {
 	{
 		while (!_events.empty()) {
 			std::shared_ptr<Event> e = _events.front();
-			LOG_TRACE("Handling event: %s", e->ToString().c_str());
+			//LOG_TRACE("Handling event: %s", e->ToString().c_str());
 
 			switch (e->GetType())
 			{

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "window/GlWindow.h"
+#include "render/Renderer.h"
 
 namespace Q2Compilers {
 
@@ -14,6 +15,7 @@ namespace Q2Compilers {
 		void DispatchEvents();
 	private:
 		GlWindow* _window;
+		Renderer* _renderer;
 		static std::queue<std::shared_ptr<Event>> _events;
 	};
 }

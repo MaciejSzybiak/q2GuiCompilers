@@ -1,6 +1,3 @@
 [submodule "external/glfw"]
 	path = external/glfw
 	url = https://github.com/MaciejSzybiak/glfw.git
-[submodule "q2GuiCompilers/external/microui"]
-	path = q2GuiCompilers/external/microui
-	url = https://github.com/rxi/microui.git

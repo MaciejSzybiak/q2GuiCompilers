@@ -20,6 +20,9 @@ namespace Q2Compilers {
 		~GlWindow();
 		bool WindowShouldClose();
 		void OnUpdate();
+		GLFWwindow* GetGlfwWindow() {
+			return _window;
+		}
 	private:
 		inline static void ErrorCallback(int error, const char *description){
 			LOG_ERROR("GLFW ERROR %d: %s", error, description);

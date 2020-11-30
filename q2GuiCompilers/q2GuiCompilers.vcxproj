@@ -50,6 +50,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)bin\$(Platform)-$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)obj\$(Platform)-$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -64,6 +66,9 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <CreateHotPatchableImage>
+      </CreateHotPatchableImage>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,12 +88,17 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <CreateHotPatchableImage>
+      </CreateHotPatchableImage>
+      <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="external\glad\include\glad\glad.h" />
     <ClInclude Include="external\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="external\microui\src\microui.h" />
+    <ClInclude Include="src\render\atlas\Atlas.inl" />
+    <ClInclude Include="src\render\Renderer.h" />
     <ClInclude Include="src\events\Event.h" />
     <ClInclude Include="src\log\Log.h" />
     <ClInclude Include="src\Core.h" />
@@ -98,6 +108,7 @@
   <ItemGroup>
     <ClCompile Include="external\glad\src\glad.c" />
     <ClCompile Include="external\microui\src\microui.c" />
+    <ClCompile Include="src\render\Renderer.cpp" />
     <ClCompile Include="src\log\Log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\window\GlWindow.cpp" />
