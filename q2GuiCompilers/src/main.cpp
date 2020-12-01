@@ -1,5 +1,5 @@
-#include "Application.h"
 #include "Core.h"
+#include "Application.h"
 
 int main() {
 	LOG_TRACE("Test trace message");

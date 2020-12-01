@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "CompilerData.h"
 
 namespace Q2Compilers {

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core.h"
 #include "microui.h"
 #include "data/CompilerData.h"
 
@@ -12,10 +11,12 @@ namespace Q2Compilers {
 		CData* data;
 		std::vector<std::string> profileFiles;
 		std::string profileName;
+		std::string mapName;
 
-		bool saveProfile;
-		bool loadProfile;
-		bool updateProfileList;
+		bool saveProfile = false;
+		bool loadProfile = false;
+		bool updateProfileList = false;
+		bool compile = false;
 	};
 
 	class MuGui

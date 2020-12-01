@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Core.h"
-
 namespace Q2Compilers {
 
 	struct WindowProps {

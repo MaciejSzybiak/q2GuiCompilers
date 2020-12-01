@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core.h"
 #include "microui.h"
 #include "atlas/Atlas.inl"
 

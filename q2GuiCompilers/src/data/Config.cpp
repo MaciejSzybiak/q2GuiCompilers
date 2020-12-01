@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "Config.h"
 
 namespace Q2Compilers {

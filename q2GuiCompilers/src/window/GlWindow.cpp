@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "GlWindow.h"
 
 namespace Q2Compilers {

@@ -1,5 +1,5 @@
+#include "Core.h"
 #include "Application.h"
-#include <iostream>
 
 namespace Q2Compilers {
 
@@ -94,6 +94,10 @@ namespace Q2Compilers {
 		if (data->updateProfileList) {
 			data->updateProfileList = false;
 		}
+		if (data->compile) {
+			Compile(data->mapName);
+			data->compile = false;
+		}
 	}
 
 	void Application::GetProfileNames(std::vector<std::string>* vec)
@@ -110,5 +114,10 @@ namespace Q2Compilers {
 			size_t start = str.find_last_of('/');
 			vec->push_back(str.substr(start + 1));
 		}
+	}
+
+	void Application::Compile(std::string mapName)
+	{
+		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
 	}
 }

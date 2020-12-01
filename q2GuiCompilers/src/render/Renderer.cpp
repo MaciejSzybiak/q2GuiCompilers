@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "Renderer.h"
 
 namespace Q2Compilers {

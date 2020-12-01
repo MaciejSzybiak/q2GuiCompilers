@@ -1,3 +1,4 @@
+#include "Core.h"
 #include "MuGui.h"
 
 namespace Q2Compilers {
