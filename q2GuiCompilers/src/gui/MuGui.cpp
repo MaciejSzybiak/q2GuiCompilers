@@ -1,5 +1,8 @@
 #include "Core.h"
+#include "microui.h"
 #include "MuGui.h"
+
+#define WINDOW_BORDER 2
 
 namespace Q2Compilers {
 

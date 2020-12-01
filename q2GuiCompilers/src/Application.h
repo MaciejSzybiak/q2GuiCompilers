@@ -1,5 +1,4 @@
 #pragma once
-
 #include "window/GlWindow.h"
 #include "render/Renderer.h"
 #include "gui/MuGui.h"

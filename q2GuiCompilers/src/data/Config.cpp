@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "Config.h"
 
+
 namespace Q2Compilers {
 
 	void to_json(json& j, const ConfigData& p) 

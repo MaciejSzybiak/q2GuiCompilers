@@ -1,9 +1,6 @@
 #pragma once
 
-#include "microui.h"
 #include "data/CompilerData.h"
-
-#define WINDOW_BORDER 2
 
 namespace Q2Compilers {
 	

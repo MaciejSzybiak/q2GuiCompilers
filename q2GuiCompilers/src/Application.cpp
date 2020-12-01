@@ -1,4 +1,5 @@
 #include "Core.h"
+
 #include "Application.h"
 
 namespace Q2Compilers {

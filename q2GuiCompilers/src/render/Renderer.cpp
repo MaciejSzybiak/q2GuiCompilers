@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Renderer.h"
+#include "atlas/Atlas.inl"
 
 namespace Q2Compilers {
 

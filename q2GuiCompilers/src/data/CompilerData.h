@@ -1,7 +1,6 @@
 #pragma once
 
 #include "json.hpp"
-
 using json = nlohmann::json;
 
 namespace Q2Compilers {

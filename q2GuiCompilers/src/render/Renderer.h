@@ -1,7 +1,6 @@
 #pragma once
 
 #include "microui.h"
-#include "atlas/Atlas.inl"
 
 #define RENDER_BUFFER_SIZE 16384
 
