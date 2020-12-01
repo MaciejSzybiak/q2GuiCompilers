@@ -1,7 +1,8 @@
 #include "Core.h"
 #include "Application.h"
 
-int main() {
+int main()
+{
 	LOG_TRACE("Test trace message");
 	LOG_INFO("Test info message");
 	LOG_WARNING("Test warning message");

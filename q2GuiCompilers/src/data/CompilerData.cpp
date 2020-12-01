@@ -1,9 +1,11 @@
 #include "Core.h"
 #include "CompilerData.h"
 
-namespace Q2Compilers {
+namespace Q2Compilers
+{
 
-	void to_json(json& j, const CData& p) {
+	void to_json(json& j, const CData& p)
+	{
 		j = json{
 			{ "qbsp_glView"      , p.qbsp_glView       },
 			{ "qbsp_verbose"     , p.qbsp_verbose      },
@@ -57,7 +59,8 @@ namespace Q2Compilers {
 		};
 	}
 
-	void from_json(const json& j, CData& p) {
+	void from_json(const json& j, CData& p)
+	{
 		j.at("qbsp_glView"      ).get_to(p.qbsp_glView);
 		j.at("qbsp_verbose"     ).get_to(p.qbsp_verbose);
 		j.at("qbsp_noweld"      ).get_to(p.qbsp_noweld);
@@ -112,7 +115,8 @@ namespace Q2Compilers {
 		std::ifstream file("profiles/" + filename, std::ios_base::in);
 		std::string content;
 
-		if (file.good()) {
+		if (file.good())
+		{
 			file >> j;
 			Deserialize();
 
@@ -128,7 +132,8 @@ namespace Q2Compilers {
 		CreateDirectoryA("profiles", NULL);
 		std::ofstream file("profiles/" + filename, std::ios_base::out | std::ios_base::trunc);
 
-		if (file.good()) {
+		if (file.good())
+		{
 			Serialize();
 
 			file << std::setw(4) << j << std::endl;
@@ -143,10 +148,12 @@ namespace Q2Compilers {
 
 	void CompilerData::Deserialize()
 	{
-		try {
+		try
+		{
 			data = j;
 		}
-		catch (nlohmann::detail::exception e) {
+		catch (nlohmann::detail::exception e)
+		{
 			LOG_WARNING("Compiler data deserialization: %s", e.what());
 		}
 	}

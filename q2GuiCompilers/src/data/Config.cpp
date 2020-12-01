@@ -2,31 +2,27 @@
 #include "Config.h"
 
 
-namespace Q2Compilers {
+namespace Q2Compilers
+{
 
-	void to_json(json& j, const ConfigData& p) 
+	void to_json(json& j, const ConfigData& p)
 	{
 		j = json{
-			{ "profile_last"   , p.profile_last    },
+			{ "profile_last", p.profile_last},
 		};
 	}
 
-	void from_json(const json& j, ConfigData& p) 
+	void from_json(const json& j, ConfigData& p)
 	{
-		j.at("profile_last"   ).get_to(p.profile_last);
+		j.at("profile_last").get_to(p.profile_last);
 	}
 
 	Config::Config()
 	{
-		if(!ReadConfig())
+		if (!ReadConfig())
 		{
 			WriteConfig();
 		}
-	}
-
-	Config::~Config()
-	{
-		//WriteConfig();
 	}
 
 	void Config::SetLastProfile(std::string name)
@@ -39,7 +35,8 @@ namespace Q2Compilers {
 	{
 		std::ifstream file("config.json");
 
-		if (file.good()) {
+		if (file.good())
+		{
 			file >> j;
 			Deserialize();
 			return true;
@@ -50,8 +47,9 @@ namespace Q2Compilers {
 	void Config::WriteConfig()
 	{
 		std::ofstream file("config.json", std::ios_base::out | std::ios_base::trunc);
-		
-		if (file.good()) {
+
+		if (file.good())
+		{
 			Serialize();
 			file << std::setw(4) << j << std::endl;
 			file.close();
@@ -63,12 +61,14 @@ namespace Q2Compilers {
 		j = data;
 	}
 
-	void Config::Deserialize() 
+	void Config::Deserialize()
 	{
-		try {
+		try
+		{
 			data = j;
 		}
-		catch (nlohmann::detail::exception e) {
+		catch (nlohmann::detail::exception e)
+		{
 			LOG_WARNING("Config deserialization: %s", e.what());
 		}
 	}

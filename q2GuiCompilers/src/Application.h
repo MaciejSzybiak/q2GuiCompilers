@@ -5,8 +5,8 @@
 #include "data/CompilerData.h"
 #include "data/Config.h"
 
-namespace Q2Compilers {
-
+namespace Q2Compilers
+{
 	class Application
 	{
 	public:

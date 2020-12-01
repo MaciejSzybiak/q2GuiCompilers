@@ -2,9 +2,9 @@
 #include "Renderer.h"
 #include "atlas/Atlas.inl"
 
-namespace Q2Compilers {
-
-	Renderer::Renderer(GLFWwindow *window)
+namespace Q2Compilers
+{
+	Renderer::Renderer(GLFWwindow* window)
 	{
 		_window = window;
 		glfwGetFramebufferSize(window, &_width, &_height);
@@ -31,21 +31,24 @@ namespace Q2Compilers {
 
 	Renderer::~Renderer()
 	{
-		if (_atlasTex) {
+		if (_atlasTex)
+		{
 			glDeleteTextures(1, &_atlasTex);
 		}
 	}
 
-	void Renderer::ProcessCommands(mu_Context *context, mu_Color clearColor)
+	void Renderer::ProcessCommands(mu_Context* context, mu_Color clearColor)
 	{
 		Clear(clearColor);
 
-		if (!context) {
+		if (!context)
+		{
 			return;
 		}
 
-		mu_Command *cmd = NULL;
-		while (mu_next_command(context, &cmd)) {
+		mu_Command* cmd = NULL;
+		while (mu_next_command(context, &cmd))
+		{
 			switch (cmd->type)
 			{
 			case MU_COMMAND_TEXT:
@@ -69,8 +72,10 @@ namespace Q2Compilers {
 	int Renderer::GetTextWidth(const char* text, int len)
 	{
 		int res = 0;
-		for (const char* p = text; *p && len--; p++) {
-			if ((*p & 0xc0) == 0x80) {
+		for (const char* p = text; *p && len--; p++)
+		{
+			if ((*p & 0xc0) == 0x80)
+			{
 				continue;
 			}
 			int chr = mu_min((unsigned char)*p, 127);
@@ -87,9 +92,11 @@ namespace Q2Compilers {
 	void Renderer::CmdText(const char* text, mu_Vec2 pos, mu_Color color)
 	{
 		mu_Rect dst = { pos.x, pos.y, 0, 0 };
-		
-		for (const char* p = text; *p; p++) {
-			if ((*p & 0xc0) == 0x80) {
+
+		for (const char* p = text; *p; p++)
+		{
+			if ((*p & 0xc0) == 0x80)
+			{
 				continue;
 			}
 			int chr = mu_min((unsigned char)*p, 127);
@@ -123,7 +130,8 @@ namespace Q2Compilers {
 
 	void Renderer::PushQuad(mu_Rect dst, mu_Rect src, mu_Color color)
 	{
-		if (buf.i == RENDER_BUFFER_SIZE) {
+		if (buf.i == RENDER_BUFFER_SIZE)
+		{
 			Flush();
 		}
 
@@ -181,7 +189,8 @@ namespace Q2Compilers {
 	{
 		//LOG_TRACE("Atempted flush with buf.i=%d", buf.i);
 
-		if (buf.i == 0) {
+		if (buf.i == 0)
+		{
 			return;
 		}
 

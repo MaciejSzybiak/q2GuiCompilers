@@ -29,7 +29,8 @@
 #define ASSERT(test, ...) if(!(test)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); }
 #define ASSERT_N(test, ...) if((test)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); }
 
-namespace Q2Compilers {
+namespace Q2Compilers
+{
 	typedef void (*EventCallbackFunc)(std::shared_ptr<Event>);
 	typedef int (*TextWidthFunc)(const char* text, int len);
 }

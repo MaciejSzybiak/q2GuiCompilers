@@ -1,13 +1,13 @@
 #include "Core.h"
 #include "GlWindow.h"
 
-namespace Q2Compilers {
-
+namespace Q2Compilers
+{
 	int GlWindow::_width;
 	int GlWindow::_height;
 	EventCallbackFunc GlWindow::eventPushCallback;
 
-	GlWindow::GlWindow(WindowProps& props, EventCallbackFunc pushFunc)
+	GlWindow::GlWindow(const WindowProps& props, EventCallbackFunc pushFunc)
 	{
 		int init = glfwInit();
 		ASSERT(init == GLFW_TRUE, "Failed to initialize glfw");
@@ -47,12 +47,12 @@ namespace Q2Compilers {
 		glfwTerminate();
 	}
 
-	bool GlWindow::WindowShouldClose()
+	bool GlWindow::WindowShouldClose() const
 	{
 		return glfwWindowShouldClose(_window);
 	}
 
-	void GlWindow::OnUpdate()
+	void GlWindow::OnUpdate() const
 	{
 		glfwSwapBuffers(_window);
 		glfwWaitEvents();

@@ -4,7 +4,8 @@
 
 #define WINDOW_BORDER 2
 
-namespace Q2Compilers {
+namespace Q2Compilers
+{
 
 #pragma warning( push )
 #pragma warning( disable : 26812 )
@@ -31,6 +32,7 @@ namespace Q2Compilers {
 	MuGui::MuGui(TextWidthFunc widthFunc, int xSize, int ySize, std::string name)
 		: _width(xSize), _height(ySize), _name(name)
 	{
+
 		ASSERT(widthFunc, "No width func specified");
 
 		_context = new mu_Context();
@@ -50,17 +52,18 @@ namespace Q2Compilers {
 		{
 			auto event = std::dynamic_pointer_cast<MouseButtonPressedEvent>(e);
 			int btn = event->GetButton();
-			if (buttonMap.find(btn) != buttonMap.end()) {
+			if (buttonMap.find(btn) != buttonMap.end())
+			{
 				mu_input_mousedown(_context, event->GetX(), event->GetY(), buttonMap.at(btn));
 			}
-			//LOG_TRACE("mousedown %d %d", event->GetX(), event->GetY());
 			break;
 		}
 		case EventType::MouseButtonReleased:
 		{
 			auto event = std::dynamic_pointer_cast<MouseButtonReleasedEvent>(e);
 			int btn = event->GetButton();
-			if (buttonMap.find(btn) != buttonMap.end()) {
+			if (buttonMap.find(btn) != buttonMap.end())
+			{
 				mu_input_mouseup(_context, event->GetX(), event->GetY(), buttonMap.at(btn));
 			}
 			break;
@@ -81,7 +84,8 @@ namespace Q2Compilers {
 		{
 			auto event = std::dynamic_pointer_cast<KeyPressedEvent>(e);
 			int key = event->GetKey();
-			if (!(event->IsRepeating()) && keyMap.find(key) != keyMap.end()) {
+			if (!(event->IsRepeating()) && keyMap.find(key) != keyMap.end())
+			{
 				mu_input_keydown(_context, keyMap.at(key));
 			}
 			break;
@@ -90,7 +94,8 @@ namespace Q2Compilers {
 		{
 			auto event = std::dynamic_pointer_cast<KeyReleasedEvent>(e);
 			int key = event->GetKey();
-			if (keyMap.find(key) != keyMap.end()) {
+			if (keyMap.find(key) != keyMap.end())
+			{
 				mu_input_keyup(_context, keyMap.at(key));
 			}
 			break;
@@ -109,9 +114,10 @@ namespace Q2Compilers {
 		mu_begin(_context);
 		mu_Container* win = mu_get_container(_context, _name.c_str());
 		win->rect = mu_rect(WINDOW_BORDER, WINDOW_BORDER, _width - WINDOW_BORDER * 2, _height - WINDOW_BORDER * 2);
-		
+
 		if (mu_begin_window_ex(_context, _name.c_str(), mu_rect(0, 0, 0, 0),
-			MU_OPT_NORESIZE)) {
+			MU_OPT_NORESIZE))
+		{
 			int widths[] = { -1 };
 			mu_layout_row(_context, 1, widths, -1);
 			mu_begin_panel(_context, "console");

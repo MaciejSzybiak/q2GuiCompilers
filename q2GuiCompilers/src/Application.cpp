@@ -1,15 +1,14 @@
 #include "Core.h"
-
 #include "Application.h"
 
-namespace Q2Compilers {
-
+namespace Q2Compilers
+{
 	std::queue<std::shared_ptr<Event>> Application::_events;
 
 	Application::Application(std::string name)
 	{
 		WindowProps props = WindowProps(name, 600, 800);
-		
+
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());
 		_gui = new MuGui(Renderer::GetTextWidth, props.width, props.height, props.title);
@@ -18,7 +17,8 @@ namespace Q2Compilers {
 
 		std::string last = _config->GetCurrentData()->profile_last;
 
-		if (last.length() > 0) {
+		if (last.length() > 0)
+		{
 			LoadProfile(last);
 		}
 	}
@@ -38,9 +38,11 @@ namespace Q2Compilers {
 		MuGuiData guiData;
 
 		//main loop
-		while (!_window->WindowShouldClose()) {
+		while (!_window->WindowShouldClose())
+		{
 			DispatchEvents();
-			if (!_gui->MakeCommands(&guiData)) {
+			if (!_gui->MakeCommands(&guiData))
+			{
 				break;
 			}
 			_renderer->ProcessCommands(_gui->GetContext(), mu_color(128, 128, 128, 255));
@@ -59,9 +61,10 @@ namespace Q2Compilers {
 
 	void Application::DispatchEvents()
 	{
-		while (!_events.empty()) {
+		while (!_events.empty())
+		{
 			std::shared_ptr<Event> e = _events.front();
-			
+
 			_gui->HandleEvent(e);
 
 			_events.pop();
@@ -74,7 +77,7 @@ namespace Q2Compilers {
 		_compilerData->LoadFromFile(filename);
 	}
 
-	void Application::SaveProfile(std::string filename) 
+	void Application::SaveProfile(std::string filename)
 	{
 		_config->SetLastProfile(filename);
 		_compilerData->SaveFile(filename);
@@ -84,18 +87,22 @@ namespace Q2Compilers {
 	{
 		data->data = _compilerData->GetCurrentData();
 
-		if (data->saveProfile) {
+		if (data->saveProfile)
+		{
 			SaveProfile(data->profileName);
 			data->saveProfile = false;
 		}
-		if (data->loadProfile) {
+		if (data->loadProfile)
+		{
 			LoadProfile(data->profileName);
 			data->loadProfile = false;
 		}
-		if (data->updateProfileList) {
+		if (data->updateProfileList)
+		{
 			data->updateProfileList = false;
 		}
-		if (data->compile) {
+		if (data->compile)
+		{
 			Compile(data->mapName);
 			data->compile = false;
 		}
@@ -105,12 +112,14 @@ namespace Q2Compilers {
 	{
 		vec->clear();
 
-		if (!std::filesystem::exists("profiles/")) {
+		if (!std::filesystem::exists("profiles/"))
+		{
 			LOG_WARNING("Directory \"profiles\" doesn't exist");
 			return;
 		}
 
-		for (const auto& entry : std::filesystem::directory_iterator("profiles/")) {
+		for (const auto& entry : std::filesystem::directory_iterator("profiles/"))
+		{
 			std::string str = entry.path().string();
 			size_t start = str.find_last_of('/');
 			vec->push_back(str.substr(start + 1));

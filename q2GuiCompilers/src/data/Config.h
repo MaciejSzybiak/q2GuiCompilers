@@ -1,19 +1,23 @@
 #pragma once
 #include "json.hpp"
+
 using json = nlohmann::json;
 
-namespace Q2Compilers {
+namespace Q2Compilers
+{
 
-	struct ConfigData {
+	struct ConfigData
+	{
 		std::string profile_last = "";
 	};
 
-	class Config {
+	class Config
+	{
 	public:
 		Config();
-		~Config();
 		void SetLastProfile(std::string name);
-		ConfigData* GetCurrentData() {
+		ConfigData* GetCurrentData()
+		{
 			return &data;
 		}
 	private:
