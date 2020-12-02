@@ -39,6 +39,9 @@ namespace Q2Compilers
 		glfwSetScrollCallback(_window, OnMouseScroll);
 		glfwSetCursorPosCallback(_window, OnMouseMoved);
 		glfwSetKeyCallback(_window, OnKey);
+
+		//set input mode
+		glfwSetInputMode(_window, GLFW_LOCK_KEY_MODS, GLFW_TRUE);
 	}
 
 	GlWindow::~GlWindow()
@@ -55,6 +58,6 @@ namespace Q2Compilers
 	void GlWindow::OnUpdate() const
 	{
 		glfwSwapBuffers(_window);
-		glfwWaitEvents();
+		glfwPollEvents();
 	}
 }

@@ -57,12 +57,31 @@ namespace Q2Compilers
 
 		inline static void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
+			if (key > 64 && key < 91)
+			{
+				if (mods & GLFW_MOD_CAPS_LOCK)
+				{
+					if (mods & GLFW_MOD_SHIFT)
+					{
+						key += 32;
+					}
+				}
+				else
+				{
+					if (!(mods & GLFW_MOD_SHIFT))
+					{
+						key += 32;
+					}
+				}
+			}
 			switch (action)
 			{
 			case GLFW_PRESS:
 			case GLFW_REPEAT:
+			{
 				eventPushCallback(std::make_shared<KeyPressedEvent>(key, action - 1));
 				break;
+			}
 			case GLFW_RELEASE:
 				eventPushCallback(std::make_shared<KeyReleasedEvent>(key));
 			}

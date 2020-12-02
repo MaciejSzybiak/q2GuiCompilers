@@ -52,10 +52,11 @@ namespace Q2Compilers
 			{ "argh_nocurve"     , p.argh_nocurve      },
 			{ "argh_nosplotchfix", p.argh_nosplotchfix },
 			{ "argh_noradorigin" , p.argh_noradorigin  },
-			{ "q2_directory"     , p.q2_directory      },
-			{ "q2_modname"       , p.q2_modname        },
-			{ "q2_executable"    , p.q2_executable     },
-			{ "q2_args"          , p.q2_args           },
+			
+			{ "q2_directory"     , p.q2_directory.c_str()},
+			{ "q2_modname"       , p.q2_modname.c_str()},
+			{ "q2_executable"    , p.q2_executable.c_str()},
+			{ "q2_args"          , p.q2_args.c_str()},
 		};
 	}
 

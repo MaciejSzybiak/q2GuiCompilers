@@ -46,5 +46,10 @@ namespace Q2Compilers
 		{
 			return 18;
 		}
+
+		void DrawProfilePopup(bool isLoadPopup, MuGuiData* data, int windowWidth);
+		void DrawGamePanel(MuGuiData* data);
+		void DrawQradPanel(MuGuiData* data);
+		void DrawVisPanel(MuGuiData* data);
 	};
 }

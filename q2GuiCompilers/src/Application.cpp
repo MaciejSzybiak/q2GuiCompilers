@@ -7,7 +7,7 @@ namespace Q2Compilers
 
 	Application::Application(std::string name)
 	{
-		WindowProps props = WindowProps(name, 600, 800);
+		WindowProps props = WindowProps(name, 400, 600);
 
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());
@@ -17,15 +17,18 @@ namespace Q2Compilers
 
 		std::string last = _config->GetCurrentData()->profile_last;
 
-		if (last.length() > 0)
+		if (last.length() > 0 && last.ends_with(".json"))
 		{
+			LOG_INFO("Loading last profile: %s", last.c_str());
+			size_t dot = last.find_last_of('.');
+			last = last.substr(0, dot);
 			LoadProfile(last);
 		}
 	}
 
 	Application::~Application()
 	{
-		SaveProfile("cached.json");
+		SaveProfile("cached");
 
 		delete _gui;
 		delete _renderer;
@@ -36,6 +39,8 @@ namespace Q2Compilers
 	void Application::Run()
 	{
 		MuGuiData guiData;
+
+		GetProfileNames(&(guiData.profileFiles));
 
 		//main loop
 		while (!_window->WindowShouldClose())
@@ -73,12 +78,14 @@ namespace Q2Compilers
 
 	void Application::LoadProfile(std::string filename)
 	{
+		filename += ".json";
 		_config->SetLastProfile(filename);
 		_compilerData->LoadFromFile(filename);
 	}
 
 	void Application::SaveProfile(std::string filename)
 	{
+		filename += ".json";
 		_config->SetLastProfile(filename);
 		_compilerData->SaveFile(filename);
 	}
@@ -99,6 +106,7 @@ namespace Q2Compilers
 		}
 		if (data->updateProfileList)
 		{
+			GetProfileNames(&(data->profileFiles));
 			data->updateProfileList = false;
 		}
 		if (data->compile)
@@ -117,12 +125,20 @@ namespace Q2Compilers
 			LOG_WARNING("Directory \"profiles\" doesn't exist");
 			return;
 		}
-
 		for (const auto& entry : std::filesystem::directory_iterator("profiles/"))
 		{
 			std::string str = entry.path().string();
+			if (!str.ends_with(".json"))
+			{
+				continue;
+			}
+			//strip path
 			size_t start = str.find_last_of('/');
-			vec->push_back(str.substr(start + 1));
+			str = str.substr(start + 1);
+			//strip extension
+			start = str.find_last_of('.');
+			str = str.substr(0, start);
+			vec->push_back(str);
 		}
 	}
 

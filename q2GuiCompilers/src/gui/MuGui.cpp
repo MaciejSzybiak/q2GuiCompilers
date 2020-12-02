@@ -84,9 +84,16 @@ namespace Q2Compilers
 		{
 			auto event = std::dynamic_pointer_cast<KeyPressedEvent>(e);
 			int key = event->GetKey();
-			if (!(event->IsRepeating()) && keyMap.find(key) != keyMap.end())
+
+			if (keyMap.find(key) != keyMap.end())
 			{
 				mu_input_keydown(_context, keyMap.at(key));
+			}
+			else
+			{
+				static char keyChar[2] = { '\0', '\0' };
+				keyChar[0] = (char)key;
+				mu_input_text(_context, keyChar);
 			}
 			break;
 		}
@@ -118,6 +125,41 @@ namespace Q2Compilers
 		if (mu_begin_window_ex(_context, _name.c_str(), mu_rect(0, 0, 0, 0),
 			MU_OPT_NORESIZE))
 		{
+			if (mu_header(_context, "Profiles"))
+			{
+				int l[] = { win->content_size.x / 2, -1 };
+				mu_layout_row(_context, 2, l, 0);
+
+				if (mu_button(_context, "Load"))
+				{
+					mu_open_popup(_context, "Load profile");
+					data->updateProfileList = true;
+				}
+				if (mu_button(_context, "Save"))
+				{
+					mu_open_popup(_context, "Save profile");
+					data->updateProfileList = true;
+				}
+				DrawProfilePopup(true, data, win->content_size.x);
+				DrawProfilePopup(false, data, win->content_size.x);
+			}
+			if (mu_header(_context, "Game"))
+			{
+				DrawGamePanel(data);
+			}
+			if (mu_header(_context, "BSP stage"))
+			{
+				DrawQradPanel(data);
+			}
+			if (mu_header(_context, "VIS stage"))
+			{
+				DrawVisPanel(data);
+			}
+			if (mu_header(_context, "Radiosity"))
+			{
+
+			}
+
 			int widths[] = { -1 };
 			mu_layout_row(_context, 1, widths, -1);
 			mu_begin_panel(_context, "console");
@@ -136,5 +178,122 @@ namespace Q2Compilers
 		mu_end(_context);
 
 		return true;
+	}
+
+	void MuGui::DrawVisPanel(MuGuiData* data)
+	{
+		
+	}
+
+	void MuGui::DrawQradPanel(MuGuiData* data)
+	{
+		CData* d = data->data;
+		int enabled;
+		mu_checkbox(_context, "Enable stage", &enabled); //TODO: add storable variable
+
+		int l[] = { mu_get_current_container(_context)->content_size.x / 2, 0 };
+		mu_layout_row(_context, 2, l, 0);
+
+		mu_checkbox(_context, "Verbose output", &d->qbsp_verbose);
+		mu_checkbox(_context, "GL View", &d->qbsp_glView);
+		mu_checkbox(_context, "No welding", &d->qbsp_noweld);
+		mu_checkbox(_context, "No detail", &d->qbsp_nodetail);
+		mu_checkbox(_context, "No detail", &d->qbsp_nowater);
+		mu_checkbox(_context, "Leak test", &d->qbsp_leaktest);
+	}
+
+	void MuGui::DrawGamePanel(MuGuiData* data)
+	{
+		//directory string
+		std::string& dirStr = data->data->q2_directory;
+		dirStr.reserve(128);
+		char *dirBuf = &dirStr[0];
+
+		//modname
+		std::string& modName = data->data->q2_modname;
+		modName.reserve(32);
+		char *modBuf = &modName[0];
+
+		//executable
+		std::string& execStr = data->data->q2_executable;
+		execStr.reserve(32);
+		char* execBuf = &execStr[0];
+
+		//args
+		std::string& argsStr = data->data->q2_args;
+		argsStr.reserve(256);
+		char* argsBuf = &argsStr[0];
+
+		//layout
+		int l[] = { 100, -1 };
+		mu_layout_row(_context, 2, l, 0);
+
+		//row 1
+		mu_label(_context, "Directory");
+		mu_textbox(_context, dirBuf, (int)dirStr.capacity());
+
+		//row 2
+		mu_label(_context, "Mod directory");
+		mu_textbox(_context, modBuf, (int)modName.capacity());
+
+		//row 3
+		mu_label(_context, "Executable name");
+		mu_textbox(_context, execBuf, (int)execStr.capacity());
+
+		//row 3
+		mu_label(_context, "Args");
+		mu_textbox(_context, argsBuf, (int)argsStr.capacity());
+	}
+
+	void MuGui::DrawProfilePopup(bool isLoadPopup, MuGuiData *data, int windowWidth)
+	{
+		static char buf[64];
+		bool isPopup = isLoadPopup ? mu_begin_popup(_context, "Load profile") :
+			mu_begin_popup(_context, "Save profile");
+
+		if (isPopup)
+		{
+			mu_Container* ct = mu_get_current_container(_context);
+			ct->rect.x = (windowWidth / 2) - ct->content_size.x / 2;
+
+			mu_label(_context, isLoadPopup ? "Load profle" : "Save profle");
+
+			for (const auto& value : data->profileFiles)
+			{
+				if (mu_button(_context, value.c_str()))
+				{
+					data->profileName = value;
+					if (isLoadPopup)
+					{
+						data->loadProfile = true;
+					}
+					else
+					{
+						data->saveProfile = true;
+					}
+					ct->open = 0;
+				}
+			}
+			if (!isLoadPopup)
+			{
+				if (mu_header(_context, "New..."))
+				{
+					bool submitted = false;
+					if (mu_textbox(_context, buf, sizeof(buf)) & MU_RES_SUBMIT)
+					{
+						mu_set_focus(_context, _context->last_id);
+						submitted = true;
+					}
+					if (mu_button(_context, "Save new") || submitted)
+					{
+						data->saveProfile = true;
+						data->profileName = buf;
+						mu_Container* ct2 = mu_get_current_container(_context);
+						ct2->open = 0;
+					}
+				}
+			}
+			mu_end_popup(_context);
+		}
 	}
 }
