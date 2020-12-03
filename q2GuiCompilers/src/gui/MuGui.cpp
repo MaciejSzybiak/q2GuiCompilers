@@ -184,9 +184,68 @@ namespace Q2Compilers
 		return true;
 	}
 
+	int MuGui::DrawIntSlider(int* value, float low, float high)
+	{
+		static float tmp;
+		mu_push_id(_context, &value, sizeof(value));
+		tmp = (float)*value;
+		int res = mu_slider_ex(_context, &tmp, low, high, 0, "%.0f", MU_OPT_ALIGNCENTER);
+		*value = (int)tmp;
+		mu_pop_id(_context);
+		return res;
+	}
+
+	void MuGui::DrawSliderWithLabel(const char* label, int* value, float low, float high)
+	{
+		static int l[] = { 0, -1 };
+		int widths[] = { -1 };
+		mu_layout_row(_context, 1, widths, 30);
+
+		mu_begin_panel_ex(_context, label, 0);
+
+		l[0] = mu_get_current_container(_context)->content_size.x / 2;
+		mu_layout_row(_context, 2, l, 0);
+
+		mu_label(_context, label);
+		DrawIntSlider(value, low, high);
+
+		mu_end_panel(_context);
+	}
+
+	void MuGui::DrawSliderWithLabel(const char* label, float* value, float low, float high)
+	{
+		static int l[] = { 0, -1 };
+		int widths[] = { -1 };
+		mu_layout_row(_context, 1, widths, 30);
+
+		mu_begin_panel_ex(_context, label, 0);
+
+		l[0] = mu_get_current_container(_context)->content_size.x / 2;
+		mu_layout_row(_context, 2, l, 0);
+
+		mu_label(_context, label);
+		mu_slider(_context, value, low, high);
+
+		mu_end_panel(_context);
+	}
+
 	void MuGui::DrawVisPanel(MuGuiData* data)
 	{
-		
+		CData* d = data->data;
+		int enabled;
+		mu_checkbox(_context, "Enable stage", &enabled); //TODO: add storable variable
+
+		//slider
+		DrawSliderWithLabel("Threads:", &d->qvis_threads, 0, 8);
+
+		int l[] = { mu_get_current_container(_context)->content_size.x / 2, -1 };
+		mu_layout_row(_context, 2, l, 0);
+
+		//toggles
+		mu_checkbox(_context, "Verbose output", &d->qvis_qvis_verbose);
+		mu_checkbox(_context, "Fast", &d->qvis_fastvis);
+		mu_checkbox(_context, "No sorting", &d->qvis_nosort);
+		mu_checkbox(_context, "Cull error", &d->qvis_cullerror);
 	}
 
 	void MuGui::DrawQradPanel(MuGuiData* data)

@@ -51,5 +51,8 @@ namespace Q2Compilers
 		void DrawGamePanel(MuGuiData* data);
 		void DrawQradPanel(MuGuiData* data);
 		void DrawVisPanel(MuGuiData* data);
+		void DrawSliderWithLabel(const char* label, int* value, float low, float high);
+		void DrawSliderWithLabel(const char* label, float* value, float low, float high);
+		int DrawIntSlider(int* value, float low, float high);
 	};
 }
