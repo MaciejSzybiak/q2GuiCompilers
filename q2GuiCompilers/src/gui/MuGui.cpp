@@ -89,12 +89,6 @@ namespace Q2Compilers
 			{
 				mu_input_keydown(_context, keyMap.at(key));
 			}
-			else
-			{
-				static char keyChar[2] = { '\0', '\0' };
-				keyChar[0] = (char)key;
-				mu_input_text(_context, keyChar);
-			}
 			break;
 		}
 		case EventType::KeyReleased:
@@ -105,6 +99,16 @@ namespace Q2Compilers
 			{
 				mu_input_keyup(_context, keyMap.at(key));
 			}
+			break;
+		}
+		case EventType::TextInput:
+		{
+			//microui expects a null terminated string
+			static char keyChar[2] = { '\0', '\0' };
+			auto event = std::dynamic_pointer_cast<TextInputEvent>(e);
+			int key = event->GetKey();
+			keyChar[0] = (char)key;
+			mu_input_text(_context, keyChar);
 			break;
 		}
 		default:
@@ -198,7 +202,7 @@ namespace Q2Compilers
 		mu_checkbox(_context, "GL View", &d->qbsp_glView);
 		mu_checkbox(_context, "No welding", &d->qbsp_noweld);
 		mu_checkbox(_context, "No detail", &d->qbsp_nodetail);
-		mu_checkbox(_context, "No detail", &d->qbsp_nowater);
+		mu_checkbox(_context, "No water", &d->qbsp_nowater);
 		mu_checkbox(_context, "Leak test", &d->qbsp_leaktest);
 	}
 

@@ -25,12 +25,12 @@ namespace Q2Compilers
 			return _window;
 		}
 	private:
-		inline static void ErrorCallback(int error, const char* description)
+		static void ErrorCallback(int error, const char* description)
 		{
 			LOG_ERROR("GLFW ERROR %d: %s", error, description);
 		}
 
-		inline static void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
+		static void OnMouseButton(GLFWwindow* window, int button, int action, int mods)
 		{
 			double x, y;
 			glfwGetCursorPos(window, &x, &y);
@@ -45,35 +45,18 @@ namespace Q2Compilers
 			}
 		}
 
-		inline static void OnMouseScroll(GLFWwindow* window, double xOffset, double yOffset)
+		static void OnMouseScroll(GLFWwindow* window, double xOffset, double yOffset)
 		{
 			eventPushCallback(std::make_shared<MouseScrolledEvent>((float)(xOffset), (float)(yOffset)));
 		}
 
-		inline static void OnMouseMoved(GLFWwindow* window, double xPos, double yPos)
+		static void OnMouseMoved(GLFWwindow* window, double xPos, double yPos)
 		{
 			eventPushCallback(std::make_shared<MouseMovedEvent>((int)(xPos), (int)(yPos)));
 		}
 
-		inline static void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods)
+		static void OnKey(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
-			if (key > 64 && key < 91)
-			{
-				if (mods & GLFW_MOD_CAPS_LOCK)
-				{
-					if (mods & GLFW_MOD_SHIFT)
-					{
-						key += 32;
-					}
-				}
-				else
-				{
-					if (!(mods & GLFW_MOD_SHIFT))
-					{
-						key += 32;
-					}
-				}
-			}
 			switch (action)
 			{
 			case GLFW_PRESS:
@@ -87,10 +70,17 @@ namespace Q2Compilers
 			}
 		}
 
+		static void OnTextInput(GLFWwindow* window, unsigned int key)
+		{
+			eventPushCallback(std::make_shared<TextInputEvent>(key));
+		}
+
 		GLFWwindow* _window;
 		static int _width;
 		static int _height;
 		static EventCallbackFunc eventPushCallback;
 	};
+
+
 }
 

@@ -7,7 +7,7 @@ namespace Q2Compilers
 	{
 		MouseButtonPressed, MouseButtonReleased,
 		MouseScrolled, MouseMoved,
-		KeyPressed, KeyReleased
+		KeyPressed, KeyReleased, TextInput
 	};
 
 	class Event
@@ -146,6 +146,23 @@ namespace Q2Compilers
 		}
 	protected:
 		int _keyCode;
+	};
+
+	class TextInputEvent : public KeyEvent
+	{
+	public:
+		TextInputEvent(int keyCode) : KeyEvent(keyCode) {}
+
+		virtual EventType GetType() const override
+		{
+			return EventType::TextInput;
+		}
+		virtual std::string ToString() const override
+		{
+			std::stringstream stream;
+			stream << "Text input: " << ((char)_keyCode);
+			return stream.str();
+		}
 	};
 
 	class KeyPressedEvent : public KeyEvent
