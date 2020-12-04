@@ -67,12 +67,12 @@ namespace Q2Compilers
 	class CompilerData
 	{
 	public:
-		bool LoadFromFile(std::string filename);
+		bool LoadFromFile(const std::string& filename);
 		CData* GetCurrentData()
 		{
 			return &data;
 		}
-		void SaveFile(std::string filename);
+		void SaveFile(const std::string& filename);
 	private:
 		void Serialize();
 		void Deserialize();

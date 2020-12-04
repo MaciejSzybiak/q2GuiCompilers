@@ -27,8 +27,8 @@ namespace Q2Compilers
 		void SaveProfile(std::string filename);
 
 		void ProcessGuiData(MuGuiData* data);
-		void GetProfileNames(std::vector<std::string>* vec);
-		void Compile(std::string mapName);
+		void GetProfileNames(std::vector<std::string>& vec);
+		void Compile(const std::string& mapName);
 	};
 }
 

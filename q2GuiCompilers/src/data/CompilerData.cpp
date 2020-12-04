@@ -111,7 +111,7 @@ namespace Q2Compilers
 		j.at("q2_args"          ).get_to(p.q2_args);
 	}
 
-	bool CompilerData::LoadFromFile(std::string filename)
+	bool CompilerData::LoadFromFile(const std::string& filename)
 	{
 		std::ifstream file("profiles/" + filename, std::ios_base::in);
 		std::string content;
@@ -128,7 +128,7 @@ namespace Q2Compilers
 		return false;
 	}
 
-	void CompilerData::SaveFile(std::string filename)
+	void CompilerData::SaveFile(const std::string& filename)
 	{
 		CreateDirectoryA("profiles", NULL);
 		std::ofstream file("profiles/" + filename, std::ios_base::out | std::ios_base::trunc);

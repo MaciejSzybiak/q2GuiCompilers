@@ -25,7 +25,7 @@ namespace Q2Compilers
 		}
 	}
 
-	void Config::SetLastProfile(std::string name)
+	void Config::SetLastProfile(std::string& name)
 	{
 		data.profile_last = name;
 		WriteConfig();

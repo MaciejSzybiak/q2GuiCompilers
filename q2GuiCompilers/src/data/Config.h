@@ -15,7 +15,7 @@ namespace Q2Compilers
 	{
 	public:
 		Config();
-		void SetLastProfile(std::string name);
+		void SetLastProfile(std::string& name);
 		ConfigData* GetCurrentData()
 		{
 			return &data;

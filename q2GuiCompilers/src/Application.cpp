@@ -40,7 +40,7 @@ namespace Q2Compilers
 	{
 		MuGuiData guiData;
 
-		GetProfileNames(&(guiData.profileFiles));
+		GetProfileNames(guiData.profileFiles);
 
 		//main loop
 		while (!_window->WindowShouldClose())
@@ -106,7 +106,7 @@ namespace Q2Compilers
 		}
 		if (data->updateProfileList)
 		{
-			GetProfileNames(&(data->profileFiles));
+			GetProfileNames(data->profileFiles);
 			data->updateProfileList = false;
 		}
 		if (data->compile)
@@ -116,9 +116,9 @@ namespace Q2Compilers
 		}
 	}
 
-	void Application::GetProfileNames(std::vector<std::string>* vec)
+	void Application::GetProfileNames(std::vector<std::string>& vec)
 	{
-		vec->clear();
+		vec.clear();
 
 		if (!std::filesystem::exists("profiles/"))
 		{
@@ -138,11 +138,11 @@ namespace Q2Compilers
 			//strip extension
 			start = str.find_last_of('.');
 			str = str.substr(0, start);
-			vec->push_back(str);
+			vec.push_back(str);
 		}
 	}
 
-	void Application::Compile(std::string mapName)
+	void Application::Compile(const std::string& mapName)
 	{
 		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
 	}
