@@ -28,7 +28,7 @@ namespace Q2Compilers
 
 		void ProcessGuiData(MuGuiData* data);
 		void GetProfileNames(std::vector<std::string>& vec);
-		void Compile(const std::string& mapName);
+		void Compile(const std::string& mapName, bool& isCompiling);
 	};
 }
 

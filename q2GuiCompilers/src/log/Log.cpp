@@ -16,13 +16,13 @@ namespace Q2Compilers
 		switch (type)
 		{
 		case Q2Compilers::LogType::warning:
-			std::cout << "! WARNING: ";
+			std::cout << "> WARNING: ";
 			break;
 		case Q2Compilers::LogType::error:
-			std::cout << "! ERROR: ";
+			std::cout << "> ERROR: ";
 			break;
 		case Q2Compilers::LogType::assert:
-			std::cout << "! ASSERTION FAILED: ";
+			std::cout << "> ASSERTION FAILED: ";
 			break;
 		case Q2Compilers::LogType::trace:
 		case Q2Compilers::LogType::info:

@@ -38,10 +38,10 @@ namespace Q2Compilers
 		_context = new mu_Context();
 		mu_init(_context);
 
-		_widthFunc = widthFunc;
+_widthFunc = widthFunc;
 
-		_context->text_width = TextWidth;
-		_context->text_height = TextHeight;
+_context->text_width = TextWidth;
+_context->text_height = TextHeight;
 	}
 
 	void MuGui::HandleEvent(std::shared_ptr<Event> e)
@@ -137,6 +137,10 @@ namespace Q2Compilers
 			{
 				DrawProfilesPanel(data, win);
 			}
+			if (mu_header(_context, "Map"))
+			{
+				DrawMapPanel(data);
+			}
 			if (mu_header(_context, "Game"))
 			{
 				DrawGamePanel(data);
@@ -155,8 +159,24 @@ namespace Q2Compilers
 			}
 			mu_end_panel(_context);
 
-			mu_layout_row(_context, 1, widths, -1);
+			mu_layout_row(_context, 1, widths, -25);
 			DrawConsolePanel();
+
+			//compile button
+			mu_layout_row(_context, 1, widths, -1);
+			if (mu_button(_context, data->isCompiling ? "Cancel" : "Compile!"))
+			{
+				if (!data->isCompiling)
+				{
+					data->compile = true;
+					data->isCompiling = true;
+				}
+				else
+				{
+					data->isCompiling = false; //abort
+				}
+			}
+
 			mu_end_window(_context);
 		}
 		else
@@ -183,7 +203,7 @@ namespace Q2Compilers
 	void MuGui::DrawSliderWithLabel(const char* label, int* value, float low, float high)
 	{
 		static int l[] = { 0, -1 };
-		int widths[] = { -1 };
+		const int widths[] = { -1 };
 		mu_layout_row(_context, 1, widths, 30);
 
 		mu_begin_panel_ex(_context, label, 0);
@@ -200,7 +220,7 @@ namespace Q2Compilers
 	void MuGui::DrawSliderWithLabel(const char* label, float* value, float low, float high)
 	{
 		static int l[] = { 0, -1 };
-		int widths[] = { -1 };
+		const int widths[] = { -1 };
 		mu_layout_row(_context, 1, widths, 30);
 
 		mu_begin_panel_ex(_context, label, 0);
@@ -216,12 +236,22 @@ namespace Q2Compilers
 
 	void MuGui::DrawConsolePanel()
 	{
+		const int widths[] = { -1 };
+		static int lastLength = 0;
+
 		mu_begin_panel(_context, "console");
 
 		mu_Container* panel = mu_get_current_container(_context);
-		mu_text(_context, "This is\na test text.\n\nAnd it works!");
+		mu_layout_row(_context, 1, widths, -1);
+		std::string& log = Log::GetLogString();
+		mu_text(_context, log.c_str());
 
 		mu_end_panel(_context);
+		if (lastLength != log.length())
+		{
+			panel->scroll.y = panel->content_size.y;
+			lastLength = (int)log.length();
+		}
 	}
 
 	void MuGui::DrawProfilesPanel(MuGuiData* data, mu_Container* window)
@@ -279,6 +309,19 @@ namespace Q2Compilers
 		mu_checkbox(_context, "Leak test", &d->qbsp_leaktest);
 	}
 
+	void MuGui::DrawMapPanel(MuGuiData* data)
+	{
+		std::string& mapStr = data->mapName;
+		mapStr.reserve(32);
+		char* mapBuf = &mapStr[0];
+
+		const int l[] = { 100, -1 };
+		mu_layout_row(_context, 2, l, 0);
+
+		mu_label(_context, "Map file path");
+		mu_textbox(_context, mapBuf, (int)mapStr.capacity());
+	}
+
 	void MuGui::DrawGamePanel(MuGuiData* data)
 	{
 		//directory string
@@ -302,7 +345,7 @@ namespace Q2Compilers
 		char* argsBuf = &argsStr[0];
 
 		//layout
-		int l[] = { 100, -1 };
+		const  int l[] = { 100, -1 };
 		mu_layout_row(_context, 2, l, 0);
 
 		//row 1

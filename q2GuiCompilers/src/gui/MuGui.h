@@ -15,6 +15,8 @@ namespace Q2Compilers
 		bool loadProfile = false;
 		bool updateProfileList = false;
 		bool compile = false;
+
+		bool isCompiling = false;
 	};
 
 	class MuGui
@@ -53,6 +55,7 @@ namespace Q2Compilers
 		void DrawQradPanel(MuGuiData* data);
 		void DrawVisPanel(MuGuiData* data);
 		void DrawConsolePanel();
+		void DrawMapPanel(MuGuiData* data);
 
 		void DrawSliderWithLabel(const char* label, int* value, float low, float high);
 		void DrawSliderWithLabel(const char* label, float* value, float low, float high);

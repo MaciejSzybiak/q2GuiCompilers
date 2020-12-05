@@ -7,6 +7,8 @@ namespace Q2Compilers
 
 	Application::Application(std::string name)
 	{
+		Log::Init();
+
 		WindowProps props = WindowProps(name, 400, 600);
 
 		_window = new GlWindow(props, Application::PushEvent);
@@ -111,7 +113,7 @@ namespace Q2Compilers
 		}
 		if (data->compile)
 		{
-			Compile(data->mapName);
+			Compile(data->mapName, data->isCompiling);
 			data->compile = false;
 		}
 	}
@@ -142,8 +144,15 @@ namespace Q2Compilers
 		}
 	}
 
-	void Application::Compile(const std::string& mapName)
+	void Application::Compile(const std::string& mapName, bool& isCompiling)
 	{
+		if (mapName.length() == 0)
+		{
+			LOG_WARNING("No map path specified.");
+			isCompiling = false;
+			return;
+		}
+
 		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
 	}
 }
