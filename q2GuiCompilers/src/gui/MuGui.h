@@ -48,9 +48,12 @@ namespace Q2Compilers
 		}
 
 		void DrawProfilePopup(bool isLoadPopup, MuGuiData* data, int windowWidth);
+		void DrawProfilesPanel(MuGuiData* data, mu_Container* window);
 		void DrawGamePanel(MuGuiData* data);
 		void DrawQradPanel(MuGuiData* data);
 		void DrawVisPanel(MuGuiData* data);
+		void DrawConsolePanel();
+
 		void DrawSliderWithLabel(const char* label, int* value, float low, float high);
 		void DrawSliderWithLabel(const char* label, float* value, float low, float high);
 		int DrawIntSlider(int* value, float low, float high);

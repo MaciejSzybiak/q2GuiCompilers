@@ -125,27 +125,17 @@ namespace Q2Compilers
 		mu_begin(_context);
 		mu_Container* win = mu_get_container(_context, _name.c_str());
 		win->rect = mu_rect(WINDOW_BORDER, WINDOW_BORDER, _width - WINDOW_BORDER * 2, _height - WINDOW_BORDER * 2);
+		static int widths[] = { -1 };
 
 		if (mu_begin_window_ex(_context, _name.c_str(), mu_rect(0, 0, 0, 0),
 			MU_OPT_NORESIZE))
 		{
+			mu_layout_row(_context, 1, widths, -200);
+			mu_begin_panel(_context, "Main panel");
+
 			if (mu_header(_context, "Profiles"))
 			{
-				int l[] = { win->content_size.x / 2, -1 };
-				mu_layout_row(_context, 2, l, 0);
-
-				if (mu_button(_context, "Load"))
-				{
-					mu_open_popup(_context, "Load profile");
-					data->updateProfileList = true;
-				}
-				if (mu_button(_context, "Save"))
-				{
-					mu_open_popup(_context, "Save profile");
-					data->updateProfileList = true;
-				}
-				DrawProfilePopup(true, data, win->content_size.x);
-				DrawProfilePopup(false, data, win->content_size.x);
+				DrawProfilesPanel(data, win);
 			}
 			if (mu_header(_context, "Game"))
 			{
@@ -163,15 +153,10 @@ namespace Q2Compilers
 			{
 
 			}
-
-			int widths[] = { -1 };
-			mu_layout_row(_context, 1, widths, -1);
-			mu_begin_panel(_context, "console");
-			mu_Container* panel = mu_get_current_container(_context);
-			mu_layout_row(_context, 1, widths, -1);
-			mu_text(_context, "This is\na test text.\n\nAnd it works!");
 			mu_end_panel(_context);
 
+			mu_layout_row(_context, 1, widths, -1);
+			DrawConsolePanel();
 			mu_end_window(_context);
 		}
 		else
@@ -227,6 +212,35 @@ namespace Q2Compilers
 		mu_slider(_context, value, low, high);
 
 		mu_end_panel(_context);
+	}
+
+	void MuGui::DrawConsolePanel()
+	{
+		mu_begin_panel(_context, "console");
+
+		mu_Container* panel = mu_get_current_container(_context);
+		mu_text(_context, "This is\na test text.\n\nAnd it works!");
+
+		mu_end_panel(_context);
+	}
+
+	void MuGui::DrawProfilesPanel(MuGuiData* data, mu_Container* window)
+	{
+		int l[] = { window->content_size.x / 2, -1 };
+		mu_layout_row(_context, 2, l, 0);
+
+		if (mu_button(_context, "Load"))
+		{
+			mu_open_popup(_context, "Load profile");
+			data->updateProfileList = true;
+		}
+		if (mu_button(_context, "Save"))
+		{
+			mu_open_popup(_context, "Save profile");
+			data->updateProfileList = true;
+		}
+		DrawProfilePopup(true, data, window->content_size.x);
+		DrawProfilePopup(false, data, window->content_size.x);
 	}
 
 	void MuGui::DrawVisPanel(MuGuiData* data)
