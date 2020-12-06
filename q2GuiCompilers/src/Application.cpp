@@ -17,6 +17,7 @@ namespace Q2Compilers
 		_config = new Config();
 		_compilerData = new CompilerData();
 
+		_guiData.mapName = _config->GetCurrentData()->map_path;
 		std::string last = _config->GetCurrentData()->profile_last;
 
 		if (last.length() > 0 && last.ends_with(".json"))
@@ -30,6 +31,8 @@ namespace Q2Compilers
 
 	Application::~Application()
 	{
+		_config->GetCurrentData()->map_path = _guiData.mapName;
+		_config->WriteConfig();
 		SaveProfile("cached");
 
 		delete _gui;
@@ -40,22 +43,20 @@ namespace Q2Compilers
 
 	void Application::Run()
 	{
-		MuGuiData guiData;
-
-		GetProfileNames(guiData.profileFiles);
+		GetProfileNames(_guiData.profileFiles);
 
 		//main loop
 		while (!_window->WindowShouldClose())
 		{
 			DispatchEvents();
-			if (!_gui->MakeCommands(&guiData))
+			if (!_gui->MakeCommands(&_guiData))
 			{
 				break;
 			}
 			_renderer->ProcessCommands(_gui->GetContext(), mu_color(128, 128, 128, 255));
 			_renderer->Finish();
 
-			ProcessGuiData(&guiData);
+			ProcessGuiData();
 
 			_window->OnUpdate();
 		}
@@ -81,40 +82,40 @@ namespace Q2Compilers
 	void Application::LoadProfile(std::string filename)
 	{
 		filename += ".json";
-		_config->SetLastProfile(filename);
+		_config->GetCurrentData()->profile_last = filename;
 		_compilerData->LoadFromFile(filename);
 	}
 
 	void Application::SaveProfile(std::string filename)
 	{
 		filename += ".json";
-		_config->SetLastProfile(filename);
+		_config->GetCurrentData()->profile_last = filename;
 		_compilerData->SaveFile(filename);
 	}
 
-	void Application::ProcessGuiData(MuGuiData* data)
+	void Application::ProcessGuiData()
 	{
-		data->data = _compilerData->GetCurrentData();
+		_guiData.data = _compilerData->GetCurrentData();
 
-		if (data->saveProfile)
+		if (_guiData.saveProfile)
 		{
-			SaveProfile(data->profileName);
-			data->saveProfile = false;
+			SaveProfile(_guiData.profileName);
+			_guiData.saveProfile = false;
 		}
-		if (data->loadProfile)
+		if (_guiData.loadProfile)
 		{
-			LoadProfile(data->profileName);
-			data->loadProfile = false;
+			LoadProfile(_guiData.profileName);
+			_guiData.loadProfile = false;
 		}
-		if (data->updateProfileList)
+		if (_guiData.updateProfileList)
 		{
-			GetProfileNames(data->profileFiles);
-			data->updateProfileList = false;
+			GetProfileNames(_guiData.profileFiles);
+			_guiData.updateProfileList = false;
 		}
-		if (data->compile)
+		if (_guiData.compile)
 		{
-			Compile(data->mapName, data->isCompiling);
-			data->compile = false;
+			Compile(_guiData.mapName, _guiData.isCompiling);
+			_guiData.compile = false;
 		}
 	}
 

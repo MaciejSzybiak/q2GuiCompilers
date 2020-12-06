@@ -9,12 +9,14 @@ namespace Q2Compilers
 	{
 		j = json{
 			{ "profile_last", p.profile_last},
+			{ "map_path", p.map_path},
 		};
 	}
 
 	void from_json(const json& j, ConfigData& p)
 	{
 		j.at("profile_last").get_to(p.profile_last);
+		j.at("map_path").get_to(p.map_path);
 	}
 
 	Config::Config()
@@ -23,12 +25,6 @@ namespace Q2Compilers
 		{
 			WriteConfig();
 		}
-	}
-
-	void Config::SetLastProfile(std::string& name)
-	{
-		data.profile_last = name;
-		WriteConfig();
 	}
 
 	bool Config::ReadConfig()

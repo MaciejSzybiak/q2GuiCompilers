@@ -21,12 +21,14 @@ namespace Q2Compilers
 		MuGui* _gui;
 		CompilerData* _compilerData;
 		Config* _config;
+		MuGuiData _guiData;
+
 		static std::queue<std::shared_ptr<Event>> _events;
 
 		void LoadProfile(std::string filename);
 		void SaveProfile(std::string filename);
 
-		void ProcessGuiData(MuGuiData* data);
+		void ProcessGuiData();
 		void GetProfileNames(std::vector<std::string>& vec);
 		void Compile(const std::string& mapName, bool& isCompiling);
 	};
