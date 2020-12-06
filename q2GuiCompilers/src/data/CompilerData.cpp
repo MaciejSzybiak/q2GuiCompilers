@@ -52,7 +52,12 @@ namespace Q2Compilers
 			{ "argh_nocurve"     , p.argh_nocurve      },
 			{ "argh_nosplotchfix", p.argh_nosplotchfix },
 			{ "argh_noradorigin" , p.argh_noradorigin  },
-			
+
+			{ "enable_qvis"      , p.enable_qvis       },
+			{ "enable_qrad"      , p.enable_qrad       },
+			{ "enable_copy"      , p.enable_copy       },
+			{ "enable_exec"      , p.enable_exec       },
+
 			{ "q2_directory"     , p.q2_directory.c_str()},
 			{ "q2_modname"       , p.q2_modname.c_str()},
 			{ "q2_executable"    , p.q2_executable.c_str()},
@@ -105,6 +110,10 @@ namespace Q2Compilers
 		j.at("argh_nocurve"     ).get_to(p.argh_nocurve);
 		j.at("argh_nosplotchfix").get_to(p.argh_nosplotchfix);
 		j.at("argh_noradorigin" ).get_to(p.argh_noradorigin);
+		j.at("enable_qvis"      ).get_to(p.enable_qvis);
+		j.at("enable_qrad"      ).get_to(p.enable_qrad);
+		j.at("enable_copy"      ).get_to(p.enable_copy);
+		j.at("enable_exec"      ).get_to(p.enable_exec);
 		j.at("q2_directory"     ).get_to(p.q2_directory);
 		j.at("q2_modname"       ).get_to(p.q2_modname);
 		j.at("q2_executable"    ).get_to(p.q2_executable);

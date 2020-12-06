@@ -58,10 +58,16 @@ namespace Q2Compilers
 		int   argh_nosplotchfix = false;
 		int   argh_noradorigin = false;
 
+		int   enable_qvis = true;
+		int   enable_qrad = true;
+		int   enable_copy = true;
+		int   enable_exec = true;
+
 		std::string q2_directory = "";
-		std::string q2_modname = "";
-		std::string q2_executable = "";
+		std::string q2_modname = "baseq2";
+		std::string q2_executable = "q2pro.exe";
 		std::string q2_args = "";
+
 	};
 
 	class CompilerData

@@ -52,6 +52,7 @@ namespace Q2Compilers
 		void DrawProfilePopup(bool isLoadPopup, MuGuiData* data, int windowWidth);
 		void DrawProfilesPanel(MuGuiData* data, mu_Container* window);
 		void DrawGamePanel(MuGuiData* data);
+		void DrawQbspPanel(MuGuiData* data);
 		void DrawQradPanel(MuGuiData* data);
 		void DrawVisPanel(MuGuiData* data);
 		void DrawConsolePanel();

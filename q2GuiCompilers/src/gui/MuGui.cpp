@@ -147,7 +147,7 @@ _context->text_height = TextHeight;
 			}
 			if (mu_header(_context, "BSP stage"))
 			{
-				DrawQradPanel(data);
+				DrawQbspPanel(data);
 			}
 			if (mu_header(_context, "VIS stage"))
 			{
@@ -155,7 +155,7 @@ _context->text_height = TextHeight;
 			}
 			if (mu_header(_context, "Radiosity"))
 			{
-
+				DrawQradPanel(data);
 			}
 			mu_end_panel(_context);
 
@@ -273,30 +273,43 @@ _context->text_height = TextHeight;
 		DrawProfilePopup(false, data, window->content_size.x);
 	}
 
-	void MuGui::DrawVisPanel(MuGuiData* data)
-	{
-		CData* d = data->data;
-		int enabled;
-		mu_checkbox(_context, "Enable stage", &enabled); //TODO: add storable variable
-
-		//slider
-		DrawSliderWithLabel("Threads:", &d->qvis_threads, 0, 8);
-
-		int l[] = { mu_get_current_container(_context)->content_size.x / 2, -1 };
-		mu_layout_row(_context, 2, l, 0);
-
-		//toggles
-		mu_checkbox(_context, "Verbose output", &d->qvis_qvis_verbose);
-		mu_checkbox(_context, "Fast", &d->qvis_fastvis);
-		mu_checkbox(_context, "No sorting", &d->qvis_nosort);
-		mu_checkbox(_context, "Cull error", &d->qvis_cullerror);
-	}
-
 	void MuGui::DrawQradPanel(MuGuiData* data)
 	{
 		CData* d = data->data;
-		int enabled;
-		mu_checkbox(_context, "Enable stage", &enabled); //TODO: add storable variable
+
+		mu_checkbox(_context, "Enable stage", &d->enable_qrad);
+
+		if (d->enable_qrad)
+		{
+
+		}
+	}
+
+	void MuGui::DrawVisPanel(MuGuiData* data)
+	{
+		CData* d = data->data;
+
+		mu_checkbox(_context, "Enable stage", &d->enable_qvis);
+
+		if (d->enable_qvis)
+		{
+			//slider
+			DrawSliderWithLabel("Threads:", &d->qvis_threads, 0, 8);
+
+			int l[] = { mu_get_current_container(_context)->content_size.x / 2, -1 };
+			mu_layout_row(_context, 2, l, 0);
+
+			//toggles
+			mu_checkbox(_context, "Verbose output", &d->qvis_qvis_verbose);
+			mu_checkbox(_context, "Fast", &d->qvis_fastvis);
+			mu_checkbox(_context, "No sorting", &d->qvis_nosort);
+			mu_checkbox(_context, "Cull error", &d->qvis_cullerror);
+		}
+	}
+
+	void MuGui::DrawQbspPanel(MuGuiData* data)
+	{
+		CData* d = data->data;
 
 		int l[] = { mu_get_current_container(_context)->content_size.x / 2, 0 };
 		mu_layout_row(_context, 2, l, 0);
@@ -324,45 +337,54 @@ _context->text_height = TextHeight;
 
 	void MuGui::DrawGamePanel(MuGuiData* data)
 	{
-		//directory string
-		std::string& dirStr = data->data->q2_directory;
-		dirStr.resize(128);
-		char *dirBuf = &dirStr[0];
-
-		//modname
-		std::string& modName = data->data->q2_modname;
-		modName.resize(15);
-		char *modBuf = &modName[0];
-
-		//executable
-		std::string& execStr = data->data->q2_executable;
-		execStr.resize(15);
-		char* execBuf = &execStr[0];
-
-		//args
-		std::string& argsStr = data->data->q2_args;
-		argsStr.resize(256);
-		char* argsBuf = &argsStr[0];
+		CData* d = data->data;
 
 		//layout
 		const  int l[] = { 100, -1 };
 		mu_layout_row(_context, 2, l, 0);
 
-		//row 1
-		mu_label(_context, "Directory");
-		mu_textbox(_context, dirBuf, (int)dirStr.capacity());
+		mu_checkbox(_context, "Enable copy", &d->enable_copy);
 
-		//row 2
-		mu_label(_context, "Mod directory");
-		mu_textbox(_context, modBuf, (int)modName.capacity());
+		if (d->enable_copy)
+		{
+			mu_checkbox(_context, "Enable game exec", &d->enable_exec);
 
-		//row 3
-		mu_label(_context, "Executable name");
-		mu_textbox(_context, execBuf, (int)execStr.capacity());
+			//directory string
+			std::string& dirStr = data->data->q2_directory;
+			dirStr.resize(128);
+			char *dirBuf = &dirStr[0];
 
-		//row 3
-		mu_label(_context, "Args");
-		mu_textbox(_context, argsBuf, (int)argsStr.capacity());
+			mu_label(_context, "Directory");
+			mu_textbox(_context, dirBuf, (int)dirStr.capacity());
+
+			//modname
+			std::string& modName = data->data->q2_modname;
+			modName.resize(15);
+			char *modBuf = &modName[0];
+
+			mu_label(_context, "Mod directory");
+			mu_textbox(_context, modBuf, (int)modName.capacity());
+
+			if (d->enable_exec)
+			{
+				//executable
+				std::string& execStr = data->data->q2_executable;
+				execStr.resize(15);
+				char* execBuf = &execStr[0];
+
+				mu_label(_context, "Executable name");
+				mu_textbox(_context, execBuf, (int)execStr.capacity());
+			
+				//args
+				std::string& argsStr = data->data->q2_args;
+				argsStr.resize(256);
+				char* argsBuf = &argsStr[0];
+
+				mu_label(_context, "Args");
+				mu_textbox(_context, argsBuf, (int)argsStr.capacity());
+			}
+		}
+
 	}
 
 	void MuGui::DrawProfilePopup(bool isLoadPopup, MuGuiData *data, int windowWidth)
