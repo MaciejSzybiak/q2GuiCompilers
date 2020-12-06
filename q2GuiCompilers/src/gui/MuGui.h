@@ -6,7 +6,7 @@ namespace Q2Compilers
 {
 	struct MuGuiData
 	{
-		CData* data;
+		CData* data = nullptr;
 		std::vector<std::string> profileFiles;
 		std::string profileName;
 		std::string mapName;

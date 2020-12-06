@@ -312,7 +312,7 @@ _context->text_height = TextHeight;
 	void MuGui::DrawMapPanel(MuGuiData* data)
 	{
 		std::string& mapStr = data->mapName;
-		mapStr.reserve(32);
+		mapStr.resize(128);
 		char* mapBuf = &mapStr[0];
 
 		const int l[] = { 100, -1 };
@@ -326,22 +326,22 @@ _context->text_height = TextHeight;
 	{
 		//directory string
 		std::string& dirStr = data->data->q2_directory;
-		dirStr.reserve(128);
+		dirStr.resize(128);
 		char *dirBuf = &dirStr[0];
 
 		//modname
 		std::string& modName = data->data->q2_modname;
-		modName.reserve(32);
+		modName.resize(15);
 		char *modBuf = &modName[0];
 
 		//executable
 		std::string& execStr = data->data->q2_executable;
-		execStr.reserve(32);
+		execStr.resize(15);
 		char* execBuf = &execStr[0];
 
 		//args
 		std::string& argsStr = data->data->q2_args;
-		argsStr.reserve(256);
+		argsStr.resize(256);
 		char* argsBuf = &argsStr[0];
 
 		//layout

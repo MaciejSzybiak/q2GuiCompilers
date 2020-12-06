@@ -129,18 +129,16 @@ namespace Q2Compilers
 		}
 		for (const auto& entry : std::filesystem::directory_iterator("profiles/"))
 		{
-			std::string str = entry.path().string();
+			const std::string& str = entry.path().string();
 			if (!str.ends_with(".json"))
 			{
 				continue;
 			}
 			//strip path
-			size_t start = str.find_last_of('/');
-			str = str.substr(start + 1);
-			//strip extension
-			start = str.find_last_of('.');
-			str = str.substr(0, start);
-			vec.push_back(str);
+			size_t start = str.find_last_of('/') + 1;
+			size_t end = str.find_last_of('.');
+
+			vec.push_back(str.substr(start, end - start));
 		}
 	}
 
