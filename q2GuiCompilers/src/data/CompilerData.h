@@ -36,18 +36,18 @@ namespace Q2Compilers
 		int   argh_chopwarp = 0;
 		int   argh_choplight = 0;
 		int   argh_chopcurve = 0;
-		float argh_scale = 0;
-		float argh_direct = 0;
-		float argh_entity = 0;
-		float argh_texscale = 0;
+		float argh_scale = 1;
+		float argh_direct = 1;
+		float argh_entity = 1;
+		float argh_texscale = 1;
 		int   argh_glView = false;
 		int   argh_nopvs = false;
 		int   argh_nocolor = false;
-		float argh_saturation = 0;
+		float argh_saturation = 1;
 		float argh_ambient = 0;
 		float argh_minlight = 0;
 		float argh_maxlight = 0;
-		float argh_gamma = 0;
+		float argh_gamma = 1;
 		float argh_stylemin = 0;
 		float argh_radmin = 0;
 		int   argh_nobmodlight = false;
@@ -57,6 +57,7 @@ namespace Q2Compilers
 		int   argh_nocurve = false;
 		int   argh_nosplotchfix = false;
 		int   argh_noradorigin = false;
+		int   argh_lightwarp = false;
 
 		int   enable_qvis = true;
 		int   enable_qrad = true;

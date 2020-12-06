@@ -203,7 +203,7 @@ _context->text_height = TextHeight;
 	void MuGui::DrawSliderWithLabel(const char* label, int* value, float low, float high)
 	{
 		static int l[] = { 0, -1 };
-		const int widths[] = { -1 };
+		const static int widths[] = { -1 };
 		mu_layout_row(_context, 1, widths, 30);
 
 		mu_begin_panel_ex(_context, label, 0);
@@ -220,7 +220,7 @@ _context->text_height = TextHeight;
 	void MuGui::DrawSliderWithLabel(const char* label, float* value, float low, float high)
 	{
 		static int l[] = { 0, -1 };
-		const int widths[] = { -1 };
+		const static int widths[] = { -1 };
 		mu_layout_row(_context, 1, widths, 30);
 
 		mu_begin_panel_ex(_context, label, 0);
@@ -276,12 +276,74 @@ _context->text_height = TextHeight;
 	void MuGui::DrawQradPanel(MuGuiData* data)
 	{
 		CData* d = data->data;
+		const static int widths[] = { -1 };
 
 		mu_checkbox(_context, "Enable stage", &d->enable_qrad);
 
 		if (d->enable_qrad)
 		{
+			int l[] = { mu_get_current_container(_context)->content_size.x / 2, -1 };
+			
+			mu_label(_context, "General");
+			mu_layout_row(_context, 2, l, 0);
 
+			mu_checkbox(_context, "Verbose output", &d->argh_verbose);
+			mu_checkbox(_context, "Extra quality", &d->argh_extra);
+
+			DrawSliderWithLabel("Light bounces", &d->argh_bounce, 0, 12);
+			DrawSliderWithLabel("Threads", &d->argh_threads, 0, 8);
+
+			mu_layout_row(_context, 1, widths, 0);
+			mu_label(_context, "Chop exponents (2^n)");
+			mu_layout_row(_context, 2, l, 0);
+
+			DrawSliderWithLabel("Chop size", &d->argh_chop, 4, 10);
+			DrawSliderWithLabel("Chop sky size", &d->argh_chopsky, 4, 8);
+			DrawSliderWithLabel("Chop warp size", &d->argh_chopwarp, 4, 8);
+			DrawSliderWithLabel("Chop light size", &d->argh_choplight, 4, 8);
+			DrawSliderWithLabel("Chop phong size", &d->argh_chopcurve, 4, 8);
+
+			mu_layout_row(_context, 1, widths, 0);
+			mu_label(_context, "Brightness and color");
+			mu_layout_row(_context, 2, l, 0);
+
+			mu_checkbox(_context, "Grayscale lightmaps", &d->argh_nocolor);
+
+			DrawSliderWithLabel("Light brightness", &d->argh_scale, 0.1f, 2);
+			DrawSliderWithLabel("Surface light brightness", &d->argh_direct, .1f, 2);
+			DrawSliderWithLabel("Entity light brightness", &d->argh_entity, .1f, 2);
+			DrawSliderWithLabel("Texture brightness", &d->argh_texscale, 0, 1);
+			DrawSliderWithLabel("Light saturation", &d->argh_saturation, 0, 1);
+			DrawSliderWithLabel("Global ambient amount", &d->argh_ambient, 0, 2);
+			DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 2);
+			DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 2);
+			DrawSliderWithLabel("Light gamma", &d->argh_gamma, 0, 2);
+			DrawSliderWithLabel("Minimum lightsyles light", &d->argh_stylemin, 0, 255);
+
+			mu_layout_row(_context, 1, widths, 0);
+			mu_label(_context, "Disable features");
+			mu_layout_row(_context, 2, l, 0);
+
+			mu_checkbox(_context, "Disable bmodel lighting", &d->argh_nobmodlight);
+			mu_checkbox(_context, "Disable bounce fix", &d->argh_nobouncefix);
+			mu_checkbox(_context, "Disable light face brightening", &d->argh_nobrightsurf);
+			mu_checkbox(_context, "Disable bleeding correction", &d->argh_nostopbleed);
+			mu_checkbox(_context, "Disable phong shading", &d->argh_nocurve);
+			mu_checkbox(_context, "Disable anti-splotch fix", &d->argh_nosplotchfix);
+			mu_checkbox(_context, "Disable origin lighting", &d->argh_noradorigin);
+			
+			mu_layout_row(_context, 1, widths, 0);
+			mu_label(_context, "Other");
+			mu_layout_row(_context, 2, l, 0);
+
+			mu_checkbox(_context, "Only update lightmaps", &d->argh_update);
+			mu_checkbox(_context, "Light warp surfaces", &d->argh_lightwarp);
+			mu_checkbox(_context, "Disable phong shading", &d->argh_nocurve);
+			mu_checkbox(_context, "Dump patch info", &d->argh_dump);
+			mu_checkbox(_context, "GL View", &d->argh_glView);
+			mu_checkbox(_context, "Stop pvs checking", &d->argh_nopvs);
+
+			DrawSliderWithLabel("Minimum radiosity cutoff", &d->argh_radmin, 0, 0.015f);
 		}
 	}
 

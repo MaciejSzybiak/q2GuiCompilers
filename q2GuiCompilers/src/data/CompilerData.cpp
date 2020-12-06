@@ -52,6 +52,7 @@ namespace Q2Compilers
 			{ "argh_nocurve"     , p.argh_nocurve      },
 			{ "argh_nosplotchfix", p.argh_nosplotchfix },
 			{ "argh_noradorigin" , p.argh_noradorigin  },
+			{ "argh_lightwarp"   , p.argh_lightwarp    },
 
 			{ "enable_qvis"      , p.enable_qvis       },
 			{ "enable_qrad"      , p.enable_qrad       },
@@ -110,6 +111,7 @@ namespace Q2Compilers
 		j.at("argh_nocurve"     ).get_to(p.argh_nocurve);
 		j.at("argh_nosplotchfix").get_to(p.argh_nosplotchfix);
 		j.at("argh_noradorigin" ).get_to(p.argh_noradorigin);
+		j.at("argh_lightwarp"   ).get_to(p.argh_lightwarp);
 		j.at("enable_qvis"      ).get_to(p.enable_qvis);
 		j.at("enable_qrad"      ).get_to(p.enable_qrad);
 		j.at("enable_copy"      ).get_to(p.enable_copy);
