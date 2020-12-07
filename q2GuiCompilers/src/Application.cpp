@@ -5,7 +5,7 @@ namespace Q2Compilers
 {
 	std::queue<std::shared_ptr<Event>> Application::_events;
 
-	Application::Application(std::string name)
+	Application::Application(int argc, char **argv, std::string name)
 	{
 		Log::Init();
 
@@ -17,16 +17,29 @@ namespace Q2Compilers
 		_config = new Config();
 		_compilerData = new CompilerData();
 
+		//get settings from config
 		_guiData.mapName = _config->GetCurrentData()->map_path;
-		std::string last = _config->GetCurrentData()->profile_last;
+		_guiData.profileName = _config->GetCurrentData()->profile_last;
 
-		if (last.length() > 0 && last.ends_with(".json"))
+		//get settings from args
+		args = ArgParser::ParseArgs(argc, argv);
+		if (args.mapName.size() > 0)
 		{
-			LOG_INFO("Loading last profile: %s", last.c_str());
-			size_t dot = last.find_last_of('.');
-			last = last.substr(0, dot);
-			LoadProfile(last);
+			_guiData.mapName = args.mapName;
 		}
+		if (args.profile.size() > 0)
+		{
+			_guiData.profileName = args.profile;
+		}
+		_guiData.compile = _guiData.isCompiling = args.instant;
+
+		//load profile
+		if (_guiData.profileName.length() > 0 && _guiData.profileName.ends_with(".json"))
+		{
+			size_t dot = _guiData.profileName.find_last_of('.');
+			_guiData.profileName = _guiData.profileName.substr(0, dot);
+		}
+		LoadProfile(_guiData.profileName);
 	}
 
 	Application::~Application()

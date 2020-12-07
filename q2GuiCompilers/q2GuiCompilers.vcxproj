@@ -96,6 +96,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\ArgParser.h" />
     <ClInclude Include="external\glad\include\glad\glad.h" />
     <ClInclude Include="external\glad\include\KHR\khrplatform.h" />
     <ClInclude Include="external\json\single_include\nlohmann\json.hpp" />
@@ -112,6 +113,7 @@
     <ClInclude Include="src\Application.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ArgParser.cpp" />
     <ClCompile Include="external\glad\src\glad.c">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>

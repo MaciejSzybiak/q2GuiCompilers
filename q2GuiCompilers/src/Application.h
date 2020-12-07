@@ -4,13 +4,14 @@
 #include "gui/MuGui.h"
 #include "data/CompilerData.h"
 #include "data/Config.h"
+#include "ArgParser.h"
 
 namespace Q2Compilers
 {
 	class Application
 	{
 	public:
-		Application(std::string name);
+		Application(int argc, char** argv, std::string name);
 		~Application();
 		void Run();
 		static void PushEvent(std::shared_ptr<Event> event);
@@ -22,6 +23,7 @@ namespace Q2Compilers
 		CompilerData* _compilerData;
 		Config* _config;
 		MuGuiData _guiData;
+		ArgOptions args;
 
 		static std::queue<std::shared_ptr<Event>> _events;
 
