@@ -82,7 +82,7 @@ namespace Q2Compilers
 
 			_window->OnUpdate();
 		}
-		blargh.join();
+		//blargh.join();
 	}
 
 	void Application::PushEvent(std::shared_ptr<Event> event)
