@@ -7,6 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q2GuiCompilers", "q2GuiComp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "external\glfw\glfw.vcxproj", "{12FAAD91-4C17-42CB-B786-2DA98D766704}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blarghrad", "compilers\blarghrad\src\blarghrad.vcxproj", "{A0600E3F-21B3-4068-948D-F84AAF6714E4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F} = {D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjpeg", "compilers\blarghrad\src\libjpeg\libjpeg.vcxproj", "{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +28,14 @@ Global
 		{12FAAD91-4C17-42CB-B786-2DA98D766704}.Debug|x64.Build.0 = Debug|x64
 		{12FAAD91-4C17-42CB-B786-2DA98D766704}.Release|x64.ActiveCfg = Release|x64
 		{12FAAD91-4C17-42CB-B786-2DA98D766704}.Release|x64.Build.0 = Release|x64
+		{A0600E3F-21B3-4068-948D-F84AAF6714E4}.Debug|x64.ActiveCfg = Debug|x64
+		{A0600E3F-21B3-4068-948D-F84AAF6714E4}.Debug|x64.Build.0 = Debug|x64
+		{A0600E3F-21B3-4068-948D-F84AAF6714E4}.Release|x64.ActiveCfg = Release|x64
+		{A0600E3F-21B3-4068-948D-F84AAF6714E4}.Release|x64.Build.0 = Release|x64
+		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Debug|x64.ActiveCfg = Debug|x64
+		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Debug|x64.Build.0 = Debug|x64
+		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Release|x64.ActiveCfg = Release|x64
+		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

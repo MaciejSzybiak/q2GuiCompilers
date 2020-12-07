@@ -1,5 +1,7 @@
 #include "Core.h"
 #include "Application.h"
+#include "blargh.h"
+#include <thread>
 
 namespace Q2Compilers
 {
@@ -58,6 +60,13 @@ namespace Q2Compilers
 	{
 		GetProfileNames(_guiData.profileFiles);
 
+		/*BlarghData bdata;
+		bdata.bspName = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b1.bsp";
+		bdata.gamedir = "H:\\Q2PRO\\baseq2";
+		bdata.moddir = "H:\\Q2PRO\\jumptest";
+
+		std::thread blargh(exec_blarghrad, bdata);*/
+
 		//main loop
 		while (!_window->WindowShouldClose())
 		{
@@ -73,6 +82,7 @@ namespace Q2Compilers
 
 			_window->OnUpdate();
 		}
+		blargh.join();
 	}
 
 	void Application::PushEvent(std::shared_ptr<Event> event)

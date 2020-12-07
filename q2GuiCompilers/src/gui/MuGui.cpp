@@ -315,8 +315,8 @@ _context->text_height = TextHeight;
 			DrawSliderWithLabel("Texture brightness", &d->argh_texscale, 0, 1);
 			DrawSliderWithLabel("Light saturation", &d->argh_saturation, 0, 1);
 			DrawSliderWithLabel("Global ambient amount", &d->argh_ambient, 0, 2);
-			DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 2);
-			DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 2);
+			DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 255);
+			DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 255);
 			DrawSliderWithLabel("Light gamma", &d->argh_gamma, 0, 2);
 			DrawSliderWithLabel("Minimum lightsyles light", &d->argh_stylemin, 0, 255);
 

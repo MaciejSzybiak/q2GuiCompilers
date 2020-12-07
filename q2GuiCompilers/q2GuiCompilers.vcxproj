@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\blarghrad\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Core.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -80,7 +80,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\json\single_include\nlohmann\;$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\blarghrad\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Core.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -138,6 +138,12 @@
     <ClCompile Include="src\Application.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\compilers\blarghrad\src\blarghrad.vcxproj">
+      <Project>{a0600e3f-21b3-4068-948d-f84aaf6714e4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\compilers\blarghrad\src\libjpeg\libjpeg.vcxproj">
+      <Project>{d5dcf74c-cbfa-4928-8dc0-e6f6d012a70f}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\external\glfw\glfw.vcxproj">
       <Project>{12faad91-4c17-42cb-b786-2da98d766704}</Project>
     </ProjectReference>
