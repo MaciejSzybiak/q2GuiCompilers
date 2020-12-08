@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "blargh.h"
 #include "qbspi.h"
+#include "qvisi.h"
 #include <thread>
 
 namespace Q2Compilers
@@ -75,6 +76,11 @@ namespace Q2Compilers
 
 		std::thread qbsp(exec_qbsp, qbspData);*/
 
+		/*QvisData qvisData;
+		qvisData.mapPath = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b4.bsp";
+
+		std::thread qvis(exec_qvis, qvisData);*/
+
 		//main loop
 		while (!_window->WindowShouldClose())
 		{
@@ -92,6 +98,7 @@ namespace Q2Compilers
 		}
 		//blargh.join();
 		//qbsp.join();
+		//qvis.join();
 	}
 
 	void Application::PushEvent(std::shared_ptr<Event> event)
