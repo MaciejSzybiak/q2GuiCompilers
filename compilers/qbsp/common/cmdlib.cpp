@@ -2,6 +2,7 @@
 // cmdlib.c
 #include <windows.h>
 #include <crtdbg.h>
+#include <exception>
 
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
@@ -126,18 +127,17 @@ Error
 For abnormal program terminations in console apps
 =================
 */
-void Error (char *error, ...)
+void Error(const char* error, ...)
 {
 	va_list argptr;
 
-	printf ("\n************ ERROR ************\n");
+	char buf[1024];
 
-	va_start (argptr,error);
-	vprintf (error,argptr);
-	va_end (argptr);
-	printf ("\n");
+	va_start(argptr, error);
+	vsnprintf(buf, sizeof(buf), error, argptr);
+	va_end(argptr);
 
-	__debugbreak();
+	throw std::exception(buf);
 }
 #endif
 

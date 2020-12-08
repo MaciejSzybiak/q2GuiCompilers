@@ -155,14 +155,13 @@ void Error(const char *error, ...)
 {
     va_list argptr;
 
-    printf("\n************ ERROR ************\n");
+    char buf[1024];
 
     va_start(argptr, error);
-    vprintf(error, argptr);
+    vsnprintf(buf, sizeof(buf), error, argptr);
     va_end(argptr);
-    printf("\n");
 
-    __debugbreak();
+    throw std::exception(buf);
 }
 #endif
 
