@@ -43,7 +43,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)bin\compilers\$(Platform)-$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)bin\libjpeg\$(Platform)-$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)obj\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>$(SolutionDir)bin\libjpeg\$(Platform)-$(Configuration)\</OutDir>
     <IntDir>$(ProjectDIr)obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

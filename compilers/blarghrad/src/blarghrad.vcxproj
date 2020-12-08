@@ -58,6 +58,8 @@
     <ReferencePath>$(VC_ReferencesPath_x64);.\libjpeg\$(IntDir)</ReferencePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
     <TargetExt>.lib</TargetExt>
+    <OutDir>$(SolutionDir)bin\compilers\$(Platform)-$(Configuration)\</OutDir>
+    <IntDir>$(ProjectDIr)obj\$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

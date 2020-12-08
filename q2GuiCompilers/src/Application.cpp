@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "Application.h"
 #include "blargh.h"
+#include "qbspi.h"
 #include <thread>
 
 namespace Q2Compilers
@@ -67,6 +68,13 @@ namespace Q2Compilers
 
 		std::thread blargh(exec_blarghrad, bdata);*/
 
+		/*QbspData qbspData;
+		qbspData.mapPath = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b4.map";
+		qbspData.gamedir = "H:\\Q2PRO\\baseq2";
+		qbspData.moddir = "H:\\Q2PRO\\jumptest";
+
+		std::thread qbsp(exec_qbsp, qbspData);*/
+
 		//main loop
 		while (!_window->WindowShouldClose())
 		{
@@ -83,6 +91,7 @@ namespace Q2Compilers
 			_window->OnUpdate();
 		}
 		//blargh.join();
+		//qbsp.join();
 	}
 
 	void Application::PushEvent(std::shared_ptr<Event> event)

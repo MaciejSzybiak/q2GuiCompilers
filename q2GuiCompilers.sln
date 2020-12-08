@@ -14,6 +14,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blarghrad", "compilers\blar
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libjpeg", "compilers\blarghrad\src\libjpeg\libjpeg.vcxproj", "{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qbsp", "compilers\qbsp\qbsp.vcxproj", "{EB2E18C2-F954-4502-AD5A-35DCF65EF166}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -36,6 +38,10 @@ Global
 		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Debug|x64.Build.0 = Debug|x64
 		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Release|x64.ActiveCfg = Release|x64
 		{D5DCF74C-CBFA-4928-8DC0-E6F6D012A70F}.Release|x64.Build.0 = Release|x64
+		{EB2E18C2-F954-4502-AD5A-35DCF65EF166}.Debug|x64.ActiveCfg = Debug|x64
+		{EB2E18C2-F954-4502-AD5A-35DCF65EF166}.Debug|x64.Build.0 = Debug|x64
+		{EB2E18C2-F954-4502-AD5A-35DCF65EF166}.Release|x64.ActiveCfg = Release|x64
+		{EB2E18C2-F954-4502-AD5A-35DCF65EF166}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
