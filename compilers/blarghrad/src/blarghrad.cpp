@@ -1,4 +1,7 @@
 #include "pch.h"
+#include "../include/blargh.h"
+namespace blarghrad
+{
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "bspfile.h"
@@ -6,7 +9,6 @@
 #include "threads.h"
 #include "blarghrad.h"
 
-#include "../include/blargh.h"
 
 #if defined(_WIN32)
 #include <io.h>
@@ -3453,4 +3455,4 @@ int exec_blarghrad(BlarghData data)
     printf("%5.0f seconds elapsed\n", (float)elapsed);
     return 0;
 }
-
+}

@@ -3,7 +3,6 @@
 #include "blargh.h"
 #include "qbspi.h"
 #include "qvisi.h"
-#include <thread>
 
 namespace Q2Compilers
 {
@@ -20,6 +19,7 @@ namespace Q2Compilers
 		_gui = new MuGui(Renderer::GetTextWidth, props.width, props.height, props.title);
 		_config = new Config();
 		_compilerData = new CompilerData();
+		_compiler = new	Compiler();
 
 		//get settings from config
 		_guiData.mapName = _config->GetCurrentData()->map_path;
@@ -62,25 +62,6 @@ namespace Q2Compilers
 	{
 		GetProfileNames(_guiData.profileFiles);
 
-		/*BlarghData bdata;
-		bdata.bspName = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b1.bsp";
-		bdata.gamedir = "H:\\Q2PRO\\baseq2";
-		bdata.moddir = "H:\\Q2PRO\\jumptest";
-
-		std::thread blargh(exec_blarghrad, bdata);*/
-
-		/*QbspData qbspData;
-		qbspData.mapPath = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b4.map";
-		qbspData.gamedir = "H:\\Q2PRO\\baseq2";
-		qbspData.moddir = "H:\\Q2PRO\\jumptest";
-
-		std::thread qbsp(exec_qbsp, qbspData);*/
-
-		/*QvisData qvisData;
-		qvisData.mapPath = "G:\\Programy\\BSP97\\Quake2\\maps\\mako9b4.bsp";
-
-		std::thread qvis(exec_qvis, qvisData);*/
-
 		//main loop
 		while (!_window->WindowShouldClose())
 		{
@@ -95,10 +76,12 @@ namespace Q2Compilers
 			ProcessGuiData();
 
 			_window->OnUpdate();
+
+			if (_guiData.isCompiling)
+			{
+				_guiData.isCompiling = _compiler->Update();
+			}
 		}
-		//blargh.join();
-		//qbsp.join();
-		//qvis.join();
 	}
 
 	void Application::PushEvent(std::shared_ptr<Event> event)
@@ -192,5 +175,6 @@ namespace Q2Compilers
 		}
 
 		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
+		_guiData.isCompiling = _compiler->Compile(_guiData.data, mapName);
 	}
 }

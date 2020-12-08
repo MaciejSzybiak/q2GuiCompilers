@@ -3,7 +3,8 @@
 #include <windows.h>
 #include <crtdbg.h>
 #include <exception>
-
+namespace qvisn
+{
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #undef THIS_FILE
@@ -127,7 +128,7 @@ Error
 For abnormal program terminations in console apps
 =================
 */
-void Error(const char* error, ...)
+void Error(char* error, ...)
 {
 	va_list argptr;
 
@@ -1159,5 +1160,4 @@ void QCopyFile (char *from, char *to)
 	SaveFile (to, buffer, length);
 	free (buffer);
 }
-
-
+}

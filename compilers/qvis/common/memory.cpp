@@ -6,53 +6,54 @@
 #include <malloc.h>
 
 #define MEG 1048576
+namespace qvisn
+{
+    static long cnt = 0;
+    static long chunk = 0;
+    static long total = 0;
+    static long cur = 0;
+    static long peak = 0;
+    static long next = MEG;
 
-static long cnt = 0;
-static long chunk = 0;
-static long total = 0;
-static long cur = 0;
-static long peak = 0;
-static long next = MEG;
-
-void *GetMemory(long size)
+    void* GetMemory(long size)
     {
-    cnt++;
+        cnt++;
 
-    if(size > chunk)
-        chunk = size;
+        if (size > chunk)
+            chunk = size;
 
-    cur += size;
-    total += size;
+        cur += size;
+        total += size;
 
-    if(peak < cur)
-        peak = cur;
+        if (peak < cur)
+            peak = cur;
 
-    if(next <= peak)
+        if (next <= peak)
         {
-        printf("\n%d Megs currently\n", peak / MEG);
+            printf("\n%d Megs currently\n", peak / MEG);
 
-        next += MEG;
+            next += MEG;
         }
 
-    return malloc(size);
+        return malloc(size);
     }
 
-void FreeMemory(void *p)
+    void FreeMemory(void* p)
     {
-    cur -= _msize(p);
+        cur -= _msize(p);
 
-    free(p);
+        free(p);
     }
 
-void FinalReport()
+    void FinalReport()
     {
-    printf("%15ld Chunks.\n", cnt);
-    printf("%15ld Biggest chunk.\n", chunk);
-    printf("%15ld Average chunk.\n", total / cnt);
-    printf("%15ld Total memory.\n", total);
-    printf("%15ld Peak memory.\n", peak);
+        printf("%15ld Chunks.\n", cnt);
+        printf("%15ld Biggest chunk.\n", chunk);
+        printf("%15ld Average chunk.\n", total / cnt);
+        printf("%15ld Total memory.\n", total);
+        printf("%15ld Peak memory.\n", peak);
 
-    getchar();
+        getchar();
     }
-
+}
 #endif

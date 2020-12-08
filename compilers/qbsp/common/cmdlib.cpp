@@ -127,7 +127,7 @@ Error
 For abnormal program terminations in console apps
 =================
 */
-void Error(const char* error, ...)
+void Error(char* error, ...)
 {
 	va_list argptr;
 

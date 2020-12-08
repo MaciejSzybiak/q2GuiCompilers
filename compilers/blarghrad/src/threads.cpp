@@ -20,198 +20,207 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 ===========================================================================
 */
 #include "pch.h"
+namespace blarghrad
+{
 #include "cmdlib.h"
 #include "threads.h"
 
 #define	MAX_THREADS	64
 
-int		dispatch;
-int		workcount;
-int		oldf;
-qboolean		pacifier;
+	int		dispatch;
+	int		workcount;
+	int		oldf;
+	qboolean		pacifier;
 
-qboolean	threaded;
+	qboolean	threaded;
 
-/*
-=============
-GetThreadWork
+	/*
+	=============
+	GetThreadWork
 
-=============
-*/
-int	GetThreadWork (void)
-{
-	int	r;
-	int	f;
-
-    std::lock_guard<std::mutex> lock(threadMutex);
-
-	if (dispatch == workcount)
+	=============
+	*/
+	int	GetThreadWork(void)
 	{
-		return -1;
+		int	r;
+		int	f;
+
+		std::lock_guard<std::mutex> lock(threadMutex);
+
+		if (dispatch == workcount)
+		{
+			return -1;
+		}
+
+		f = ((dispatch * 5 + 5) * 8) / workcount;
+		r = dispatch;
+		while (f - 1U != oldf)
+		{
+			oldf++;
+			if (pacifier == 0)
+				continue;
+
+			/*if (f != oldf)
+			{
+				oldf = f;
+				if (pacifier)
+					printf("%i...", f);
+			}*/
+
+			if ((oldf % 4) == 0)
+			{
+				dispatch = r;
+				printf("%i", (int)(oldf + ((int)oldf >> 0x1f & 3U)) >> 2); // TODO fix expr
+				fflush(stdout);
+				r = dispatch;
+			}
+			else
+			{
+				dispatch = r;
+				printf(".");
+				fflush(stdout);
+				r = dispatch;
+			}
+		}
+
+		dispatch++;
+
+		return r;
 	}
 
-    f = ((dispatch * 5 + 5) * 8) / workcount;
-	r = dispatch;
-    while (f - 1U != oldf) {
-        oldf++;
-        if (pacifier == 0)
-            continue;
 
-        /*if (f != oldf)
-        {
-            oldf = f;
-            if (pacifier)
-                printf("%i...", f);
-        }*/
+	void (*workfunction) (int);
 
-        if ((oldf % 4) == 0) {
-            dispatch = r;
-            printf("%i", (int)(oldf + ((int)oldf >> 0x1f & 3U)) >> 2); // TODO fix expr
-            fflush(stdout);
-            r = dispatch;
-        }
-        else {
-            dispatch = r;
-            printf(".");
-            fflush(stdout);
-            r = dispatch;
-        }
-    }
-
-	dispatch++;
-
-	return r;
-}
-
-
-void (*workfunction) (int);
-
-void ThreadWorkerFunction (int threadnum)
-{
-	int		work;
-
-	while (1)
+	void ThreadWorkerFunction(int threadnum)
 	{
-		work = GetThreadWork ();
-		if (work == -1)
-			break;
-//printf ("thread %i, work %i\n", threadnum, work);
-		workfunction(work);
-	}
-}
+		int		work;
 
-void RunThreadsOnIndividual (int workcnt, qboolean showpacifier, void(*func)(int))
-{
-	if (numthreads == -1)
-		ThreadSetDefault ();
-	workfunction = func;
-	RunThreadsOn (workcnt, showpacifier, ThreadWorkerFunction);
-}
+		while (1)
+		{
+			work = GetThreadWork();
+			if (work == -1)
+				break;
+			//printf ("thread %i, work %i\n", threadnum, work);
+			workfunction(work);
+		}
+	}
+
+	void RunThreadsOnIndividual(int workcnt, qboolean showpacifier, void(*func)(int))
+	{
+		if (numthreads == -1)
+			ThreadSetDefault();
+		workfunction = func;
+		RunThreadsOn(workcnt, showpacifier, ThreadWorkerFunction);
+	}
 
 #define USED
 
-int		numthreads = -1;
-std::mutex threadMutex;
+	int		numthreads = -1;
+	std::mutex threadMutex;
 
-void ThreadSetDefault (void)
-{
-	if (numthreads == -1)	// not set manually
+	void ThreadSetDefault(void)
 	{
-		numthreads = (int)std::thread::hardware_concurrency();
-		if (numthreads < 1 || numthreads > 32)
-			numthreads = 1;
-	}
-
-	qprintf ("%i threads\n", numthreads);
-}
-
-/*
-=============
-RunThreadsOn
-=============
-*/
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
-{
-	int		i;
-	int		start, end;
-
-    if (numthreads == -1) {
-        ThreadSetDefault();
-    }
-
-    workfunction = func;
-	start = I_FloatTime ();
-	dispatch = 0;
-	workcount = workcnt;
-	oldf = -1;
-	pacifier = showpacifier;
-
-	//
-	// run threads in parallel
-	//
-	if (numthreads == 1)
-	{	// use same thread
-        ThreadWorkerFunction(0); // func(0);
-	}
-	else
-    {
-	    threaded = true;
-        std::vector<std::thread> threads;
-		for (i=0 ; i<numthreads ; i++) {
-            threads.emplace_back(std::thread(ThreadWorkerFunction, i));
+		if (numthreads == -1)	// not set manually
+		{
+			numthreads = (int)std::thread::hardware_concurrency();
+			if (numthreads < 1 || numthreads > 32)
+				numthreads = 1;
 		}
 
-        for (auto& t : threads) {
-            t.join();
-        }
-	    threaded = false;
+		qprintf("%i threads\n", numthreads);
 	}
 
-	end = I_FloatTime ();
-	if (pacifier)
-		printf (" (%i)\n", end-start);
-}
+	/*
+	=============
+	RunThreadsOn
+	=============
+	*/
+	void RunThreadsOn(int workcnt, qboolean showpacifier, void(*func)(int))
+	{
+		int		i;
+		int		start, end;
+
+		if (numthreads == -1)
+		{
+			ThreadSetDefault();
+		}
+
+		workfunction = func;
+		start = I_FloatTime();
+		dispatch = 0;
+		workcount = workcnt;
+		oldf = -1;
+		pacifier = showpacifier;
+
+		//
+		// run threads in parallel
+		//
+		if (numthreads == 1)
+		{	// use same thread
+			ThreadWorkerFunction(0); // func(0);
+		}
+		else
+		{
+			threaded = true;
+			std::vector<std::thread> threads;
+			for (i = 0; i < numthreads; i++)
+			{
+				threads.emplace_back(std::thread(ThreadWorkerFunction, i));
+			}
+
+			for (auto& t : threads)
+			{
+				t.join();
+			}
+			threaded = false;
+		}
+
+		end = I_FloatTime();
+		if (pacifier)
+			printf(" (%i)\n", end - start);
+	}
 
 
-/*
-=======================================================================
+	/*
+	=======================================================================
 
-  SINGLE THREAD
+	  SINGLE THREAD
 
-=======================================================================
-*/
+	=======================================================================
+	*/
 
 #ifndef USED
 
-void ThreadSetDefault (void)
-{
-	numthreads = 1;
-}
+	void ThreadSetDefault(void)
+	{
+		numthreads = 1;
+	}
 
-/*
-=============
-RunThreadsOn
-=============
-*/
-void RunThreadsOn (int workcnt, qboolean showpacifier, void(*func)(int))
-{
-	int		i;
-	int		start, end;
+	/*
+	=============
+	RunThreadsOn
+	=============
+	*/
+	void RunThreadsOn(int workcnt, qboolean showpacifier, void(*func)(int))
+	{
+		int		i;
+		int		start, end;
 
-	dispatch = 0;
-	workcount = workcnt;
-	oldf = -1;
-	pacifier = showpacifier;
-	start = I_FloatTime ();
+		dispatch = 0;
+		workcount = workcnt;
+		oldf = -1;
+		pacifier = showpacifier;
+		start = I_FloatTime();
 #ifdef NeXT
-	if (pacifier)
-		setbuf (stdout, NULL);
+		if (pacifier)
+			setbuf(stdout, NULL);
 #endif
-	func(0);
+		func(0);
 
-	end = I_FloatTime ();
-	if (pacifier)
-		printf (" (%i)\n", end-start);
+		end = I_FloatTime();
+		if (pacifier)
+			printf(" (%i)\n", end - start);
+	}
+
+#endif
 }
-
-#endif

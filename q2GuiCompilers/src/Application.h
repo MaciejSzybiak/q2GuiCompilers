@@ -5,6 +5,7 @@
 #include "data/CompilerData.h"
 #include "data/Config.h"
 #include "ArgParser.h"
+#include "compiler/Compiler.h"
 
 namespace Q2Compilers
 {
@@ -23,6 +24,7 @@ namespace Q2Compilers
 		CompilerData* _compilerData;
 		Config* _config;
 		MuGuiData _guiData;
+		Compiler* _compiler;
 		ArgOptions args;
 
 		static std::queue<std::shared_ptr<Event>> _events;

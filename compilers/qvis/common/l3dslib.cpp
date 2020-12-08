@@ -4,6 +4,8 @@
 //
 
 #include <stdio.h>
+namespace qvisn
+{
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "trilib.h"
@@ -18,263 +20,266 @@
 
 #define MAXVERTS	2000
 
-typedef struct {
-	int	v[4];
-} tri;
-
-float	fverts[MAXVERTS][3];
-tri		tris[MAXTRIANGLES];
-
-int	bytesread, level, numtris, totaltris;
-int	vertsfound, trisfound;
-
-triangle_t	*ptri;
-
-
-// Alias stores triangles as 3 explicit vertices in .tri files, so even though we
-// start out with a vertex pool and vertex indices for triangles, we have to convert
-// to raw, explicit triangles
-void StoreAliasTriangles (void)
-{
-	int		i, j, k;
-
-	if ((totaltris + numtris) > MAXTRIANGLES)
-		Error ("Error: Too many triangles");
-
-	for (i=0; i<numtris ; i++)
+	typedef struct
 	{
-		for (j=0 ; j<3 ; j++)
+		int	v[4];
+	} tri;
+
+	float	fverts[MAXVERTS][3];
+	tri		tris[MAXTRIANGLES];
+
+	int	bytesread, level, numtris, totaltris;
+	int	vertsfound, trisfound;
+
+	triangle_t* ptri;
+
+
+	// Alias stores triangles as 3 explicit vertices in .tri files, so even though we
+	// start out with a vertex pool and vertex indices for triangles, we have to convert
+	// to raw, explicit triangles
+	void StoreAliasTriangles(void)
+	{
+		int		i, j, k;
+
+		if ((totaltris + numtris) > MAXTRIANGLES)
+			Error("Error: Too many triangles");
+
+		for (i = 0; i < numtris; i++)
 		{
-			for (k=0 ; k<3 ; k++)
+			for (j = 0; j < 3; j++)
 			{
-				ptri[i+totaltris].verts[j][k] = fverts[tris[i].v[j]][k];
+				for (k = 0; k < 3; k++)
+				{
+					ptri[i + totaltris].verts[j][k] = fverts[tris[i].v[j]][k];
+				}
 			}
 		}
+
+		totaltris += numtris;
+		numtris = 0;
+		vertsfound = 0;
+		trisfound = 0;
 	}
-	
-	totaltris += numtris;
-	numtris = 0;
-	vertsfound = 0;
-	trisfound = 0;
-}
 
 
-int ParseVertexL (FILE *input)
-{
-	int				i, j, startbytesread, numverts;
-	unsigned short	tshort;
-
-	if (vertsfound)
-		Error ("Error: Multiple vertex chunks");
-
-	vertsfound = 1;
-	startbytesread = bytesread;
-
-	if (feof(input))
-		Error ("Error: unexpected end of file");
-
-	fread(&tshort, sizeof(tshort), 1, input);
-	bytesread += sizeof(tshort);
-	numverts = (int)tshort;
-
-	if (numverts > MAXVERTS)
-		Error ("Error: Too many vertices");
-
-	for (i=0 ; i<numverts ; i++)
+	int ParseVertexL(FILE* input)
 	{
-		for (j=0 ; j<3 ; j++)
-		{
-			if (feof(input))
-				Error ("Error: unexpected end of file");
+		int				i, j, startbytesread, numverts;
+		unsigned short	tshort;
 
-			fread(&fverts[i][j], sizeof(float), 1, input);
-			bytesread += sizeof(float);
+		if (vertsfound)
+			Error("Error: Multiple vertex chunks");
+
+		vertsfound = 1;
+		startbytesread = bytesread;
+
+		if (feof(input))
+			Error("Error: unexpected end of file");
+
+		fread(&tshort, sizeof(tshort), 1, input);
+		bytesread += sizeof(tshort);
+		numverts = (int)tshort;
+
+		if (numverts > MAXVERTS)
+			Error("Error: Too many vertices");
+
+		for (i = 0; i < numverts; i++)
+		{
+			for (j = 0; j < 3; j++)
+			{
+				if (feof(input))
+					Error("Error: unexpected end of file");
+
+				fread(&fverts[i][j], sizeof(float), 1, input);
+				bytesread += sizeof(float);
+			}
 		}
+
+		if (vertsfound && trisfound)
+			StoreAliasTriangles();
+
+		return bytesread - startbytesread;
 	}
 
-	if (vertsfound && trisfound)
-		StoreAliasTriangles ();
 
-	return bytesread - startbytesread;
-}
-
-
-int ParseFaceL1 (FILE *input)
-{
-
-	int				i, j, startbytesread;
-	unsigned short	tshort;
-
-	if (trisfound)
-		Error ("Error: Multiple face chunks");
-
-	trisfound = 1;
-	startbytesread = bytesread;
-
-	if (feof(input))
-		Error ("Error: unexpected end of file");
-
-	fread(&tshort, sizeof(tshort), 1, input);
-	bytesread += sizeof(tshort);
-	numtris = (int)tshort;
-
-	if (numtris > MAXTRIANGLES)
-		Error ("Error: Too many triangles");
-
-	for (i=0 ; i<numtris ; i++)
+	int ParseFaceL1(FILE* input)
 	{
-		for (j=0 ; j<4 ; j++)
-		{
-			if (feof(input))
-				Error ("Error: unexpected end of file");
 
-			fread(&tshort, sizeof(tshort), 1, input);
-			bytesread += sizeof(tshort);
-			tris[i].v[j] = (int)tshort;
+		int				i, j, startbytesread;
+		unsigned short	tshort;
+
+		if (trisfound)
+			Error("Error: Multiple face chunks");
+
+		trisfound = 1;
+		startbytesread = bytesread;
+
+		if (feof(input))
+			Error("Error: unexpected end of file");
+
+		fread(&tshort, sizeof(tshort), 1, input);
+		bytesread += sizeof(tshort);
+		numtris = (int)tshort;
+
+		if (numtris > MAXTRIANGLES)
+			Error("Error: Too many triangles");
+
+		for (i = 0; i < numtris; i++)
+		{
+			for (j = 0; j < 4; j++)
+			{
+				if (feof(input))
+					Error("Error: unexpected end of file");
+
+				fread(&tshort, sizeof(tshort), 1, input);
+				bytesread += sizeof(tshort);
+				tris[i].v[j] = (int)tshort;
+			}
 		}
+
+		if (vertsfound && trisfound)
+			StoreAliasTriangles();
+
+		return bytesread - startbytesread;
 	}
 
-	if (vertsfound && trisfound)
-		StoreAliasTriangles ();
 
-	return bytesread - startbytesread;
-}
-
-
-int ParseChunk (FILE *input)
-{
+	int ParseChunk(FILE* input)
+	{
 #define BLOCK_SIZE	4096
-	char			temp[BLOCK_SIZE];
-	unsigned short	type;
-	int				i, length, w, t, retval;
+		char			temp[BLOCK_SIZE];
+		unsigned short	type;
+		int				i, length, w, t, retval;
 
-	level++;
-	retval = 0;
+		level++;
+		retval = 0;
 
-// chunk type
-	if (feof(input))
-		Error ("Error: unexpected end of file");
+		// chunk type
+		if (feof(input))
+			Error("Error: unexpected end of file");
 
-	fread(&type, sizeof(type), 1, input);
-	bytesread += sizeof(type);
+		fread(&type, sizeof(type), 1, input);
+		bytesread += sizeof(type);
 
-// chunk length
-	if (feof(input))
-		Error ("Error: unexpected end of file");
+		// chunk length
+		if (feof(input))
+			Error("Error: unexpected end of file");
 
-	fread (&length, sizeof(length), 1, input);
-	bytesread += sizeof(length);
-	w = length - 6;
+		fread(&length, sizeof(length), 1, input);
+		bytesread += sizeof(length);
+		w = length - 6;
 
-// process chunk if we care about it, otherwise skip it
-	switch (type)
+		// process chunk if we care about it, otherwise skip it
+		switch (type)
+		{
+		case TRI_VERTEXL:
+			w -= ParseVertexL(input);
+			goto ParseSubchunk;
+
+		case TRI_FACEL1:
+			w -= ParseFaceL1(input);
+			goto ParseSubchunk;
+
+		case EDIT_OBJECT:
+			// read the name
+			i = 0;
+
+			do
+			{
+				if (feof(input))
+					Error("Error: unexpected end of file");
+
+				fread(&temp[i], 1, 1, input);
+				i++;
+				w--;
+				bytesread++;
+			} while (temp[i - 1]);
+
+		case MAIN3DS:
+		case OBJ_TRIMESH:
+		case EDIT3DS:
+			// parse through subchunks
+		ParseSubchunk:
+			while (w > 0)
+			{
+				w -= ParseChunk(input);
+			}
+
+			retval = length;
+			goto Done;
+
+		default:
+			// skip other chunks
+			while (w > 0)
+			{
+				t = w;
+
+				if (t > BLOCK_SIZE)
+					t = BLOCK_SIZE;
+
+				if (feof(input))
+					Error("Error: unexpected end of file");
+
+				fread(&temp, t, 1, input);
+				bytesread += t;
+
+				w -= t;
+			}
+
+			retval = length;
+			goto Done;
+		}
+
+	Done:
+		level--;
+		return retval;
+	}
+
+
+	void Load3DSTriangleList(char* filename, triangle_t** pptri, int* numtriangles)
 	{
-	case TRI_VERTEXL:
-		w -= ParseVertexL (input);
-		goto ParseSubchunk;
+		FILE* input;
+		short int	tshort;
 
-	case TRI_FACEL1:
-		w -= ParseFaceL1 (input);
-		goto ParseSubchunk;
+		bytesread = 0;
+		level = 0;
+		numtris = 0;
+		totaltris = 0;
+		vertsfound = 0;
+		trisfound = 0;
 
-	case EDIT_OBJECT:
-	// read the name
-		i = 0;
-
-		do
+		if ((input = fopen(filename, "rb")) == 0)
 		{
-			if (feof(input))
-				Error ("Error: unexpected end of file");
-
-			fread (&temp[i], 1, 1, input);
-			i++;
-			w--;
-			bytesread++;
-		} while (temp[i-1]);
-
-	case MAIN3DS:
-	case OBJ_TRIMESH:
-	case EDIT3DS:
-	// parse through subchunks
-ParseSubchunk:
-		while (w > 0)
-		{
-			w -= ParseChunk (input);
+			fprintf(stderr, "reader: could not open file '%s'\n", filename);
+			exit(0);
 		}
 
-		retval = length;
-		goto Done;
+		fread(&tshort, sizeof(tshort), 1, input);
 
-	default:
-	// skip other chunks
-		while (w > 0)
+		// should only be MAIN3DS, but some files seem to start with EDIT3DS, with
+		// no MAIN3DS
+		if ((tshort != MAIN3DS) && (tshort != EDIT3DS))
 		{
-			t = w;
-
-			if (t > BLOCK_SIZE)
-				t = BLOCK_SIZE;
-
-			if (feof(input))
-				Error ("Error: unexpected end of file");
-
-			fread (&temp, t, 1, input);
-			bytesread += t;
-
-			w -= t;
+			fprintf(stderr, "File is not a 3DS file.\n");
+			exit(0);
 		}
 
-		retval = length;
-		goto Done;
-	}
+		// back to top of file so we can parse the first chunk descriptor
+		fseek(input, 0, SEEK_SET);
 
-Done:
-	level--;
-	return retval;
+		ptri = (triangle_t*)malloc(MAXTRIANGLES * sizeof(triangle_t));
+
+		*pptri = ptri;
+
+		// parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT |
+		// OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks
+		ParseChunk(input);
+
+		if (vertsfound || trisfound)
+			Error("Incomplete triangle set");
+
+		*numtriangles = totaltris;
+
+		fclose(input);
+	}
 }
-
-
-void Load3DSTriangleList (char *filename, triangle_t **pptri, int *numtriangles)
-{
-	FILE        *input;
-	short int	tshort;
-
-	bytesread = 0;
-	level = 0;
-	numtris = 0;
-	totaltris = 0;
-	vertsfound = 0;
-	trisfound = 0;
-
-	if ((input = fopen(filename, "rb")) == 0) {
-		fprintf(stderr,"reader: could not open file '%s'\n", filename);
-		exit(0);
-	}
-
-	fread(&tshort, sizeof(tshort), 1, input);
-
-// should only be MAIN3DS, but some files seem to start with EDIT3DS, with
-// no MAIN3DS
-	if ((tshort != MAIN3DS) && (tshort != EDIT3DS)) {
-		fprintf(stderr,"File is not a 3DS file.\n");
-		exit(0);
-	}
-
-// back to top of file so we can parse the first chunk descriptor
-	fseek(input, 0, SEEK_SET);
-
-	ptri = (triangle_t*)malloc (MAXTRIANGLES * sizeof(triangle_t));
-
-	*pptri = ptri;
-
-// parse through looking for the relevant chunk tree (MAIN3DS | EDIT3DS | EDIT_OBJECT |
-// OBJ_TRIMESH | {TRI_VERTEXL, TRI_FACEL1}) and skipping other chunks
-	ParseChunk (input);
-
-	if (vertsfound || trisfound)
-		Error ("Incomplete triangle set");
-
-	*numtriangles = totaltris;
-
-	fclose (input);
-}
-
