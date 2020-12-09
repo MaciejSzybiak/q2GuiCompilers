@@ -202,17 +202,20 @@ void LoadPakdirs(void)
             fclose(f);
 
             if (tryGamedirOrModdir == 0) {
-                if (!gamedir_paks ||
-                    (iVar5 = Q_strcasecmp(filename.c_str(), gamedir_paks->pakfile), ppVar6 = gamedir_paks, 0 < iVar5))
+                if (!gamedir_paks || (iVar5 = Q_strcasecmp(filename.c_str(), gamedir_paks->pakfile), ppVar6 = gamedir_paks, 0 < iVar5))
                 {
                     newpak->nextpak = gamedir_paks;
                     gamedir_paks = newpak;
+                    continue;
                 }
-                else {
+                else 
+                {
                 LAB_0040c456:
-                    if (ppVar6) {
+                    if (ppVar6) 
+                    {
                         ppVar2 = ppVar6->nextpak;
-                        while ((ppVar2 && (iVar5 = Q_strcasecmp(filename.c_str(), (char *)ppVar2), iVar5 < 0))) {
+                        while ((ppVar2 && (iVar5 = Q_strcasecmp(filename.c_str(), (char *)ppVar2), iVar5 < 0))) 
+                        {
                             ppVar6 = ppVar6->nextpak;
                             ppVar2 = ppVar6->nextpak;
                         }
@@ -3313,7 +3316,78 @@ int exec_blarghrad(BlarghData data)
     CHK_DISABLE();
 #endif
 
-    const char* usage = ":)\n";
+    //clean structures and stuff
+    ambient = { 0, 0, 0 };
+    game = 0;
+    moddir[256];
+    szTempIn[32];
+    szTempOut[32];
+    numbounce = 8;
+    maxlight = 196.f;
+    lightscale = 1.f;
+    direct_scale = 0.4f;
+    entity_scale = 1.f;
+    subdiv = 64.f;
+    stopbleed = 1;
+    bmodlight = 1;
+    splotchfix = 1;
+    radorigin = 1;
+    bouncefix = 1;
+    brightsurf = 1;
+    invisfix = 1;
+    weightcurve = 1;
+    nudgefix = 1;
+    shadowfilter = 1;
+    saturation = 1.0f;
+    stylemin = 1.0f;
+    g_gamma = 1.0f;
+    iNonTransFaces = 1;
+    iTransFaces = 3;
+    chopsky = 0;
+    chopwarp = 0;
+    choplight = 0;
+    chopcurve = 0;
+    patch_cutoff = 0;
+    g_texscale = 0;
+
+    minlight = 0;
+    onlybounce = 0;
+    nocurve = 0;
+    onlyupdate = 0;
+    lightwarp = 0;
+    _nocolor_maybe_unweighted = 0;
+    dumppatches = 0;
+    extrasamples = 0;
+    gamedir_paks = nullptr;
+    moddir_paks = nullptr;
+
+    g_shadow_world = nullptr;
+    g_proj_textures = nullptr;
+
+    memset(g_shadow_faces, 0, sizeof(g_shadow_faces));
+    memset(face_patches, 0, sizeof(face_patches));
+    memset(face_entity, 0, sizeof(face_entity));
+    memset(face_offset, 0, sizeof(face_offset));
+    memset(patches, 0, sizeof(patches));
+
+    memset(texture_reflectivity, 0, sizeof(texture_reflectivity));
+    memset(directlights, 0, sizeof(directlights));
+    memset(radiosity, 0, sizeof(radiosity));
+    memset(illumination, 0, sizeof(illumination));
+    
+    memset(backplanes, 0, sizeof(backplanes));
+
+    facegroups = nullptr;
+    
+    memset(g_hashset_face, 0, sizeof(g_hashset_face));
+    memset(g_maybe_vertex_phong, 0, sizeof(g_maybe_vertex_phong));
+    memset(the_9_suns, 0, sizeof(the_9_suns));
+    memset(facelight, 0, sizeof(facelight));
+    memset(source, 0, sizeof(source));
+
+    fakeplanes = 0; //?
+    num_patches = 0;
+
 
     printf("----- ArghRad 3.00T9 by Tim Wright (Argh!) -----\n");
     printf("Modified from original source code by id Software\n\n");

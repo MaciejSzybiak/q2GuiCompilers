@@ -45,9 +45,6 @@ namespace Q2Compilers
 		void BuildCompilationQueue();
 		void SetPaths();
 		bool ValidatePaths();
-		//QbspData GetQbspData();
-		//QvisData GetQvisData();
-		//BlarghData GetBlarghData();
 
 		bool FileExists(std::string& filename);
 		bool DirectoryExists(std::string& directory);

@@ -106,7 +106,7 @@ namespace Q2Compilers
 	bool Compiler::Compile(CData* data, const std::string& mapPath)
 	{
 		compileData = *data;
-		path = mapPath;
+		path = std::string(mapPath.c_str());
 
 		if (!FileExists(path))
 		{
