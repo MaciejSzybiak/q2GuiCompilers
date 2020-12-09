@@ -167,6 +167,11 @@ namespace Q2Compilers
 
 	void Compiler::BuildCompilationQueue()
 	{
+		while (!tasks.empty())
+		{
+			tasks.pop();
+		}
+
 		//qbsp stage is mandatory
 		QbspData qbspData = GetQbspData(*this);
 		tasks.push([qbspData, this]()

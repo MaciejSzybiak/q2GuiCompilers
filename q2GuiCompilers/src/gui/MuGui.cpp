@@ -153,7 +153,7 @@ _context->text_height = TextHeight;
 			{
 				DrawVisPanel(data);
 			}
-			if (mu_header(_context, "Radiosity"))
+			if (mu_header(_context, "Radiosity stage"))
 			{
 				DrawQradPanel(data);
 			}
