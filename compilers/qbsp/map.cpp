@@ -970,6 +970,8 @@ void LoadMapFile (char *filename)
 
 	nummapbrushsides = 0;
 	num_entities = 0;
+	memset(planehash, 0, sizeof(planehash));
+	memset(entities, 0, sizeof(entities));
 	
 	while (ParseMapEntity ())
 	{
@@ -1019,7 +1021,7 @@ void TestExpandBrushes (void)
 	mapbrush_t	*brush;
 	vec_t	dist;
 
-	printf ("writing %s\n", name);
+	qprintf ("writing %s\n", name);
 	f = fopen (name, "wb");
 	if (!f)
 		Error ("Can't write %s\b", name);

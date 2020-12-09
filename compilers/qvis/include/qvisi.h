@@ -1,19 +1,19 @@
 #pragma once
 #include <string>
-namespace qvisn
-{
-	extern "C" {
-		struct QvisData
-		{
-			int threads = 0;
-			int fastvis = false;
-			int verbose = false;
-			int nosort = false;
-			int cullerror = false;
 
-			std::string mapPath;
-		};
+#ifdef QVIS_DLL
+#define QVISAPI extern "C" __declspec(dllexport)
+#endif
 
-		int exec_qvis(QvisData data);
-	}
+extern "C" {
+	struct QvisData
+	{
+		int threads = 0;
+		int fastvis = false;
+		int verbose = false;
+		int nosort = false;
+		int cullerror = false;
+
+		std::string mapPath;
+	};
 }

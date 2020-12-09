@@ -3,8 +3,7 @@
 #include <windows.h>
 #include <crtdbg.h>
 #include <exception>
-namespace qvisn
-{
+
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #undef THIS_FILE
@@ -1159,5 +1158,4 @@ void QCopyFile (char *from, char *to)
 	CreatePath (to);
 	SaveFile (to, buffer, length);
 	free (buffer);
-}
 }

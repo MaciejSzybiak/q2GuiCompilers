@@ -3,11 +3,10 @@
 #include <iostream>
 #include <stdio.h>
 #include <stdarg.h>
-namespace blarghrad
-{
+
 #define printf(x, ...) printf_hack(x, __VA_ARGS__)
     int printf_hack(const char* format, ...);
-}
+
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
@@ -18,10 +17,7 @@ namespace blarghrad
 #ifndef __BYTEBOOL__
 #define __BYTEBOOL__
 //typedef enum {} qboolean;
-namespace blarghrad
-{
-    typedef unsigned char byte;
-}
+typedef unsigned char byte;
 #endif
 
 #include <algorithm>
@@ -29,30 +25,28 @@ namespace blarghrad
 #include <vector>
 #include <thread>
 #include <mutex>
-namespace blarghrad
+
+class qboolean final
 {
-    class qboolean final
-    {
-    public:
-        qboolean() = default;
-        qboolean(const qboolean&) = default;
-        qboolean(bool b) { m_value = (int)b; }
-        qboolean(int i) { m_value = i; }
-        operator int() { return m_value; }
-    private:
-        int m_value;
-    };
-    static_assert(sizeof(qboolean) == 4, "");
-    typedef unsigned char byte;
+public:
+    qboolean() = default;
+    qboolean(const qboolean&) = default;
+    qboolean(bool b) { m_value = (int)b; }
+    qboolean(int i) { m_value = i; }
+    operator int() { return m_value; }
+private:
+    int m_value;
+};
+static_assert(sizeof(qboolean) == 4, "");
+typedef unsigned char byte;
 
-    struct vec3_t
+struct vec3_t
+{
+    union
     {
-        union
-        {
-            struct { float x, y, z; };
-            float data[3];
-        };
+        struct { float x, y, z; };
+        float data[3];
     };
+};
 
-    typedef float vec_t;
-}
+typedef float vec_t;

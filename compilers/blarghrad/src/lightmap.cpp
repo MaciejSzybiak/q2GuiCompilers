@@ -1,5 +1,4 @@
 #include "pch.h"
-namespace blarghrad{
 #include "bspfile.h"
 #include "cmdlib.h"
 #include "polylib.h"
@@ -1446,5 +1445,4 @@ void FinalLightFace(int facenum)
     if (numbounce > 0) {
         free(trian);
     }
-}
 }

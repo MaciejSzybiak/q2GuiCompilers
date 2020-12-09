@@ -363,44 +363,6 @@ LoadBSPFile
 void	LoadBSPFile (char *filename)
 {
 	int			i;
-	
-	nummodels = 0;
-	memset(dmodels, 0, sizeof(dmodels));
-	visdatasize = 0;
-	memset(dvisdata, 0, sizeof(dvisdata));
-	lightdatasize = 0;
-	memset(dlightdata, 0, sizeof(dlightdata));
-	entdatasize = 0;
-	memset(dentdata, 0, sizeof(dentdata));
-	numleafs = 0;
-	memset(dleafs, 0, sizeof(dleafs));
-	numplanes = 0;
-	memset(dplanes, 0, sizeof(dplanes));
-	numvertexes = 0;
-	memset(dvertexes, 0, sizeof(dvertexes));
-	numnodes = 0;
-	memset(dnodes, 0, sizeof(dnodes));
-	numtexinfo = 0;
-	memset(texinfo, 0, sizeof(texinfo));
-	numfaces = 0;
-	memset(dfaces, 0, sizeof(dfaces));
-	numedges = 0;
-	memset(dedges, 0, sizeof(dedges));
-	numleaffaces = 0;
-	memset(dleaffaces, 0, sizeof(dleaffaces));
-	numleafbrushes = 0;
-	memset(dleafbrushes, 0, sizeof(dleafbrushes));
-	numsurfedges = 0;
-	memset(dsurfedges, 0, sizeof(dsurfedges));
-	numbrushes = 0;
-	memset(dbrushes, 0, sizeof(dbrushes));
-	numbrushsides = 0;
-	memset(dbrushsides, 0, sizeof(dbrushsides));
-	numareas = 0;
-	memset(dareas, 0, sizeof(dareas));
-	numareaportals = 0;
-	memset(dareaportals, 0, sizeof(dareaportals));
-	memset(dpop, 0, sizeof(dpop));
 
 //
 // load the file header

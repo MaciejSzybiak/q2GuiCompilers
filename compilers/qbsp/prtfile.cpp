@@ -242,7 +242,7 @@ void WritePortalFile (tree_t *tree)
 	
 // write the file
 	sprintf (filename, "%s.prt", source);
-	printf ("writing %s\n", filename);
+	qprintf ("writing %s\n", filename);
 	pf = fopen (filename, "w");
 	if (!pf)
 		Error ("Error opening %s", filename);

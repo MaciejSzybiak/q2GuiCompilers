@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "../include/blargh.h"
-namespace blarghrad
-{
+
 #include "cmdlib.h"
 #include "mathlib.h"
 #include "bspfile.h"
@@ -3309,89 +3308,14 @@ void UpdateLightmaps(int) {
     NOT_IMPLEMENTED(__FUNCTION__);
 }
 
-int exec_blarghrad(BlarghData data)
+BLAPI int exec_blarghrad(BlarghData data)
 {
 #ifdef ENABLE_VERIFICATION
     InitVerification();
     CHK_DISABLE();
 #endif
 
-    //clean structures and stuff
-    ambient = { 0, 0, 0 };
-    game = 0;
-    moddir[256];
-    szTempIn[32];
-    szTempOut[32];
-    numbounce = 8;
-    maxlight = 196.f;
-    lightscale = 1.f;
-    direct_scale = 0.4f;
-    entity_scale = 1.f;
-    subdiv = 64.f;
-    stopbleed = 1;
-    bmodlight = 1;
-    splotchfix = 1;
-    radorigin = 1;
-    bouncefix = 1;
-    brightsurf = 1;
-    invisfix = 1;
-    weightcurve = 1;
-    nudgefix = 1;
-    shadowfilter = 1;
-    saturation = 1.0f;
-    stylemin = 1.0f;
-    g_gamma = 1.0f;
-    iNonTransFaces = 1;
-    iTransFaces = 3;
-    chopsky = 0;
-    chopwarp = 0;
-    choplight = 0;
-    chopcurve = 0;
-    patch_cutoff = 0;
-    g_texscale = 0;
-
-    minlight = 0;
-    onlybounce = 0;
-    nocurve = 0;
-    onlyupdate = 0;
-    lightwarp = 0;
-    _nocolor_maybe_unweighted = 0;
-    dumppatches = 0;
-    extrasamples = 0;
-    gamedir_paks = nullptr;
-    moddir_paks = nullptr;
-
-    g_shadow_world = nullptr;
-    g_proj_textures = nullptr;
-
-    memset(g_shadow_faces, 0, sizeof(g_shadow_faces));
-    memset(face_patches, 0, sizeof(face_patches));
-    memset(face_entity, 0, sizeof(face_entity));
-    memset(face_offset, 0, sizeof(face_offset));
-    memset(patches, 0, sizeof(patches));
-
-    memset(texture_reflectivity, 0, sizeof(texture_reflectivity));
-    memset(directlights, 0, sizeof(directlights));
-    memset(radiosity, 0, sizeof(radiosity));
-    memset(illumination, 0, sizeof(illumination));
-    
-    memset(backplanes, 0, sizeof(backplanes));
-
-    facegroups = nullptr;
-    
-    memset(g_hashset_face, 0, sizeof(g_hashset_face));
-    memset(g_maybe_vertex_phong, 0, sizeof(g_maybe_vertex_phong));
-    memset(the_9_suns, 0, sizeof(the_9_suns));
-    memset(facelight, 0, sizeof(facelight));
-    memset(source, 0, sizeof(source));
-
-    fakeplanes = 0; //?
-    num_patches = 0;
-
-
-    printf("----- ArghRad 3.00T9 by Tim Wright (Argh!) -----\n");
-    printf("Modified from original source code by id Software\n\n");
-    printf("----- Converted from blarghrad source to be a static library -----\n");
+    printf("--------- blarghrad - DLL ---------\n");
 
     //get settings from data struct
     dumppatches = data.dump;
@@ -3480,20 +3404,9 @@ int exec_blarghrad(BlarghData data)
 
     double start = I_FloatTime();
 
-    /*if (*gamedir == '\0') {
-        SetQdirFromPath_v2(argv[i]);
-    }*/
-    /*if (game == 0) {
-        game = 1;
-    }*/
-
-    //strcpy(source, SetQdirFromPath_v3(argv[i]));
-    //StripExtension(source);
-    //DefaultExtension(source, ".bsp");
     printf("----- Load BSP File -----\n");
 
     char bsp_filename[1036];
-    //sprintf(bsp_filename, "%s%s", szTempIn, source);
     sprintf(bsp_filename, "%s", data.bspName.c_str());
     printf("reading %s\n", bsp_filename);
     LoadBSPFile(bsp_filename);
@@ -3528,5 +3441,4 @@ int exec_blarghrad(BlarghData data)
     double elapsed = I_FloatTime() - start;
     printf("%5.0f seconds elapsed\n", (float)elapsed);
     return 0;
-}
 }

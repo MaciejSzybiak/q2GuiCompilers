@@ -383,7 +383,7 @@ void WriteBrushMap (char *name, bspbrush_t *list)
 	int		i;
 	winding_t	*w;
 
-	printf ("writing %s\n", name);
+	qprintf ("writing %s\n", name);
 	f = fopen (name, "wb");
 	if (!f)
 		Error ("Can't write %s\b", name);

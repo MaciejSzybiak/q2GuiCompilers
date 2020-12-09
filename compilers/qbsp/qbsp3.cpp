@@ -324,7 +324,7 @@ void ProcessModels (void)
 main
 ============
 */
-int exec_qbsp (QbspData data)
+QBSPAPI int exec_qbsp (QbspData data)
 {
 	int		n, full_help;
 	double		start, end;
@@ -332,13 +332,7 @@ int exec_qbsp (QbspData data)
     char		game_path[1024] = "";
     char *param, *param2;
 
-
-	printf ("----------- qbsp3 -----------\n");
-	printf ("original code by id Software\n");
-    printf ("Modified by Geoffrey DeWan\n");
-    printf ("Revision 1.09\n");
-    printf ("Converted to a static library\n");
-    printf ("-----------------------------\n");
+	printf ("----------- qbsp3 - DLL -----------\n");
 
     full_help = false;
 
@@ -370,7 +364,7 @@ int exec_qbsp (QbspData data)
 		strcpy(gamedir, game_path);
     }
     
-    printf("gamedir set to %s\n", gamedir);
+    qprintf("gamedir set to %s\n", gamedir);
     
 	strcpy(moddir, data.moddir.c_str());
     if(moddir[0] != 0)
@@ -383,7 +377,7 @@ int exec_qbsp (QbspData data)
 			moddir[n+1] = 0;
 		}
 
-		printf("moddir set to %s\n", moddir);
+		qprintf("moddir set to %s\n", moddir);
     }
     
 	char arr[1024];

@@ -1,6 +1,10 @@
 #pragma once
 #include <string>
 
+#ifdef QBSP_DLL
+#define QBSPAPI extern "C" __declspec(dllexport)
+#endif
+
 extern "C" {
 	struct QbspData
 	{
@@ -15,6 +19,4 @@ extern "C" {
 		std::string moddir;
 		std::string mapPath;
 	};
-
-	int exec_qbsp(QbspData data);
 }

@@ -6,6 +6,10 @@
 #include "qbspi.h"
 #include "qvisi.h"
 
+typedef int (*QbspFunc)(QbspData);
+typedef int (*QvisFunc)(QvisData);
+typedef int (*BlarghFunc)(BlarghData);
+
 namespace Q2Compilers
 {
 	static QbspData GetQbspData(Compiler& c)
@@ -28,9 +32,9 @@ namespace Q2Compilers
 		return d;
 	}
 
-	static qvisn::QvisData GetQvisData(Compiler& c)
+	static QvisData GetQvisData(Compiler& c)
 	{
-		qvisn::QvisData d;
+		QvisData d;
 
 		CData& compileData = c.GetCompileData();
 
@@ -45,9 +49,9 @@ namespace Q2Compilers
 		return d;
 	}
 
-	static blarghrad::BlarghData GetBlarghData(Compiler& c)
+	static BlarghData GetBlarghData(Compiler& c)
 	{
-		blarghrad::BlarghData d;
+		BlarghData d;
 
 		CData& compileData = c.GetCompileData();
 
@@ -179,7 +183,18 @@ namespace Q2Compilers
 			try
 			{
 				LOG_INFO("TASK: qbsp");
-				exec_qbsp(qbspData);
+				HINSTANCE handle = LoadLibraryA("compilers/qbsp.dll");
+				if (handle == nullptr)
+				{
+					throw std::exception("Failed to load qbsp.dll!");
+				}
+				QbspFunc func = (QbspFunc)GetProcAddress(handle, "exec_qbsp");
+				if (func == nullptr)
+				{
+					throw std::exception("Function \"exec_qbsp\" not found!");
+				}
+				func(qbspData);
+				FreeLibrary(handle);
 				allowNext = true;
 			}
 			catch (const std::exception& e)
@@ -191,13 +206,24 @@ namespace Q2Compilers
 		
 		if (compileData.enable_qvis)
 		{
-			qvisn::QvisData qvisData = GetQvisData(*this);
+			QvisData qvisData = GetQvisData(*this);
 			tasks.push([qvisData, this]()
 			{
 				try
 				{
-					LOG_INFO("TASK: qvis"); 
-					exec_qvis(qvisData);
+					LOG_INFO("TASK: qvis");
+					HINSTANCE handle = LoadLibraryA("compilers/qvis.dll");
+					if (handle == nullptr)
+					{
+						throw std::exception("Failed to load qvis.dll!");
+					}
+					QvisFunc func = (QvisFunc)GetProcAddress(handle, "exec_qvis");
+					if (func == nullptr)
+					{
+						throw std::exception("Function \"exec_qvis\" not found!");
+					}
+					func(qvisData);
+					FreeLibrary(handle);
 					allowNext = true;
 				}
 				catch (const std::exception& e)
@@ -210,13 +236,24 @@ namespace Q2Compilers
 
 		if (compileData.enable_qrad)
 		{
-			blarghrad::BlarghData blarghData = GetBlarghData(*this);
+			BlarghData blarghData = GetBlarghData(*this);
 			tasks.push([blarghData, this]()
 			{
 				try
 				{
 					LOG_INFO("TASK: blarghrad");
-					exec_blarghrad(blarghData);
+					HINSTANCE handle = LoadLibraryA("compilers/blarghrad.dll");
+					if (handle == nullptr)
+					{
+						throw std::exception("Failed to load blarghrad.dll!");
+					}
+					BlarghFunc func = (BlarghFunc)GetProcAddress(handle, "exec_blarghrad");
+					if (func == nullptr)
+					{
+						throw std::exception("Function \"exec_blarghrad\" not found!");
+					}
+					func(blarghData);
+					FreeLibrary(handle);
 					allowNext = true;
 				}
 				catch (const std::exception& e)

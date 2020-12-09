@@ -516,7 +516,7 @@ void EndBSPFile (void)
 
 	// write the map
 	sprintf (path, "%s.bsp", source);
-	printf ("Writing %s\n", path);
+	qprintf ("Writing %s\n", path);
 	WriteBSPFile (path);
 }
 

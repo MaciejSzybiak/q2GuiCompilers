@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 // cmdlib.c
 
 #include "pch.h"
-namespace blarghrad{
 #include "cmdlib.h"
 #include "qfiles.h"
 #include "polylib.h"
@@ -1143,5 +1142,4 @@ void QCopyFile(const char *from, const char *to)
     CreatePath(to);
     SaveFile(to, buffer, length);
     free(buffer);
-}
 }
