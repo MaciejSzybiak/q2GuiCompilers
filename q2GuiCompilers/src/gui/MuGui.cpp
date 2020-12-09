@@ -164,16 +164,12 @@ _context->text_height = TextHeight;
 
 			//compile button
 			mu_layout_row(_context, 1, widths, -1);
-			if (mu_button(_context, data->isCompiling ? "Cancel" : "Compile!"))
+			if (mu_button(_context, data->isCompiling ? "Compiling..." : "Compile!"))
 			{
 				if (!data->isCompiling)
 				{
 					data->compile = true;
 					data->isCompiling = true;
-				}
-				else
-				{
-					data->isCompiling = false; //abort
 				}
 			}
 
