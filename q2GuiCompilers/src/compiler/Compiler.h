@@ -39,6 +39,7 @@ namespace Q2Compilers
 		std::string copyTarget;
 		std::queue<std::function<void()>> tasks;
 		std::thread *currentTask;
+		std::string execCommandLine;
 		bool allowNext = false;
 		bool failed = false;
 

@@ -287,7 +287,40 @@ namespace Q2Compilers
 		{
 			tasks.push([this]()
 			{
-				LOG_INFO("Execute not implemented yet.");
+				LOG_INFO("Executing %s", executable.c_str());
+
+				STARTUPINFOA sInfo;
+				PROCESS_INFORMATION pInfo;
+
+				ZeroMemory(&sInfo, sizeof(sInfo));
+				sInfo.cb = sizeof(sInfo);
+				ZeroMemory(&pInfo, sizeof(pInfo));
+
+				char args[2048];
+				strcpy(args, executable.c_str());
+				strcat(args, " ");
+				strcat(args, execCommandLine.c_str());
+
+				BOOL result = CreateProcessA(executable.c_str(), args, NULL, NULL, false, 0, NULL, NULL, &sInfo, &pInfo);
+
+				if (!result)
+				{
+					failed = true;
+					CloseHandle(pInfo.hProcess);
+					CloseHandle(pInfo.hThread);
+					return;
+				}
+
+				LOG_INFO("Process %lu started", pInfo.dwProcessId);
+
+				WaitForSingleObject(pInfo.hProcess, INFINITE);
+
+				CloseHandle(pInfo.hProcess);
+				CloseHandle(pInfo.hThread);
+
+				LOG_INFO("Process ended");
+
+				allowNext = true;
 			});
 		}
 	}
@@ -296,6 +329,10 @@ namespace Q2Compilers
 	{
 		//map path
 		std::replace(path.begin(), path.end(), '/', '\\');
+
+		//map name
+		size_t maplast = path.find_last_of("\\") + 1;
+		std::string mapname = path.substr(maplast, path.length() - 4 - maplast);
 
 		//bsp path
 		pathBsp = path.substr(0, path.length() - 4) + ".bsp";
@@ -324,9 +361,26 @@ namespace Q2Compilers
 		//gamedir
 		gamedir = s;
 		gamedir = gamedir.append(std::string("baseq2\\"));
+
 		//executable
-		executable = s;
-		executable = executable.append(std::string(compileData.q2_executable.c_str()));
+		if (compileData.enable_exec)
+		{
+			executable = s;
+			executable = executable.append(std::string(compileData.q2_executable.c_str()));
+
+			//args
+			execCommandLine = "";
+			if (useModdir)
+			{
+				execCommandLine = execCommandLine.append("+set game ");
+				execCommandLine = execCommandLine.append(compileData.q2_modname.c_str());
+				execCommandLine = execCommandLine.append(" ");
+			}
+			execCommandLine = execCommandLine.append("+map ");
+			execCommandLine = execCommandLine.append(mapname);
+			execCommandLine = execCommandLine.append(" ");
+			execCommandLine = execCommandLine.append(compileData.q2_args.c_str());
+		}
 	
 		//copy target
 		size_t start = path.find_last_of("\\") + 1;
