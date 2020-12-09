@@ -110,7 +110,21 @@ namespace Q2Compilers
 	bool Compiler::Compile(CData* data, const std::string& mapPath)
 	{
 		compileData = *data;
-		path = std::string(mapPath.c_str());
+		if (!compileData.enable_copy)
+		{
+			compileData.enable_exec = false;
+		}
+
+		path = "";
+		if (mapPath[1] != ':')
+		{
+			path = path.append(std::filesystem::current_path().string()).append("\\");
+		}
+		path = path.append(std::string(mapPath.c_str()));
+		if (!path.ends_with(".map"))
+		{
+			path = path.append(".map");
+		}
 
 		if (!FileExists(path))
 		{
