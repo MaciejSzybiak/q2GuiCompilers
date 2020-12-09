@@ -12,7 +12,7 @@ namespace Q2Compilers
 	{
 		Log::Init();
 
-		WindowProps props = WindowProps(name, 400, 720);
+		WindowProps props = WindowProps(name, 500, 720);
 
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());

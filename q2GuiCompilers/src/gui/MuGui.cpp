@@ -130,7 +130,7 @@ _context->text_height = TextHeight;
 		if (mu_begin_window_ex(_context, _name.c_str(), mu_rect(0, 0, 0, 0),
 			MU_OPT_NORESIZE))
 		{
-			mu_layout_row(_context, 1, widths, -200);
+			mu_layout_row(_context, 1, widths, -300);
 			mu_begin_panel(_context, "Main panel");
 
 			if (mu_header(_context, "Profiles"))
