@@ -367,9 +367,17 @@ namespace Q2Compilers
 		else
 		{
 			useModdir = true;
-			moddir = s;
+			moddir = "";
+			if (compileData.q2_modname[1] != ':')
+			{
+				moddir = moddir.append(s);
+			}
 			moddir = moddir.append(std::string(compileData.q2_modname.c_str()));
-			moddir = moddir.append(std::string("\\"));
+			std::replace(moddir.begin(), moddir.end(), '/', '\\');
+			if (!moddir.ends_with("\\"))
+			{
+				moddir = moddir.append(std::string("\\"));
+			}
 		}
 
 		//gamedir
@@ -379,7 +387,11 @@ namespace Q2Compilers
 		//executable
 		if (compileData.enable_exec)
 		{
-			executable = s;
+			executable = "";
+			if (compileData.q2_executable[1] != ':')
+			{
+				executable = executable.append(s);
+			}
 			executable = executable.append(std::string(compileData.q2_executable.c_str()));
 
 			//args
