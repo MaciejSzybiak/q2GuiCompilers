@@ -386,11 +386,20 @@ _context->text_height = TextHeight;
 		mapStr.resize(128);
 		char* mapBuf = &mapStr[0];
 
-		const int l[] = { 100, -1 };
-		mu_layout_row(_context, 2, l, 0);
+		const int l[] = { 100, -30, -1 };
+		mu_layout_row(_context, 3, l, 0);
 
 		mu_label(_context, "Map file path");
 		mu_textbox(_context, mapBuf, (int)mapStr.capacity());
+		if (mu_button(_context, "..."))
+		{
+			const static char *filter = "Map files (.map)\0*.map\0\0";
+			static std::string out;
+			if (TryGetPathFromFileDialog(filter, out))
+			{
+				mapStr = out;
+			}
+		}
 	}
 
 	void MuGui::DrawGamePanel(MuGuiData* data)
@@ -495,5 +504,27 @@ _context->text_height = TextHeight;
 			}
 			mu_end_popup(_context);
 		}
+	}
+
+	bool MuGui::TryGetPathFromFileDialog(const char *filter, std::string& out)
+	{
+		OPENFILENAMEA ofn;
+		char fileName[MAX_PATH] = "";
+		ZeroMemory(&ofn, sizeof(ofn));
+
+		ofn.lStructSize = sizeof(OPENFILENAMEA);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFilter = filter;
+		ofn.lpstrFile = fileName;
+		ofn.nMaxFile = MAX_PATH;
+		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+		ofn.lpstrDefExt = "";
+		
+		if (GetOpenFileNameA(&ofn))
+		{
+			out = fileName;
+			return true;
+		}
+		return false;
 	}
 }

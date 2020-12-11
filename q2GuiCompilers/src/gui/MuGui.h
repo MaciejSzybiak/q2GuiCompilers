@@ -61,5 +61,7 @@ namespace Q2Compilers
 		void DrawSliderWithLabel(const char* label, int* value, float low, float high);
 		void DrawSliderWithLabel(const char* label, float* value, float low, float high);
 		int DrawIntSlider(int* value, float low, float high);
+
+		bool TryGetPathFromFileDialog(const char* filter, std::string& out);
 	};
 }
