@@ -27,10 +27,10 @@ namespace Q2Compilers
 			{ "argh_update"      , p.argh_update       },
 			{ "argh_threads"     , p.argh_threads      },
 			{ "argh_chop"        , p.argh_chop         },
-			{ "argh_chopsky"     , p.argh_chopsky      },
-			{ "argh_chopwarp"    , p.argh_chopwarp     },
-			{ "argh_choplight"   , p.argh_choplight    },
-			{ "argh_chopcurve"   , p.argh_chopcurve    },
+			//{ "argh_chopsky"     , p.argh_chopsky      },
+			//{ "argh_chopwarp"    , p.argh_chopwarp     },
+			//{ "argh_choplight"   , p.argh_choplight    },
+			//{ "argh_chopcurve"   , p.argh_chopcurve    },
 			{ "argh_scale"       , p.argh_scale        },
 			{ "argh_direct"      , p.argh_direct       },
 			{ "argh_entity"      , p.argh_entity       },
@@ -86,10 +86,10 @@ namespace Q2Compilers
 		j.at("argh_update"      ).get_to(p.argh_update);
 		j.at("argh_threads"     ).get_to(p.argh_threads);
 		j.at("argh_chop"        ).get_to(p.argh_chop);
-		j.at("argh_chopsky"     ).get_to(p.argh_chopsky);
-		j.at("argh_chopwarp"    ).get_to(p.argh_chopwarp);
-		j.at("argh_choplight"   ).get_to(p.argh_choplight);
-		j.at("argh_chopcurve"   ).get_to(p.argh_chopcurve);
+		//j.at("argh_chopsky"     ).get_to(p.argh_chopsky);
+		//j.at("argh_chopwarp"    ).get_to(p.argh_chopwarp);
+		//j.at("argh_choplight"   ).get_to(p.argh_choplight);
+		//j.at("argh_chopcurve"   ).get_to(p.argh_chopcurve);
 		j.at("argh_scale"       ).get_to(p.argh_scale);
 		j.at("argh_direct"      ).get_to(p.argh_direct);
 		j.at("argh_entity"      ).get_to(p.argh_entity);
@@ -150,6 +150,8 @@ namespace Q2Compilers
 
 			file << std::setw(4) << j << std::endl;
 			file.close();
+
+			LOG_TRACE("Saved profile %s", filename.c_str());
 		}
 	}
 

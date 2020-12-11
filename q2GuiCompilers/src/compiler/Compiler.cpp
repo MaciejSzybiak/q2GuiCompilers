@@ -62,10 +62,10 @@ namespace Q2Compilers
 		d.update = compileData.argh_update;
 		d.threads = compileData.argh_threads;
 		d.chop = compileData.argh_chop;
-		d.chopsky = compileData.argh_chopsky;
-		d.chopwarp = compileData.argh_chopwarp;
-		d.choplight = compileData.argh_choplight;
-		d.chopcurve = compileData.argh_chopcurve;
+		//d.chopsky = compileData.argh_chopsky;
+		//d.chopwarp = compileData.argh_chopwarp;
+		//d.choplight = compileData.argh_choplight;
+		//d.chopcurve = compileData.argh_chopcurve;
 		d.scale = compileData.argh_scale;
 		d.direct = compileData.argh_direct;
 		d.entity = compileData.argh_entity;

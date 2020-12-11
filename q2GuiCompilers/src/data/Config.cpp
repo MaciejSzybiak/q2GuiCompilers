@@ -49,6 +49,8 @@ namespace Q2Compilers
 			Serialize();
 			file << std::setw(4) << j << std::endl;
 			file.close();
+
+			LOG_TRACE("Saved configuration file.");
 		}
 	}
 

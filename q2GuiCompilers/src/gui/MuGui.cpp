@@ -289,15 +289,15 @@ _context->text_height = TextHeight;
 			DrawSliderWithLabel("Light bounces", &d->argh_bounce, 0, 12);
 			DrawSliderWithLabel("Threads", &d->argh_threads, 0, 8);
 
-			mu_layout_row(_context, 1, widths, 0);
-			mu_label(_context, "Chop exponents (2^n)");
-			mu_layout_row(_context, 2, l, 0);
+			//mu_layout_row(_context, 1, widths, 0);
+			//mu_label(_context, "Chop");
+			//mu_layout_row(_context, 2, l, 0);
 
-			DrawSliderWithLabel("Chop size", &d->argh_chop, 4, 10);
-			DrawSliderWithLabel("Chop sky size", &d->argh_chopsky, 4, 8);
-			DrawSliderWithLabel("Chop warp size", &d->argh_chopwarp, 4, 8);
-			DrawSliderWithLabel("Chop light size", &d->argh_choplight, 4, 8);
-			DrawSliderWithLabel("Chop phong size", &d->argh_chopcurve, 4, 8);
+			DrawSliderWithLabel("Chop size", &d->argh_chop, 8, 256);
+			//DrawSliderWithLabel("Chop sky size", &d->argh_chopsky, 4, 8);
+			//DrawSliderWithLabel("Chop warp size", &d->argh_chopwarp, 4, 8);
+			//DrawSliderWithLabel("Chop light size", &d->argh_choplight, 4, 8);
+			//DrawSliderWithLabel("Chop phong size", &d->argh_chopcurve, 4, 8);
 
 			mu_layout_row(_context, 1, widths, 0);
 			mu_label(_context, "Brightness and color");

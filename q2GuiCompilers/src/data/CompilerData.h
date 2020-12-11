@@ -31,11 +31,11 @@ namespace Q2Compilers
 		int   argh_extra = false;
 		int   argh_update = false;
 		int   argh_threads = 0;
-		int   argh_chop = 0;
-		int   argh_chopsky = 0;
-		int   argh_chopwarp = 0;
-		int   argh_choplight = 0;
-		int   argh_chopcurve = 0;
+		int   argh_chop = 128;
+		//int   argh_chopsky = 0;
+		//int   argh_chopwarp = 0;
+		//int   argh_choplight = 0;
+		//int   argh_chopcurve = 0;
 		float argh_scale = 1;
 		float argh_direct = 1;
 		float argh_entity = 1;

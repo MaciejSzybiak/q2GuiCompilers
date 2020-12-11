@@ -3324,11 +3324,11 @@ BLAPI int exec_blarghrad(BlarghData data)
     extrasamples = data.extra;
     onlyupdate = data.update;
     if (data.threads > 0) numthreads = data.threads;
-    if (data.chop > 0) subdiv = std::powf(2, data.chop);
-    if (data.chopsky > 0) chopsky = std::powf(2, data.chopsky);
-    if (data.chopwarp > 0) chopwarp = std::powf(2, data.chopwarp);
-    if (data.choplight > 0) choplight = std::powf(2, data.choplight);
-    if (data.chopcurve > 0) chopcurve = std::powf(2, data.chopcurve);
+    if (data.chop > 0) subdiv = data.chop;// std::powf(2, data.chop);
+    //if (data.chopsky > 0) chopsky = std::powf(2, data.chopsky);
+    //if (data.chopwarp > 0) chopwarp = std::powf(2, data.chopwarp);
+    //if (data.choplight > 0) choplight = std::powf(2, data.choplight);
+    //if (data.chopcurve > 0) chopcurve = std::powf(2, data.chopcurve);
     if (data.scale > 0) lightscale = data.scale;
     if (data.direct > 0) direct_scale = data.direct;
     if (data.entity > 0) entity_scale = data.entity;
@@ -3395,12 +3395,12 @@ BLAPI int exec_blarghrad(BlarghData data)
     if (subdiv > 256)
         subdiv = 256;
 
-    if (choplight == 0) {
-        choplight = subdiv;
-        chopsky = subdiv;
-        chopwarp = subdiv;
-        chopcurve = std::max(32.f, subdiv);
-    }
+    //if (choplight == 0) {
+    choplight = subdiv;
+    chopsky = subdiv;
+    chopwarp = subdiv;
+    chopcurve = std::max(32.f, subdiv);
+    //}
 
     double start = I_FloatTime();
 
