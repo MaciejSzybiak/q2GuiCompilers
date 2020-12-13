@@ -510,7 +510,7 @@ namespace Q2Compilers
 		ofn.lpstrFilter = filter;
 		ofn.lpstrFile = fileName;
 		ofn.nMaxFile = MAX_PATH;
-		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
 		ofn.lpstrDefExt = "";
 		
 		if (GetOpenFileNameA(&ofn))
