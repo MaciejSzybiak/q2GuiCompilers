@@ -19,7 +19,7 @@ namespace Q2Compilers
 		wcscpy_s(profilesDir, dataPath);
 		wcscat_s(profilesDir, L"profiles\\");
 
-		WindowProps props = WindowProps(name, 500, 720);
+		WindowProps props = WindowProps(name, 1000, 700);
 
 		_window = new GlWindow(props, Application::PushEvent);
 		_renderer = new Renderer(_window->GetGlfwWindow());

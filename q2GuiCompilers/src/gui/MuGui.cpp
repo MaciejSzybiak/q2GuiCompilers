@@ -126,17 +126,17 @@ namespace Q2Compilers
 		mu_begin(_context);
 		mu_Container* win = mu_get_container(_context, _name.c_str());
 		win->rect = mu_rect(WINDOW_BORDER, WINDOW_BORDER, _width - WINDOW_BORDER * 2, _height - WINDOW_BORDER * 2);
-		static int widths[] = { -1 };
+		static int widths[] = { _width / 2, -1 };
 
 		if (mu_begin_window_ex(_context, _name.c_str(), mu_rect(0, 0, 0, 0),
 			MU_OPT_NORESIZE))
 		{
-			mu_layout_row(_context, 1, widths, -300);
+			mu_layout_row(_context, 2, widths, -25);
 			mu_begin_panel(_context, "Main panel");
 
 			if (mu_header(_context, "Profiles"))
 			{
-				DrawProfilesPanel(data, win);
+				DrawProfilesPanel(data, mu_get_current_container(_context));
 			}
 			if (mu_header(_context, "Map"))
 			{
@@ -160,11 +160,10 @@ namespace Q2Compilers
 			}
 			mu_end_panel(_context);
 
-			mu_layout_row(_context, 1, widths, -25);
 			DrawConsolePanel();
 
 			//compile button
-			mu_layout_row(_context, 1, widths, -1);
+			mu_layout_row(_context, 1, &widths[1], -1);
 			if (mu_button(_context, data->isCompiling ? "Compiling..." : "Compile!"))
 			{
 				if (!data->isCompiling)
@@ -266,8 +265,8 @@ namespace Q2Compilers
 			mu_open_popup(_context, "Save profile");
 			data->updateProfileList = true;
 		}
-		DrawProfilePopup(true, data, window->content_size.x);
-		DrawProfilePopup(false, data, window->content_size.x);
+		DrawProfilePopup(true, data, window->body.w);
+		DrawProfilePopup(false, data, window->body.w);
 	}
 
 	void MuGui::DrawQradPanel(MuGuiData* data)
@@ -406,7 +405,12 @@ namespace Q2Compilers
 		if (d->enable_copy)
 		{
 			mu_checkbox(_context, "Enable game exec", &d->enable_exec);
-
+		}
+		else
+		{
+			mu_layout_next(_context);
+		}
+		{
 			mu_layout_row(_context, 3, k, 0);
 
 			mu_label(_context, "Directory");
@@ -428,7 +432,7 @@ namespace Q2Compilers
 					strcpy_s(data->data->q2_modname, out);
 				}
 			}
-			if (d->enable_exec)
+			if (d->enable_exec && d->enable_copy)
 			{
 				mu_label(_context, "Executable name");
 				mu_textbox(_context, data->data->q2_executable, C_PATH_LENGTH);
