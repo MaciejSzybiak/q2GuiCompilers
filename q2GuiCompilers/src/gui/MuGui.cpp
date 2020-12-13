@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "microui.h"
 #include "MuGui.h"
+#include <ShlObj.h>
 
 #define WINDOW_BORDER 2
 
@@ -38,10 +39,10 @@ namespace Q2Compilers
 		_context = new mu_Context();
 		mu_init(_context);
 
-_widthFunc = widthFunc;
+		_widthFunc = widthFunc;
 
-_context->text_width = TextWidth;
-_context->text_height = TextHeight;
+		_context->text_width = TextWidth;
+		_context->text_height = TextHeight;
 	}
 
 	void MuGui::HandleEvent(std::shared_ptr<Event> e)
@@ -380,7 +381,7 @@ _context->text_height = TextHeight;
 
 		mu_label(_context, "Map file path");
 		mu_textbox(_context, data->mapName, C_PATH_LENGTH);
-		if (mu_button(_context, "..."))
+		if (mu_button_ex2(_context, "...", "map...", 0, MU_OPT_ALIGNCENTER))
 		{
 			const static char *filter = "Map files (.map)\0*.map\0\0";
 			if (TryGetPathFromFileDialog(filter, out))
@@ -393,9 +394,11 @@ _context->text_height = TextHeight;
 	void MuGui::DrawGamePanel(MuGuiData* data)
 	{
 		CData* d = data->data;
+		static char out[C_PATH_LENGTH];
 
 		//layout
 		const  int l[] = { 100, -1 };
+		const int k[] = { 100, -30, -1 };
 		mu_layout_row(_context, 2, l, 0);
 
 		mu_checkbox(_context, "Enable copy", &d->enable_copy);
@@ -404,17 +407,39 @@ _context->text_height = TextHeight;
 		{
 			mu_checkbox(_context, "Enable game exec", &d->enable_exec);
 
+			mu_layout_row(_context, 3, k, 0);
+
 			mu_label(_context, "Directory");
 			mu_textbox(_context, data->data->q2_directory, C_PATH_LENGTH);
+			if (mu_button_ex2(_context, "...", "gamedir...", 0, MU_OPT_ALIGNCENTER))
+			{
+				if (TryGetPathFromFolderDialog(out))
+				{
+					strcpy_s(data->data->q2_directory, out);
+				}
+			}
 
 			mu_label(_context, "Mod directory");
 			mu_textbox(_context, data->data->q2_modname, C_PATH_LENGTH);
-
+			if (mu_button_ex2(_context, "...", "moddir...", 0, MU_OPT_ALIGNCENTER))
+			{
+				if (TryGetPathFromFolderDialog(out))
+				{
+					strcpy_s(data->data->q2_modname, out);
+				}
+			}
 			if (d->enable_exec)
 			{
 				mu_label(_context, "Executable name");
 				mu_textbox(_context, data->data->q2_executable, C_PATH_LENGTH);
-
+				if (mu_button_ex2(_context, "...", "exe...", 0, MU_OPT_ALIGNCENTER))
+				{
+					const static char* filter = "Executable (.exe)\0*.exe\0\0";
+					if (TryGetPathFromFileDialog(filter, out))
+					{
+						strcpy_s(data->data->q2_executable, out);
+					}
+				}
 				mu_label(_context, "Args");
 				mu_textbox(_context, data->data->q2_args, C_ARGS_LENGTH);
 			}
@@ -495,4 +520,26 @@ _context->text_height = TextHeight;
 		}
 		return false;
 	}
+
+	bool MuGui::TryGetPathFromFolderDialog(char* out)
+	{
+		BROWSEINFO info;
+		memset(&info, 0, sizeof(info));
+
+		LPITEMIDLIST item = SHBrowseForFolder(&info);
+
+		if (item != NULL)
+		{
+			if (SHGetPathFromIDList(item, out))
+			{
+				CoTaskMemFree(item);
+				return true;
+			}
+			CoTaskMemFree(item);
+		}
+
+		return false;
+	}
+
+
 }

@@ -65,5 +65,6 @@ namespace Q2Compilers
 		int DrawIntSlider(int* value, float low, float high);
 
 		bool TryGetPathFromFileDialog(const char* filter, char *out);
+		bool TryGetPathFromFolderDialog(char* out);
 	};
 }
