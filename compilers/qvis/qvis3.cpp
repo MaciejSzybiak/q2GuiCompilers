@@ -455,7 +455,7 @@ void CalcPHS(void)
 	byte	uncompressed[MAX_MAP_LEAFS / 8];
 	byte	compressed[MAX_MAP_LEAFS / 8];
 
-	printf("Building PHS...\n");
+	qprintf("Building PHS...\n");
 
 	count = 0;
 	for (i = 0; i < portalclusters; i++)
@@ -536,7 +536,7 @@ QVISAPI int exec_qvis(QvisData data)
 	DefaultExtension(source, ".bsp");
 
 	sprintf(name, "%s", source);
-	printf("reading %s\n", name);
+	qprintf("reading %s\n", name);
 	LoadBSPFile(name);
 	if (numnodes == 0 || numfaces == 0)
 		Error("Empty map");
@@ -545,7 +545,7 @@ QVISAPI int exec_qvis(QvisData data)
 	StripExtension(portalfile);
 	strcat(portalfile, ".prt");
 
-	printf("reading %s\n", portalfile);
+	qprintf("reading %s\n", portalfile);
 	LoadPortals(portalfile);
 
 	CalcVis();

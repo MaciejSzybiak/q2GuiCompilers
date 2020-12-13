@@ -3315,7 +3315,7 @@ BLAPI int exec_blarghrad(BlarghData data)
     CHK_DISABLE();
 #endif
 
-    printf("--------- blarghrad - DLL ---------\n");
+    printf("----- blarghrad - DLL -----\n");
 
     //get settings from data struct
     dumppatches = data.dump;
@@ -3324,11 +3324,7 @@ BLAPI int exec_blarghrad(BlarghData data)
     extrasamples = data.extra;
     onlyupdate = data.update;
     if (data.threads > 0) numthreads = data.threads;
-    if (data.chop > 0) subdiv = data.chop;// std::powf(2, data.chop);
-    //if (data.chopsky > 0) chopsky = std::powf(2, data.chopsky);
-    //if (data.chopwarp > 0) chopwarp = std::powf(2, data.chopwarp);
-    //if (data.choplight > 0) choplight = std::powf(2, data.choplight);
-    //if (data.chopcurve > 0) chopcurve = std::powf(2, data.chopcurve);
+    if (data.chop > 0) subdiv = data.chop;
     if (data.scale > 0) lightscale = data.scale;
     if (data.direct > 0) direct_scale = data.direct;
     if (data.entity > 0) entity_scale = data.entity;
@@ -3395,20 +3391,18 @@ BLAPI int exec_blarghrad(BlarghData data)
     if (subdiv > 1024)
         subdiv = 1024;
 
-    //if (choplight == 0) {
     choplight = subdiv;
     chopsky = subdiv;
     chopwarp = subdiv;
     chopcurve = std::max(32.f, subdiv);
-    //}
 
     double start = I_FloatTime();
 
-    printf("----- Load BSP File -----\n");
+    qprintf("----- Load BSP File -----\n");
 
     char bsp_filename[1036];
     sprintf(bsp_filename, "%s", data.bspName);
-    printf("reading %s\n", bsp_filename);
+    qprintf("reading %s\n", bsp_filename);
     LoadBSPFile(bsp_filename);
     ParseEntities();
     if (!onlyupdate) {
@@ -3422,7 +3416,7 @@ BLAPI int exec_blarghrad(BlarghData data)
             printf("no vis information, direct lighting only\n");
             numbounce = 0;
         }
-        printf("----- Light World -----\n");
+        qprintf("----- Light World -----\n");
         RadWorld();
     }
     else {
@@ -3433,11 +3427,11 @@ BLAPI int exec_blarghrad(BlarghData data)
         }
         RunThreadsOn(numfaces, true, UpdateLightmaps);
     }
-    printf("----- Save BSP File -----\n");
+    qprintf("----- Save BSP File -----\n");
     //sprintf(bsp_filename, "%s%s", szTempOut, source);
-    printf("writing %s\n", bsp_filename);
+    qprintf("writing %s\n", bsp_filename);
     WriteBSPFile(bsp_filename);
-    printf("----- Time -----\n");
+    qprintf("----- Time -----\n");
     double elapsed = I_FloatTime() - start;
     printf("%5.0f seconds elapsed\n", (float)elapsed);
     return 0;

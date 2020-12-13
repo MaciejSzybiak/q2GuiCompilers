@@ -175,7 +175,6 @@ namespace Q2Compilers
 		{
 			try
 			{
-				LOG_INFO("TASK: qbsp");
 				HINSTANCE handle = LoadLibraryA("compilers/qbsp.dll");
 				if (handle == nullptr)
 				{
@@ -204,7 +203,6 @@ namespace Q2Compilers
 			{
 				try
 				{
-					LOG_INFO("TASK: qvis");
 					HINSTANCE handle = LoadLibraryA("compilers/qvis.dll");
 					if (handle == nullptr)
 					{
@@ -234,7 +232,6 @@ namespace Q2Compilers
 			{
 				try
 				{
-					LOG_INFO("TASK: blarghrad");
 					HINSTANCE handle = LoadLibraryA("compilers/blarghrad.dll");
 					if (handle == nullptr)
 					{
@@ -263,7 +260,6 @@ namespace Q2Compilers
 			{
 				try
 				{
-					LOG_INFO("TASK: copy");
 					std::filesystem::copy_file(pathBsp, copyTarget, std::filesystem::copy_options::overwrite_existing);
 					allowNext = true;
 					LOG_INFO("Copied %s to %s", pathBsp, copyTarget);
@@ -303,8 +299,6 @@ namespace Q2Compilers
 					CloseHandle(pInfo.hThread);
 					return;
 				}
-
-				LOG_INFO("Process %lu started", pInfo.dwProcessId);
 
 				WaitForSingleObject(pInfo.hProcess, INFINITE);
 

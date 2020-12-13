@@ -62,7 +62,7 @@ void AddScriptToStack (char *filename)
 
 	size = LoadFile (script->filename, (void **)&script->buffer);
 
-	printf ("entering %s\n", script->filename);
+	qprintf ("entering %s\n", script->filename);
 
 	script->line = 1;
 
