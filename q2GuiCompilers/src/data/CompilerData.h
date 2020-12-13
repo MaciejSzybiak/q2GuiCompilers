@@ -1,9 +1,5 @@
 #pragma once
 
-#include "json.hpp"
-
-using json = nlohmann::json;
-
 namespace Q2Compilers
 {
 
@@ -32,10 +28,6 @@ namespace Q2Compilers
 		int   argh_update = false;
 		int   argh_threads = 0;
 		int   argh_chop = 128;
-		//int   argh_chopsky = 0;
-		//int   argh_chopwarp = 0;
-		//int   argh_choplight = 0;
-		//int   argh_chopcurve = 0;
 		float argh_scale = 1;
 		float argh_direct = 1;
 		float argh_entity = 1;
@@ -64,11 +56,10 @@ namespace Q2Compilers
 		int   enable_copy = true;
 		int   enable_exec = true;
 
-		std::string q2_directory = "";
-		std::string q2_modname = "baseq2";
-		std::string q2_executable = "q2pro.exe";
-		std::string q2_args = "";
-
+		char q2_directory[C_PATH_LENGTH];
+		char q2_modname[C_PATH_LENGTH];
+		char q2_executable[C_PATH_LENGTH];
+		char q2_args[C_ARGS_LENGTH];
 	};
 
 	class CompilerData
@@ -81,9 +72,6 @@ namespace Q2Compilers
 		}
 		void SaveFile(const std::string& filename);
 	private:
-		void Serialize();
-		void Deserialize();
-		json j;
 		CData data;
 	};
 }

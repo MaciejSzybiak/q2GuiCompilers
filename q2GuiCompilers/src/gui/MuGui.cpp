@@ -289,15 +289,7 @@ _context->text_height = TextHeight;
 			DrawSliderWithLabel("Light bounces", &d->argh_bounce, 0, 12);
 			DrawSliderWithLabel("Threads", &d->argh_threads, 0, 8);
 
-			//mu_layout_row(_context, 1, widths, 0);
-			//mu_label(_context, "Chop");
-			//mu_layout_row(_context, 2, l, 0);
-
 			DrawSliderWithLabel("Chop size", &d->argh_chop, 8, 256);
-			//DrawSliderWithLabel("Chop sky size", &d->argh_chopsky, 4, 8);
-			//DrawSliderWithLabel("Chop warp size", &d->argh_chopwarp, 4, 8);
-			//DrawSliderWithLabel("Chop light size", &d->argh_choplight, 4, 8);
-			//DrawSliderWithLabel("Chop phong size", &d->argh_chopcurve, 4, 8);
 
 			mu_layout_row(_context, 1, widths, 0);
 			mu_label(_context, "Brightness and color");
@@ -382,22 +374,18 @@ _context->text_height = TextHeight;
 
 	void MuGui::DrawMapPanel(MuGuiData* data)
 	{
-		std::string& mapStr = data->mapName;
-		mapStr.resize(128);
-		char* mapBuf = &mapStr[0];
-
 		const int l[] = { 100, -30, -1 };
+		static char out[C_PATH_LENGTH];
 		mu_layout_row(_context, 3, l, 0);
 
 		mu_label(_context, "Map file path");
-		mu_textbox(_context, mapBuf, (int)mapStr.capacity());
+		mu_textbox(_context, data->mapName, C_PATH_LENGTH);
 		if (mu_button(_context, "..."))
 		{
 			const static char *filter = "Map files (.map)\0*.map\0\0";
-			static std::string out;
 			if (TryGetPathFromFileDialog(filter, out))
 			{
-				mapStr = out;
+				strcpy_s(data->mapName, out);
 			}
 		}
 	}
@@ -416,39 +404,19 @@ _context->text_height = TextHeight;
 		{
 			mu_checkbox(_context, "Enable game exec", &d->enable_exec);
 
-			//directory string
-			std::string& dirStr = data->data->q2_directory;
-			dirStr.resize(128);
-			char *dirBuf = &dirStr[0];
-
 			mu_label(_context, "Directory");
-			mu_textbox(_context, dirBuf, (int)dirStr.capacity());
-
-			//modname
-			std::string& modName = data->data->q2_modname;
-			modName.resize(15);
-			char *modBuf = &modName[0];
+			mu_textbox(_context, data->data->q2_directory, C_PATH_LENGTH);
 
 			mu_label(_context, "Mod directory");
-			mu_textbox(_context, modBuf, (int)modName.capacity());
+			mu_textbox(_context, data->data->q2_modname, C_PATH_LENGTH);
 
 			if (d->enable_exec)
 			{
-				//executable
-				std::string& execStr = data->data->q2_executable;
-				execStr.resize(15);
-				char* execBuf = &execStr[0];
-
 				mu_label(_context, "Executable name");
-				mu_textbox(_context, execBuf, (int)execStr.capacity());
-			
-				//args
-				std::string& argsStr = data->data->q2_args;
-				argsStr.resize(256);
-				char* argsBuf = &argsStr[0];
+				mu_textbox(_context, data->data->q2_executable, C_PATH_LENGTH);
 
 				mu_label(_context, "Args");
-				mu_textbox(_context, argsBuf, (int)argsStr.capacity());
+				mu_textbox(_context, data->data->q2_args, C_ARGS_LENGTH);
 			}
 		}
 
@@ -456,7 +424,7 @@ _context->text_height = TextHeight;
 
 	void MuGui::DrawProfilePopup(bool isLoadPopup, MuGuiData *data, int windowWidth)
 	{
-		static char buf[64];
+		static char buf[C_PATH_LENGTH] = { 0 };
 		bool isPopup = isLoadPopup ? mu_begin_popup(_context, "Load profile") :
 			mu_begin_popup(_context, "Save profile");
 
@@ -471,7 +439,7 @@ _context->text_height = TextHeight;
 			{
 				if (mu_button(_context, value.c_str()))
 				{
-					data->profileName = value;
+					strcpy_s(data->profileName, value.c_str());
 					if (isLoadPopup)
 					{
 						data->loadProfile = true;
@@ -496,7 +464,7 @@ _context->text_height = TextHeight;
 					if (mu_button(_context, "Save new") || submitted)
 					{
 						data->saveProfile = true;
-						data->profileName = buf;
+						strcpy_s(data->profileName, buf);
 						mu_Container* ct2 = mu_get_current_container(_context);
 						ct2->open = 0;
 					}
@@ -506,10 +474,10 @@ _context->text_height = TextHeight;
 		}
 	}
 
-	bool MuGui::TryGetPathFromFileDialog(const char *filter, std::string& out)
+	bool MuGui::TryGetPathFromFileDialog(const char *filter, char *out)
 	{
 		OPENFILENAMEA ofn;
-		char fileName[MAX_PATH] = "";
+		char fileName[MAX_PATH] = { 0 };
 		ZeroMemory(&ofn, sizeof(ofn));
 
 		ofn.lStructSize = sizeof(OPENFILENAMEA);
@@ -522,7 +490,7 @@ _context->text_height = TextHeight;
 		
 		if (GetOpenFileNameA(&ofn))
 		{
-			out = fileName;
+			strcpy(out, fileName);
 			return true;
 		}
 		return false;

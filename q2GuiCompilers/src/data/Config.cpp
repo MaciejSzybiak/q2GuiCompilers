@@ -4,21 +4,6 @@
 
 namespace Q2Compilers
 {
-
-	void to_json(json& j, const ConfigData& p)
-	{
-		j = json{
-			{ "profile_last", p.profile_last},
-			{ "map_path", p.map_path},
-		};
-	}
-
-	void from_json(const json& j, ConfigData& p)
-	{
-		j.at("profile_last").get_to(p.profile_last);
-		j.at("map_path").get_to(p.map_path);
-	}
-
 	Config::Config()
 	{
 		if (!ReadConfig())
@@ -29,45 +14,41 @@ namespace Q2Compilers
 
 	bool Config::ReadConfig()
 	{
-		std::ifstream file("config.json");
+		wchar_t buf[C_PATH_LENGTH] = { 0 };
+		wcscpy_s(buf, dataPath);
+		CreateDirectoryW(buf, NULL);
+		wcscat_s(buf, L"appdata");
 
-		if (file.good())
+		FILE* f = _wfopen(buf, L"r");
+
+		if (f)
 		{
-			file >> j;
-			Deserialize();
+			fread(&data, sizeof(data), 1, f);
+			fclose(f);
+
+			LOG_TRACE("Opened configuration file");
+
 			return true;
 		}
+
 		return false;
 	}
 
 	void Config::WriteConfig()
 	{
-		std::ofstream file("config.json", std::ios_base::out | std::ios_base::trunc);
+		wchar_t buf[C_PATH_LENGTH] = { 0 };
+		wcscpy_s(buf, dataPath);
+		CreateDirectoryW(buf, NULL);
+		wcscat_s(buf, L"appdata");
 
-		if (file.good())
+		FILE* f = _wfopen(buf, L"w");
+
+		if (f)
 		{
-			Serialize();
-			file << std::setw(4) << j << std::endl;
-			file.close();
+			fwrite(&data, sizeof(data), 1, f);
+			fclose(f);
 
-			LOG_TRACE("Saved configuration file.");
-		}
-	}
-
-	void Config::Serialize()
-	{
-		j = data;
-	}
-
-	void Config::Deserialize()
-	{
-		try
-		{
-			data = j;
-		}
-		catch (nlohmann::detail::exception e)
-		{
-			LOG_WARNING("Config deserialization: %s", e.what());
+			LOG_TRACE("Saved configuration file");
 		}
 	}
 }

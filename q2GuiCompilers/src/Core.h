@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <filesystem>
 
-#define _WIN32_WINNT 0x0500
 #include <Windows.h>
 
 #define GLFW_INCLUDE_NONE
@@ -29,8 +28,15 @@
 #define ASSERT(test, ...) if(!(test)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); }
 #define ASSERT_N(test, ...) if((test)) { LOG_ERROR(__VA_ARGS__); __debugbreak(); }
 
+#define C_PATH_LENGTH MAX_PATH
+#define C_ARGS_LENGTH 512
+#define PROFILE_EXTENSION_STR ".m1"
+#define W_PROFILE_EXTENSION_STR L".m1"
+
 namespace Q2Compilers
 {
 	typedef void (*EventCallbackFunc)(std::shared_ptr<Event>);
 	typedef int (*TextWidthFunc)(const char* text, int len);
+
+	extern wchar_t dataPath[C_PATH_LENGTH];
 }

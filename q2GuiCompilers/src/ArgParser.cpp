@@ -26,7 +26,7 @@ namespace Q2Compilers
 			if (!strcmp(arg, "-instant"))
 			{
 				o.instant = true;
-				LOG_INFO("Instant copmpile = true");
+				LOG_INFO("Instant compile = true");
 			}
 			else if (!strcmp(arg, "-profile"))
 			{
@@ -35,13 +35,13 @@ namespace Q2Compilers
 					LOG_ERROR("Failed to parse -profile option.");
 					break;
 				}
-				o.profile = argv[index++];
-				LOG_INFO("Profile = %s", o.profile.c_str());
+				strcpy_s(o.profile, argv[index++]);
+				LOG_INFO("Profile = %s", o.profile);
 			}
 			else
 			{
-				o.mapName = arg;
-				LOG_INFO("Map = %s", o.mapName.c_str());
+				strcpy_s(o.mapName, argv[index++]);
+				LOG_INFO("Map = %s", o.mapName);
 			}
 		}
 

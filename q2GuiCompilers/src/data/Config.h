@@ -1,15 +1,12 @@
 #pragma once
-#include "json.hpp"
-
-using json = nlohmann::json;
 
 namespace Q2Compilers
 {
 
 	struct ConfigData
 	{
-		std::string profile_last = "";
-		std::string map_path = "";
+		char profile_last[C_PATH_LENGTH] = { 0 };
+		char map_path[C_PATH_LENGTH] = { 0 };
 	};
 
 	class Config
@@ -17,15 +14,8 @@ namespace Q2Compilers
 	public:
 		Config();
 		void WriteConfig();
-		ConfigData* GetCurrentData()
-		{
-			return &data;
-		}
+		ConfigData data;
 	private:
 		bool ReadConfig();
-		void Serialize();
-		void Deserialize();
-		ConfigData data;
-		json j;
 	};
 }

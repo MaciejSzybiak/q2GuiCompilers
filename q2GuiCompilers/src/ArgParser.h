@@ -5,8 +5,8 @@ namespace Q2Compilers
 	struct ArgOptions
 	{
 		bool instant = false;
-		std::string mapName;
-		std::string profile;
+		char mapName[128] = { 0 };
+		char profile[128] = { 0 };
 	};
 
 	class ArgParser

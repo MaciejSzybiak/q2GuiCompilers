@@ -29,12 +29,14 @@ namespace Q2Compilers
 
 		static std::queue<std::shared_ptr<Event>> _events;
 
-		void LoadProfile(std::string filename);
-		void SaveProfile(std::string filename);
+		void LoadProfile(const char *filename);
+		void SaveProfile(const char *filename);
 
 		void ProcessGuiData();
 		void GetProfileNames(std::vector<std::string>& vec);
 		void Compile(const std::string& mapName, bool& isCompiling);
+
+		void SetDataPath();
 	};
 }
 

@@ -3,14 +3,19 @@
 #include "blargh.h"
 #include "qbspi.h"
 #include "qvisi.h"
+#include <shlobj_core.h>
 
 namespace Q2Compilers
 {
+	wchar_t dataPath[C_PATH_LENGTH] = { 0 };
+
 	std::queue<std::shared_ptr<Event>> Application::_events;
 
 	Application::Application(int argc, char **argv, std::string name)
 	{
 		Log::Init();
+
+		SetDataPath();
 
 		WindowProps props = WindowProps(name, 500, 720);
 
@@ -22,35 +27,33 @@ namespace Q2Compilers
 		_compiler = new	Compiler();
 
 		//get settings from config
-		_guiData.mapName = _config->GetCurrentData()->map_path;
-		_guiData.profileName = _config->GetCurrentData()->profile_last;
+		strcpy_s(_guiData.mapName, _config->data.map_path);
+		strcpy_s(_guiData.profileName, _config->data.profile_last);
 
 		//get settings from args
 		args = ArgParser::ParseArgs(argc, argv);
-		if (args.mapName.size() > 0)
+		if (strlen(args.mapName) > 0)
 		{
-			_guiData.mapName = args.mapName;
+			strcpy_s(_guiData.mapName, args.mapName);
 		}
-		if (args.profile.size() > 0)
+		if (strlen(args.profile) > 0)
 		{
-			_guiData.profileName = args.profile;
+			strcpy_s(_guiData.profileName, args.profile);
 		}
 		_guiData.compile = _guiData.isCompiling = args.instant;
 
 		//load profile
-		if (_guiData.profileName.length() > 0 && _guiData.profileName.ends_with(".json"))
+		if (strlen(_guiData.profileName) > 0)
 		{
-			size_t dot = _guiData.profileName.find_last_of('.');
-			_guiData.profileName = _guiData.profileName.substr(0, dot);
+			LoadProfile(_guiData.profileName);
 		}
-		LoadProfile(_guiData.profileName);
 	}
 
 	Application::~Application()
 	{
-		_config->GetCurrentData()->map_path = _guiData.mapName;
-		_config->WriteConfig();
 		SaveProfile("cached");
+		strcpy(_config->data.map_path, _guiData.mapName);
+		_config->WriteConfig();
 
 		delete _gui;
 		delete _renderer;
@@ -101,18 +104,16 @@ namespace Q2Compilers
 		}
 	}
 
-	void Application::LoadProfile(std::string filename)
+	void Application::LoadProfile(const char* filename)
 	{
-		filename += ".json";
-		_config->GetCurrentData()->profile_last = filename;
-		_compilerData->LoadFromFile(filename);
+		strcpy_s(_config->data.profile_last, filename);
+		_compilerData->LoadFromFile(std::string(filename));
 	}
 
-	void Application::SaveProfile(std::string filename)
+	void Application::SaveProfile(const char *filename)
 	{
-		filename += ".json";
-		_config->GetCurrentData()->profile_last = filename;
-		_compilerData->SaveFile(filename);
+		strcpy_s(_config->data.profile_last, filename);
+		_compilerData->SaveFile(std::string(filename));
 	}
 
 	void Application::ProcessGuiData()
@@ -153,7 +154,7 @@ namespace Q2Compilers
 		for (const auto& entry : std::filesystem::directory_iterator("profiles/"))
 		{
 			const std::string& str = entry.path().string();
-			if (!str.ends_with(".json"))
+			if (!str.ends_with(PROFILE_EXTENSION_STR))
 			{
 				continue;
 			}
@@ -176,5 +177,14 @@ namespace Q2Compilers
 
 		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
 		_guiData.isCompiling = _compiler->Compile(_guiData.data, mapName);
+	}
+
+	void Application::SetDataPath()
+	{
+		PWSTR path;
+		HRESULT hr = SHGetKnownFolderPath(FOLDERID_LocalAppData, 0, NULL, &path);
+		wcscpy_s(dataPath, path);
+		wcscat_s(dataPath, L"\\q2GuiCompilers\\");
+		CreateDirectoryW(dataPath, NULL);
 	}
 }

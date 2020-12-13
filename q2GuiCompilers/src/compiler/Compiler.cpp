@@ -62,10 +62,6 @@ namespace Q2Compilers
 		d.update = compileData.argh_update;
 		d.threads = compileData.argh_threads;
 		d.chop = compileData.argh_chop;
-		//d.chopsky = compileData.argh_chopsky;
-		//d.chopwarp = compileData.argh_chopwarp;
-		//d.choplight = compileData.argh_choplight;
-		//d.chopcurve = compileData.argh_chopcurve;
 		d.scale = compileData.argh_scale;
 		d.direct = compileData.argh_direct;
 		d.entity = compileData.argh_entity;
@@ -352,7 +348,7 @@ namespace Q2Compilers
 		pathBsp = path.substr(0, path.length() - 4) + ".bsp";
 
 		//q2 folder
-		std::string s = compileData.q2_directory.c_str();
+		std::string s = std::string(compileData.q2_directory);
 		std::replace(s.begin(), s.end(), '/', '\\');
 		if (!s.ends_with("\\"))
 		{
@@ -360,7 +356,7 @@ namespace Q2Compilers
 		}
 
 		//moddir
-		if (compileData.q2_modname.c_str() == "baseq2" || compileData.q2_modname.empty())
+		if (!strcmp(compileData.q2_modname, "baseq2") || !strlen(compileData.q2_modname))
 		{
 			useModdir = false;
 		}
@@ -372,17 +368,17 @@ namespace Q2Compilers
 			{
 				moddir = moddir.append(s);
 			}
-			moddir = moddir.append(std::string(compileData.q2_modname.c_str()));
+			moddir = moddir.append(compileData.q2_modname);
 			std::replace(moddir.begin(), moddir.end(), '/', '\\');
 			if (!moddir.ends_with("\\"))
 			{
-				moddir = moddir.append(std::string("\\"));
+				moddir = moddir.append("\\");
 			}
 		}
 
 		//gamedir
 		gamedir = s;
-		gamedir = gamedir.append(std::string("baseq2\\"));
+		gamedir = gamedir.append("baseq2\\");
 
 		//executable
 		if (compileData.enable_exec)
@@ -392,20 +388,20 @@ namespace Q2Compilers
 			{
 				executable = executable.append(s);
 			}
-			executable = executable.append(std::string(compileData.q2_executable.c_str()));
+			executable = executable.append(compileData.q2_executable);
 
 			//args
 			execCommandLine = "";
 			if (useModdir)
 			{
 				execCommandLine = execCommandLine.append("+set game ");
-				execCommandLine = execCommandLine.append(compileData.q2_modname.c_str());
+				execCommandLine = execCommandLine.append(compileData.q2_modname);
 				execCommandLine = execCommandLine.append(" ");
 			}
 			execCommandLine = execCommandLine.append("+map ");
 			execCommandLine = execCommandLine.append(mapname);
 			execCommandLine = execCommandLine.append(" ");
-			execCommandLine = execCommandLine.append(compileData.q2_args.c_str());
+			execCommandLine = execCommandLine.append(compileData.q2_args);
 		}
 	
 		//copy target

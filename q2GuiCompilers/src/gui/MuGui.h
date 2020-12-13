@@ -8,8 +8,10 @@ namespace Q2Compilers
 	{
 		CData* data = nullptr;
 		std::vector<std::string> profileFiles;
-		std::string profileName;
-		std::string mapName;
+		//std::string profileName;
+		char profileName[C_PATH_LENGTH] = { 0 };
+		//std::string mapName;
+		char mapName[C_PATH_LENGTH] = { 0 };
 
 		bool saveProfile = false;
 		bool loadProfile = false;
@@ -62,6 +64,6 @@ namespace Q2Compilers
 		void DrawSliderWithLabel(const char* label, float* value, float low, float high);
 		int DrawIntSlider(int* value, float low, float high);
 
-		bool TryGetPathFromFileDialog(const char* filter, std::string& out);
+		bool TryGetPathFromFileDialog(const char* filter, char *out);
 	};
 }
