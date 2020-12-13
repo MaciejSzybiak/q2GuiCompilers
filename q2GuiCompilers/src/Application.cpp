@@ -148,7 +148,7 @@ namespace Q2Compilers
 	{
 		vec.clear();
 
-		if (!std::filesystem::exists("profiles/"))
+		if (!std::filesystem::exists(profilesDir))
 		{
 			LOG_WARNING("Directory \"profiles\" doesn't exist");
 			return;

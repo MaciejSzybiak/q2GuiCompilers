@@ -25,9 +25,9 @@ namespace Q2Compilers
 		d.nowater = compileData.qbsp_nowater;
 		d.noweld = compileData.qbsp_noweld;
 
-		d.mapPath = c.GetPath();
-		d.gamedir = c.GetGamedir();
-		d.moddir = c.GetModdir();
+		strcpy_s(d.mapPath, c.GetPath());
+		strcpy_s(d.gamedir, c.GetGamedir());
+		strcpy_s(d.moddir, c.GetModdir());
 
 		return d;
 	}
@@ -44,7 +44,7 @@ namespace Q2Compilers
 		d.threads = compileData.qvis_threads;
 		d.verbose = compileData.qvis_qvis_verbose;
 
-		d.mapPath = c.GetPath();
+		strcpy_s(d.mapPath, c.GetPath());
 
 		return d;
 	}
@@ -85,9 +85,9 @@ namespace Q2Compilers
 		d.noradorigin = compileData.argh_noradorigin;
 		d.lightwarp = compileData.argh_lightwarp;
 
-		d.bspName = c.GetBspPath();
-		d.gamedir = c.GetGamedir();
-		d.moddir = c.GetModdir();
+		strcpy_s(d.bspName, c.GetBspPath());
+		strcpy_s(d.gamedir, c.GetGamedir());
+		strcpy_s(d.moddir, c.GetModdir());
 
 		return d;
 	}

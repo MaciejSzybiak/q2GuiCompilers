@@ -350,7 +350,7 @@ QBSPAPI int exec_qbsp (QbspData data)
 	ThreadSetDefault ();
     numthreads = 1;		// multiple threads aren't helping...
 
-	strcpy(game_path, data.gamedir.c_str());
+	strcpy(game_path, data.gamedir);
     if(game_path[0] != 0)
     {
 		n = strlen(game_path);
@@ -366,7 +366,7 @@ QBSPAPI int exec_qbsp (QbspData data)
     
     qprintf("gamedir set to %s\n", gamedir);
     
-	strcpy(moddir, data.moddir.c_str());
+	strcpy(moddir, data.moddir);
     if(moddir[0] != 0)
     {
 		n = strlen(moddir);
@@ -381,7 +381,7 @@ QBSPAPI int exec_qbsp (QbspData data)
     }
     
 	char arr[1024];
-	strcpy(arr, data.mapPath.c_str());
+	strcpy(arr, data.mapPath);
 	strcpy (source, ExpandArg(arr));
 	StripExtension (source);
 

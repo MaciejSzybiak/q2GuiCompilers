@@ -530,7 +530,7 @@ QVISAPI int exec_qvis(QvisData data)
 	ThreadSetDefault();
 
 	char arr[1024];
-	strcpy(arr, data.mapPath.c_str());
+	strcpy(arr, data.mapPath);
 	strcpy(source, ExpandArg(arr));
 	StripExtension(source);
 	DefaultExtension(source, ".bsp");

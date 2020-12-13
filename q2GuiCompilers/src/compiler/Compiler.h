@@ -12,19 +12,19 @@ namespace Q2Compilers
 		{
 			return compileData;
 		}
-		std::string GetPath()
+		const char* GetPath()
 		{
 			return path;
 		}
-		std::string GetBspPath()
+		const char* GetBspPath()
 		{
 			return pathBsp;
 		}
-		std::string GetGamedir()
+		const char* GetGamedir()
 		{
 			return gamedir;
 		}
-		std::string GetModdir()
+		const char* GetModdir()
 		{
 			return moddir;
 		}

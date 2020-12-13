@@ -15,8 +15,8 @@ extern "C" {
 		int nowater = false;
 		int leaktest = false;
 
-		std::string gamedir;
-		std::string moddir;
-		std::string mapPath;
+		char gamedir[260] = { 0 };
+		char  moddir[260] = { 0 };
+		char  mapPath[260] = { 0 };
 	};
 }

@@ -3360,7 +3360,7 @@ BLAPI int exec_blarghrad(BlarghData data)
     game = 1;
 
     //game directory
-    sprintf(gamedir, "%s", data.gamedir.c_str());
+    sprintf(gamedir, "%s", data.gamedir);
     if (strlen(gamedir) > 0)
     {
         if (gamedir[strlen(gamedir) - 1] != '\\' && gamedir[strlen(gamedir) - 1] != '/')
@@ -3374,7 +3374,7 @@ BLAPI int exec_blarghrad(BlarghData data)
     }
 
     //mod directory
-    sprintf(moddir, "%s", data.moddir.c_str());
+    sprintf(moddir, "%s", data.moddir);
     if (strlen(moddir) > 0)
     {
         if (moddir[strlen(moddir) - 1] != '\\' && moddir[strlen(moddir) - 1] != '/')
@@ -3407,7 +3407,7 @@ BLAPI int exec_blarghrad(BlarghData data)
     printf("----- Load BSP File -----\n");
 
     char bsp_filename[1036];
-    sprintf(bsp_filename, "%s", data.bspName.c_str());
+    sprintf(bsp_filename, "%s", data.bspName);
     printf("reading %s\n", bsp_filename);
     LoadBSPFile(bsp_filename);
     ParseEntities();

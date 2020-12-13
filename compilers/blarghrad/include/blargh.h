@@ -41,8 +41,8 @@ extern "C" {
 		int   noradorigin = false;
 		int   lightwarp = false;
 
-		std::string gamedir;
-		std::string moddir;
-		std::string bspName;
+		char gamedir[260] = { 0 };
+		char moddir[260] = { 0 };
+		char bspName[260] = { 0 };
 	};
 }

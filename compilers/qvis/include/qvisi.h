@@ -14,6 +14,6 @@ extern "C" {
 		int nosort = false;
 		int cullerror = false;
 
-		std::string mapPath;
+		char mapPath[260];
 	};
 }
