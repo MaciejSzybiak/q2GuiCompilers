@@ -3392,8 +3392,8 @@ BLAPI int exec_blarghrad(BlarghData data)
     if (maxlight > 255)
         maxlight = 255;
 
-    if (subdiv > 256)
-        subdiv = 256;
+    if (subdiv > 1024)
+        subdiv = 1024;
 
     //if (choplight == 0) {
     choplight = subdiv;

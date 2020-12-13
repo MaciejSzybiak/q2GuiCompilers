@@ -290,7 +290,7 @@ namespace Q2Compilers
 			DrawSliderWithLabel("Light bounces", &d->argh_bounce, 0, 12);
 			DrawSliderWithLabel("Threads", &d->argh_threads, 0, 8);
 
-			DrawSliderWithLabel("Chop size", &d->argh_chop, 8, 256);
+			DrawSliderWithLabel("Chop size", &d->argh_chop, 8, 1024);
 
 			mu_layout_row(_context, 1, widths, 0);
 			mu_label(_context, "Brightness and color");
