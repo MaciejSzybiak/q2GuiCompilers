@@ -16,6 +16,8 @@ namespace Q2Compilers
 		Log::Init();
 
 		SetDataPath();
+		wcscpy_s(profilesDir, dataPath);
+		wcscat_s(profilesDir, L"profiles\\");
 
 		WindowProps props = WindowProps(name, 500, 720);
 
@@ -151,7 +153,7 @@ namespace Q2Compilers
 			LOG_WARNING("Directory \"profiles\" doesn't exist");
 			return;
 		}
-		for (const auto& entry : std::filesystem::directory_iterator("profiles/"))
+		for (const auto& entry : std::filesystem::directory_iterator(profilesDir))
 		{
 			const std::string& str = entry.path().string();
 			if (!str.ends_with(PROFILE_EXTENSION_STR))
@@ -159,7 +161,7 @@ namespace Q2Compilers
 				continue;
 			}
 			//strip path
-			size_t start = str.find_last_of('/') + 1;
+			size_t start = str.find_last_of('\\') + 1;
 			size_t end = str.find_last_of('.');
 
 			vec.push_back(str.substr(start, end - start));

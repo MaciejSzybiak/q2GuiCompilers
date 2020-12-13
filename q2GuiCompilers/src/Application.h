@@ -29,6 +29,8 @@ namespace Q2Compilers
 
 		static std::queue<std::shared_ptr<Event>> _events;
 
+		wchar_t profilesDir[C_PATH_LENGTH];
+
 		void LoadProfile(const char *filename);
 		void SaveProfile(const char *filename);
 
