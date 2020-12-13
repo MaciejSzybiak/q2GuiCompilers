@@ -92,18 +92,18 @@ namespace Q2Compilers
 		return d;
 	}
 
-	bool Compiler::FileExists(std::string& filename)
+	bool Compiler::FileExists(const char* filename)
 	{
 		std::ifstream file(filename);
 		return file.good();
 	}
 
-	bool Compiler::DirectoryExists(std::string& directory)
+	bool Compiler::DirectoryExists(const char* directory)
 	{
 		return std::filesystem::exists(directory);
 	}
 
-	bool Compiler::Compile(CData* data, const std::string& mapPath)
+	bool Compiler::Compile(CData* data, const char *mapPath)
 	{
 		compileData = *data;
 		if (!compileData.enable_copy)
@@ -111,24 +111,7 @@ namespace Q2Compilers
 			compileData.enable_exec = false;
 		}
 
-		path = "";
-		if (mapPath[1] != ':')
-		{
-			path = path.append(std::filesystem::current_path().string()).append("\\");
-		}
-		path = path.append(std::string(mapPath.c_str()));
-		if (!path.ends_with(".map"))
-		{
-			path = path.append(".map");
-		}
-
-		if (!FileExists(path))
-		{
-			LOG_ERROR("Map %s not found!", path.c_str());
-			return false;
-		}
-
-		SetPaths();
+		SetPaths(mapPath);
 
 		if (!ValidatePaths())
 		{
@@ -283,7 +266,7 @@ namespace Q2Compilers
 					LOG_INFO("TASK: copy");
 					std::filesystem::copy_file(pathBsp, copyTarget, std::filesystem::copy_options::overwrite_existing);
 					allowNext = true;
-					LOG_INFO("Copied %s to %s", pathBsp.c_str(), copyTarget.c_str());
+					LOG_INFO("Copied %s to %s", pathBsp, copyTarget);
 				}
 				catch (const std::exception& e)
 				{
@@ -297,7 +280,7 @@ namespace Q2Compilers
 		{
 			tasks.push([this]()
 			{
-				LOG_INFO("Executing %s", executable.c_str());
+				LOG_INFO("Executing %s", executable);
 
 				STARTUPINFOA sInfo;
 				PROCESS_INFORMATION pInfo;
@@ -306,12 +289,12 @@ namespace Q2Compilers
 				sInfo.cb = sizeof(sInfo);
 				ZeroMemory(&pInfo, sizeof(pInfo));
 
-				char args[2048];
-				strcpy(args, executable.c_str());
+				char args[C_ARGS_LENGTH + C_PATH_LENGTH];
+				strcpy(args, executable);
 				strcat(args, " ");
-				strcat(args, execCommandLine.c_str());
+				strcat(args, execCommandLine);
 
-				BOOL result = CreateProcessA(executable.c_str(), args, NULL, NULL, false, 0, NULL, NULL, &sInfo, &pInfo);
+				BOOL result = CreateProcessA(executable, args, NULL, NULL, false, 0, NULL, NULL, &sInfo, &pInfo);
 
 				if (!result)
 				{
@@ -335,27 +318,52 @@ namespace Q2Compilers
 		}
 	}
 
-	void Compiler::SetPaths()
+	void Compiler::SetPaths(const char *mapPath)
 	{
+		memset(path, 0, sizeof(path));
+		memset(pathBsp, 0, sizeof(pathBsp));
+		memset(gamedir, 0, sizeof(gamedir));
+		memset(moddir, 0, sizeof(moddir));
+		memset(executable, 0, sizeof(executable));
+		memset(copyTarget, 0, sizeof(copyTarget));
+		memset(execCommandLine, 0, sizeof(execCommandLine));
+
 		//map path
-		std::replace(path.begin(), path.end(), '/', '\\');
+		if (mapPath[1] != ':')
+		{
+			strcat_s(path, std::filesystem::current_path().string().c_str());
+			strcat_s(path, "\\");
+		}
+		strcat_s(path, mapPath);
+
+		if (!EndsWith(path, ".map"))
+		{
+			strcat_s(path, ".map");
+		}
+
+		Replace(path, '/', '\\');
 
 		//map name
-		size_t maplast = path.find_last_of("\\") + 1;
-		std::string mapname = path.substr(maplast, path.length() - 4 - maplast);
+		int start = LastIndexOf(path, '\\') + 1;
+		int end = LastIndexOf(path, '.');
+		char mapname[32] = { 0 };
+		strncpy_s(mapname, path + start, (size_t)end - start);
 
 		//bsp path
-		pathBsp = path.substr(0, path.length() - 4) + ".bsp";
+		strncpy_s(pathBsp, path, strlen(path) - 4);
+		strcat_s(pathBsp, ".bsp");
 
 		//q2 folder
-		std::string s = std::string(compileData.q2_directory);
-		std::replace(s.begin(), s.end(), '/', '\\');
-		if (!s.ends_with("\\"))
+		char baseDir[C_PATH_LENGTH] = { 0 };
+		strcpy_s(baseDir, compileData.q2_directory);
+		Replace(baseDir, '/', '\\');
+		if (!EndsWith(baseDir, "\\"))
 		{
-			s += "\\";
+			strcat_s(baseDir, "\\");
 		}
 
 		//moddir
+		char moddirname[32] = { 0 };
 		if (!strcmp(compileData.q2_modname, "baseq2") || !strlen(compileData.q2_modname))
 		{
 			useModdir = false;
@@ -363,58 +371,73 @@ namespace Q2Compilers
 		else
 		{
 			useModdir = true;
-			moddir = "";
+			if (EndsWith(compileData.q2_modname, "\\") || EndsWith(compileData.q2_modname, "/"))
+			{
+				compileData.q2_modname[strlen(compileData.q2_modname) - 1] = '\0';
+			}
 			if (compileData.q2_modname[1] != ':')
 			{
-				moddir = moddir.append(s);
+				strcpy_s(moddir, baseDir);
 			}
-			moddir = moddir.append(compileData.q2_modname);
-			std::replace(moddir.begin(), moddir.end(), '/', '\\');
-			if (!moddir.ends_with("\\"))
-			{
-				moddir = moddir.append("\\");
-			}
+
+			strcat_s(moddir, compileData.q2_modname);
+			Replace(moddir, '/', '\\');
+			//BROKEN
+			start = LastIndexOf(moddir, '\\') + 1;
+			strcpy_s(moddirname, moddir + start);
+
+			strcat_s(moddir, "\\");
 		}
 
 		//gamedir
-		gamedir = s;
-		gamedir = gamedir.append("baseq2\\");
+		strcpy_s(gamedir, baseDir);
+		strcat_s(gamedir, "baseq2\\");
 
 		//executable
 		if (compileData.enable_exec)
 		{
-			executable = "";
+			//executable = "";
 			if (compileData.q2_executable[1] != ':')
 			{
-				executable = executable.append(s);
+				strcpy_s(executable, baseDir);
 			}
-			executable = executable.append(compileData.q2_executable);
+			strcat_s(executable, compileData.q2_executable);
 
 			//args
-			execCommandLine = "";
 			if (useModdir)
 			{
-				execCommandLine = execCommandLine.append("+set game ");
-				execCommandLine = execCommandLine.append(compileData.q2_modname);
-				execCommandLine = execCommandLine.append(" ");
+				strcpy_s(execCommandLine, "+set game ");
+				strcat_s(execCommandLine, moddirname);
+				strcat_s(execCommandLine, " ");
 			}
-			execCommandLine = execCommandLine.append("+map ");
-			execCommandLine = execCommandLine.append(mapname);
-			execCommandLine = execCommandLine.append(" ");
-			execCommandLine = execCommandLine.append(compileData.q2_args);
+			strcat_s(execCommandLine, "+map ");
+			strcat_s(execCommandLine, mapname);
+			strcat_s(execCommandLine, " ");
+			strcat_s(execCommandLine, compileData.q2_args);
 		}
 	
 		//copy target
-		size_t start = path.find_last_of("\\") + 1;
-		size_t length = path.find_last_of(".") - start;
-		copyTarget = (useModdir ? moddir : gamedir);
-		copyTarget = copyTarget.append(std::string("maps\\"));
-		copyTarget = copyTarget.append(path.substr(start, length));
-		copyTarget = copyTarget.append(std::string(".bsp"));
+		if (useModdir)
+		{
+			strcpy_s(copyTarget, moddir);
+		}
+		else
+		{
+			strcpy_s(copyTarget, gamedir);
+		}
+		strcat_s(copyTarget, "maps\\");
+		strcat_s(copyTarget, mapname);
+		strcat_s(copyTarget, ".bsp");
 	}
 
 	bool Compiler::ValidatePaths()
 	{
+		if (!FileExists(path))
+		{
+			LOG_ERROR("Map %s not found!", path);
+			return false;
+		}
+
 		if (compileData.enable_copy)
 		{
 			if (!DirectoryExists(gamedir))

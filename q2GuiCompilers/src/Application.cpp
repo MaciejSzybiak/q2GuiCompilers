@@ -168,16 +168,16 @@ namespace Q2Compilers
 		}
 	}
 
-	void Application::Compile(const std::string& mapName, bool& isCompiling)
+	void Application::Compile(const char *mapName, bool& isCompiling)
 	{
-		if (mapName.length() == 0)
+		if (strlen(mapName) == 0)
 		{
 			LOG_WARNING("No map path specified.");
 			isCompiling = false;
 			return;
 		}
 
-		LOG_INFO("COMPILE! Map: %s", mapName.c_str());
+		LOG_INFO("COMPILE! Map: %s", mapName);
 		_guiData.isCompiling = _compiler->Compile(_guiData.data, mapName);
 	}
 

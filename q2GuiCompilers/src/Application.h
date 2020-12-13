@@ -36,7 +36,7 @@ namespace Q2Compilers
 
 		void ProcessGuiData();
 		void GetProfileNames(std::vector<std::string>& vec);
-		void Compile(const std::string& mapName, bool& isCompiling);
+		void Compile(const char* mapName, bool& isCompiling);
 
 		void SetDataPath();
 	};
