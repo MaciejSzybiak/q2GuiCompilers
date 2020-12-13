@@ -21,7 +21,7 @@ namespace Q2Compilers
 
 		while (index < argc)
 		{
-			arg = argv[index++];
+			arg = argv[index];
 			
 			if (!strcmp(arg, "-instant"))
 			{
@@ -35,14 +35,15 @@ namespace Q2Compilers
 					LOG_ERROR("Failed to parse -profile option.");
 					break;
 				}
-				strcpy_s(o.profile, argv[index++]);
+				strcpy(o.profile, argv[index]);
 				LOG_INFO("Profile = %s", o.profile);
 			}
 			else
 			{
-				strcpy_s(o.mapName, argv[index++]);
+				strcpy(o.mapName, argv[index]);
 				LOG_INFO("Map = %s", o.mapName);
 			}
+			index++;
 		}
 
 		return o;
