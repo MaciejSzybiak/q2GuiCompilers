@@ -3325,24 +3325,23 @@ BLAPI int exec_blarghrad(BlarghData data)
     onlyupdate = data.update;
     if (data.threads > 0) numthreads = data.threads;
     if (data.chop > 0) subdiv = data.chop;
-    if (data.scale > 0) lightscale = data.scale;
-    if (data.direct > 0) direct_scale = data.direct;
-    if (data.entity > 0) entity_scale = data.entity;
-    if (data.texscale > 0) g_texscale = data.texscale;
+    lightscale = data.scale;
+    direct_scale = data.direct;
+    entity_scale = data.entity;
+    g_texscale = data.texscale;
     glview = data.glView;
     nopvs = data.nopvs;
     if (data.nocolor) _nocolor_maybe_unweighted = 0;
-    if (data.saturation > 0) saturation = data.saturation;
+    saturation = data.saturation;
     if (data.ambient > 0)
     {
         ambient.x = ambient.y = ambient.z = data.ambient * 128.f;
     }
     if (data.minlight > 0) minlight = data.minlight * 128.f;
     if (data.maxlight > 0) maxlight = data.maxlight * 128.f;
-    if (data.gamma > 0) g_gamma = data.gamma;
+    g_gamma = data.gamma;
     if (data.stylemin > 0) stylemin = data.stylemin;
     if (data.radmin > 0) patch_cutoff = data.radmin;
-    if (data.gamma > 0) g_gamma = data.gamma;
     bmodlight = !data.nobmodlight;
     bouncefix = !data.nobouncefix;
     brightsurf = !data.nobrightsurf;
