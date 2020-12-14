@@ -313,17 +313,17 @@ namespace Q2Compilers
 			mu_label(_context, "Brightness and color");
 			mu_layout_row(_context, 2, l, 0);
 
-			mu_checkbox(_context, "Grayscale lightmaps", &d->argh_nocolor);
+			//mu_checkbox(_context, "Grayscale lightmaps", &d->argh_nocolor);
 
 			DrawSliderWithLabel("Light brightness", &d->argh_scale, 0.1f, 2);
 			DrawSliderWithLabel("Surface light brightness", &d->argh_direct, .1f, 2);
 			DrawSliderWithLabel("Entity light brightness", &d->argh_entity, .1f, 2);
 			DrawSliderWithLabel("Texture brightness", &d->argh_texscale, 0, 1);
 			DrawSliderWithLabel("Light saturation", &d->argh_saturation, 0, 1);
-			DrawSliderWithLabel("Global ambient amount", &d->argh_ambient, 0, 2);
-			DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 255);
-			DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 255);
-			DrawSliderWithLabel("Light gamma", &d->argh_gamma, 0, 2);
+			DrawSliderWithLabel("Global ambient amount", &d->argh_ambient, 0, 1);
+			//DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 255);
+			//DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 255);
+			DrawSliderWithLabel("Light gamma", &d->argh_gamma, 0.5f, 1.5f);
 			DrawSliderWithLabel("Minimum lightsyles light", &d->argh_stylemin, 0, 255);
 
 			mu_layout_row(_context, 1, widths, 0);
@@ -562,6 +562,4 @@ namespace Q2Compilers
 
 		return false;
 	}
-
-
 }
