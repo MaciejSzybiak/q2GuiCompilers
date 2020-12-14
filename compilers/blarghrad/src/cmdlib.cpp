@@ -167,16 +167,19 @@ void Error(const char *error, ...)
 
 // only printf if in verbose mode
 qboolean verbose = false;
-void qprintf(const char *format, ...)
+void qprintf(const char* format, ...)
 {
-    va_list argptr;
-
     if (!verbose)
         return;
 
+    va_list argptr;
+    int result;
+    char buf[1024];
     va_start(argptr, format);
-    vprintf(format, argptr);
+    result = vsnprintf(buf, sizeof(buf), format, argptr);
     va_end(argptr);
+
+    std::cout << buf;
 }
 
 
