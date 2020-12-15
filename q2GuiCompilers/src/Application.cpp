@@ -60,13 +60,19 @@ namespace Q2Compilers
 		{
 			strcpy_s(_guiData.profileName, args.profile);
 		}
-		_guiData.compile = _guiData.isCompiling = args.instant;
 
 		//load profile
 		if (strlen(_guiData.profileName) > 0)
 		{
-			LoadProfile(_guiData.profileName);
+			bool result = LoadProfile(_guiData.profileName);
+
+			if (!result && args.instant)
+			{
+				LOG_WARNING("Profile not found. Instant compile canceled!");
+			}
 		}
+
+		_guiData.compile = _guiData.isCompiling = args.instant;
 	}
 
 	Application::~Application()
@@ -124,10 +130,10 @@ namespace Q2Compilers
 		}
 	}
 
-	void Application::LoadProfile(const char* filename)
+	bool Application::LoadProfile(const char* filename)
 	{
 		strcpy_s(_config->data.profile_last, filename);
-		_compilerData->LoadFromFile(std::string(filename));
+		return _compilerData->LoadFromFile(std::string(filename));
 	}
 
 	void Application::SaveProfile(const char *filename)

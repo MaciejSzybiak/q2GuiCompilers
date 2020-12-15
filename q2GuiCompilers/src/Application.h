@@ -49,7 +49,7 @@ namespace Q2Compilers
 
 		wchar_t profilesDir[C_PATH_LENGTH];
 
-		void LoadProfile(const char *filename);
+		bool LoadProfile(const char *filename);
 		void SaveProfile(const char *filename);
 
 		void ProcessGuiData();
