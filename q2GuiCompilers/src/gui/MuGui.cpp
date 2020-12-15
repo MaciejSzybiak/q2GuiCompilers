@@ -431,7 +431,7 @@ namespace Q2Compilers
 		{
 			mu_layout_row(_context, 3, k, 0);
 
-			mu_label(_context, "Directory");
+			mu_label(_context, "Game directory");
 			mu_textbox(_context, data->data->q2_directory, C_PATH_LENGTH);
 			if (mu_button_ex2(_context, "...", "gamedir...", 0, MU_OPT_ALIGNCENTER))
 			{
