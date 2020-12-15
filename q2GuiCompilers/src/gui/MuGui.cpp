@@ -342,11 +342,11 @@ namespace Q2Compilers
 			mu_label(_context, "Other");
 			mu_layout_row(_context, 2, l, 0);
 
-			mu_checkbox(_context, "Only update lightmaps", &d->argh_update);
+			//mu_checkbox(_context, "Only update lightmaps", &d->argh_update);
 			mu_checkbox(_context, "Light warp surfaces", &d->argh_lightwarp);
 			mu_checkbox(_context, "Disable phong shading", &d->argh_nocurve);
 			mu_checkbox(_context, "Dump patch info", &d->argh_dump);
-			mu_checkbox(_context, "GL View", &d->argh_glView);
+			//mu_checkbox(_context, "GL View", &d->argh_glView);
 			mu_checkbox(_context, "Stop pvs checking", &d->argh_nopvs);
 
 			DrawSliderWithLabel("Minimum radiosity cutoff", &d->argh_radmin, 0, 0.015f);
