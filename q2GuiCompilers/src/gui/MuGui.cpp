@@ -297,7 +297,7 @@ namespace Q2Compilers
 		if (d->enable_qrad)
 		{
 			int l[] = { mu_get_current_container(_context)->content_size.x / 2, -1 };
-			
+
 			mu_label(_context, "General");
 			mu_layout_row(_context, 2, l, 0);
 
@@ -337,7 +337,7 @@ namespace Q2Compilers
 			mu_checkbox(_context, "Disable phong shading", &d->argh_nocurve);
 			mu_checkbox(_context, "Disable anti-splotch fix", &d->argh_nosplotchfix);
 			mu_checkbox(_context, "Disable origin lighting", &d->argh_noradorigin);
-			
+
 			mu_layout_row(_context, 1, widths, 0);
 			mu_label(_context, "Other");
 			mu_layout_row(_context, 2, l, 0);
@@ -400,7 +400,7 @@ namespace Q2Compilers
 		mu_textbox(_context, data->mapName, C_PATH_LENGTH);
 		if (mu_button_ex2(_context, "...", "map...", 0, MU_OPT_ALIGNCENTER))
 		{
-			const static char *filter = "Map files (.map)\0*.map\0\0";
+			const static char* filter = "Map files (.map)\0*.map\0\0";
 			if (TryGetPathFromFileDialog(filter, out))
 			{
 				strcpy_s(data->mapName, out);
@@ -428,48 +428,46 @@ namespace Q2Compilers
 		{
 			mu_layout_next(_context);
 		}
+
+		mu_layout_row(_context, 3, k, 0);
+
+		mu_label(_context, "Game directory");
+		mu_textbox(_context, data->data->q2_directory, C_PATH_LENGTH);
+		if (mu_button_ex2(_context, "...", "gamedir...", 0, MU_OPT_ALIGNCENTER))
 		{
-			mu_layout_row(_context, 3, k, 0);
-
-			mu_label(_context, "Game directory");
-			mu_textbox(_context, data->data->q2_directory, C_PATH_LENGTH);
-			if (mu_button_ex2(_context, "...", "gamedir...", 0, MU_OPT_ALIGNCENTER))
+			if (TryGetPathFromFolderDialog(out))
 			{
-				if (TryGetPathFromFolderDialog(out))
-				{
-					strcpy_s(data->data->q2_directory, out);
-				}
-			}
-
-			mu_label(_context, "Mod directory");
-			mu_textbox(_context, data->data->q2_modname, C_PATH_LENGTH);
-			if (mu_button_ex2(_context, "...", "moddir...", 0, MU_OPT_ALIGNCENTER))
-			{
-				if (TryGetPathFromFolderDialog(out))
-				{
-					strcpy_s(data->data->q2_modname, out);
-				}
-			}
-			if (d->enable_exec && d->enable_copy)
-			{
-				mu_label(_context, "Executable name");
-				mu_textbox(_context, data->data->q2_executable, C_PATH_LENGTH);
-				if (mu_button_ex2(_context, "...", "exe...", 0, MU_OPT_ALIGNCENTER))
-				{
-					const static char* filter = "Executable (.exe)\0*.exe\0\0";
-					if (TryGetPathFromFileDialog(filter, out))
-					{
-						strcpy_s(data->data->q2_executable, out);
-					}
-				}
-				mu_label(_context, "Args");
-				mu_textbox(_context, data->data->q2_args, C_ARGS_LENGTH);
+				strcpy_s(data->data->q2_directory, out);
 			}
 		}
 
+		mu_label(_context, "Mod directory");
+		mu_textbox(_context, data->data->q2_modname, C_PATH_LENGTH);
+		if (mu_button_ex2(_context, "...", "moddir...", 0, MU_OPT_ALIGNCENTER))
+		{
+			if (TryGetPathFromFolderDialog(out))
+			{
+				strcpy_s(data->data->q2_modname, out);
+			}
+		}
+		if (d->enable_exec && d->enable_copy)
+		{
+			mu_label(_context, "Executable name");
+			mu_textbox(_context, data->data->q2_executable, C_PATH_LENGTH);
+			if (mu_button_ex2(_context, "...", "exe...", 0, MU_OPT_ALIGNCENTER))
+			{
+				const static char* filter = "Executable (.exe)\0*.exe\0\0";
+				if (TryGetPathFromFileDialog(filter, out))
+				{
+					strcpy_s(data->data->q2_executable, out);
+				}
+			}
+			mu_label(_context, "Args");
+			mu_textbox(_context, data->data->q2_args, C_ARGS_LENGTH);
+		}
 	}
 
-	void MuGui::DrawProfilePopup(bool isLoadPopup, MuGuiData *data, int windowWidth)
+	void MuGui::DrawProfilePopup(bool isLoadPopup, MuGuiData* data, int windowWidth)
 	{
 		static char buf[C_PATH_LENGTH] = { 0 };
 		bool isPopup = isLoadPopup ? mu_begin_popup(_context, "Load profile") :
@@ -521,7 +519,7 @@ namespace Q2Compilers
 		}
 	}
 
-	bool MuGui::TryGetPathFromFileDialog(const char *filter, char *out)
+	bool MuGui::TryGetPathFromFileDialog(const char* filter, char* out)
 	{
 		OPENFILENAMEA ofn;
 		char fileName[MAX_PATH] = { 0 };
@@ -534,7 +532,7 @@ namespace Q2Compilers
 		ofn.nMaxFile = MAX_PATH;
 		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY | OFN_NOCHANGEDIR;
 		ofn.lpstrDefExt = "";
-		
+
 		if (GetOpenFileNameA(&ofn))
 		{
 			strcpy(out, fileName);
