@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 // cmdlib.c
 #include <windows.h>
 #include <crtdbg.h>

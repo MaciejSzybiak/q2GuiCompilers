@@ -3,7 +3,7 @@
 
 #include "qbsp.h"
 #include "parsecfg.h"
-#include "include/qbspi.h"
+#include "qbspi.h"
 
 extern	float subdivide_size;
 

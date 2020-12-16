@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 //
 // trilib.c: library for loading triangles from an Alias triangle file
 //

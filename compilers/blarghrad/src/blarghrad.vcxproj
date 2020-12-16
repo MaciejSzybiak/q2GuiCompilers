@@ -73,6 +73,7 @@
       <FloatingPointModel>Precise</FloatingPointModel>
       <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>H:\repos\q2GuiCompilers\compilers\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -102,6 +103,7 @@
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <FloatingPointModel>Precise</FloatingPointModel>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalIncludeDirectories>H:\repos\q2GuiCompilers\compilers\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -117,7 +119,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\blargh.h" />
+    <ClInclude Include="..\..\common\blargh.h" />
     <ClInclude Include="blarghrad.h" />
     <ClInclude Include="bspfile.h" />
     <ClInclude Include="cmdlib.h" />
@@ -131,10 +133,10 @@
     <ClInclude Include="verify.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\common\printhack.cpp" />
     <ClCompile Include="blarghrad.cpp" />
     <ClCompile Include="bspfile.cpp" />
     <ClCompile Include="cmdlib.cpp" />
-    <ClCompile Include="printhack.cpp" />
     <ClCompile Include="lightmap.cpp" />
     <ClCompile Include="mathlib.cpp" />
     <ClCompile Include="patches.cpp" />

@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 #ifdef _DEBUG
 #define _CRTDBG_MAP_ALLOC
 #undef THIS_FILE

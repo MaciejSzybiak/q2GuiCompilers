@@ -399,7 +399,7 @@ void WriteBrushMap (char *name, bspbrush_t *list)
 
 	printf ("\ntexinfo count: %i of %i maximum.\n", numtexinfo, MAX_MAP_TEXINFO);
 	printf ("brush sides count: %i of %i maximum.\n", nummapbrushsides, MAX_MAP_BRUSHSIDES);
-	printf ("writing %s\n", name);
+	qprintf ("writing %s\n", name);
 	f = fopen (name, "wb");
 	if (!f)
 		Error ("Can't write %s\b", name);

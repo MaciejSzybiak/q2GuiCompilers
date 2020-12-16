@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 // mathlib.c -- math primitives
 
 #include "cmdlib.h"

@@ -1,6 +1,6 @@
 #include "pch.h"
 // vis.c
-#include "include/qvisi.h"
+#include "qvisi.h"
 #include "vis.h"
 #include "threads.h"
 #include "stdlib.h"

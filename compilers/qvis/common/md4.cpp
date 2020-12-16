@@ -1,4 +1,4 @@
-#include "../pch.h"
+#include "pch.h"
 /* GLOBAL.H - RSAREF types and constants */
 
 #include <string.h>

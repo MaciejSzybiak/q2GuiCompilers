@@ -18,12 +18,6 @@
     <ClCompile Include="flow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="printhack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="qvis3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,15 +39,6 @@
     <ClCompile Include="common\md4.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\parsecfg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\polylib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\scriplib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,11 +48,17 @@
     <ClCompile Include="common\trilib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\printhack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\pch\pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="common\parsecfg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="vis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -86,18 +77,6 @@
     <ClInclude Include="common\mathlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common\memory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\parsecfg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\polylib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\qfiles.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\scriplib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,7 +86,16 @@
     <ClInclude Include="common\trilib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\qvisi.h">
+    <ClInclude Include="..\common\qvisi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\pch\pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\qfiles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common\parsecfg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

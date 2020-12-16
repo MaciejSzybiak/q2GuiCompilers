@@ -335,8 +335,6 @@ main
     char		path[2053] = "";
     char		game_path[1024] = "";
 
-    //printf( "\n\n<<<<<<<<<<<<<<<<<<<<<<< 4bsp >>>>>>>>>>>>>>>>>>>>>>>>\n" );
-    //printf( "BSP compiler build " __DATE__ "\n" );
     printf("----------- 4bsp - DLL -----------\n");
 
     glview = data.glView;
@@ -350,8 +348,6 @@ main
 
     ThreadSetDefault ();
     numthreads = 1;		// multiple threads aren't helping...
-
-    //SetQdirFromPath(argv[i]);
 
     strcpy(game_path, data.gamedir);
     if (game_path[0] != 0)
@@ -391,9 +387,6 @@ main
     strcpy(arr, data.mapPath);
     strcpy(source, ExpandArg(arr));
     StripExtension(source);
-
-    //strcpy (source, ExpandArg (argv[i]));
-    //StripExtension (source);
 
     // delete portal and line files
     sprintf (path, "%s.prt", source);

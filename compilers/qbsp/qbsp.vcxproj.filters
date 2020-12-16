@@ -57,19 +57,7 @@
     <ClCompile Include="common\cmdlib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\l3dslib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\lbmlib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="common\mathlib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\md4.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="common\memory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="common\parsecfg.cpp">
@@ -84,13 +72,10 @@
     <ClCompile Include="common\threads.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="common\trilib.cpp">
+    <ClCompile Include="..\common\printhack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="printhack.cpp">
+    <ClCompile Include="..\common\pch\pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -104,16 +89,7 @@
     <ClInclude Include="common\cmdlib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common\l3dslib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\lbmlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common\mathlib.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="common\memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common\parsecfg.h">
@@ -131,13 +107,10 @@
     <ClInclude Include="common\threads.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="common\trilib.h">
+    <ClInclude Include="..\common\qbspi.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\qbspi.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
+    <ClInclude Include="..\common\pch\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -313,16 +313,12 @@ namespace Q2Compilers
 			mu_label(_context, "Brightness and color");
 			mu_layout_row(_context, 2, l, 0);
 
-			//mu_checkbox(_context, "Grayscale lightmaps", &d->argh_nocolor);
-
 			DrawSliderWithLabel("Light brightness", &d->argh_scale, 0.1f, 2);
 			DrawSliderWithLabel("Surface light brightness", &d->argh_direct, .1f, 2);
 			DrawSliderWithLabel("Entity light brightness", &d->argh_entity, .1f, 2);
 			DrawSliderWithLabel("Texture brightness", &d->argh_texscale, 0, 1);
 			DrawSliderWithLabel("Light saturation", &d->argh_saturation, 0, 1);
 			DrawSliderWithLabel("Global ambient amount", &d->argh_ambient, 0, 1);
-			//DrawSliderWithLabel("Minimum light brightness", &d->argh_minlight, 0, 255);
-			//DrawSliderWithLabel("Maximum light brightness", &d->argh_maxlight, 0, 255);
 			DrawSliderWithLabel("Light gamma", &d->argh_gamma, 0.5f, 1.5f);
 			DrawSliderWithLabel("Minimum lightsyles light", &d->argh_stylemin, 0, 255);
 
@@ -342,11 +338,9 @@ namespace Q2Compilers
 			mu_label(_context, "Other");
 			mu_layout_row(_context, 2, l, 0);
 
-			//mu_checkbox(_context, "Only update lightmaps", &d->argh_update);
 			mu_checkbox(_context, "Light warp surfaces", &d->argh_lightwarp);
 			mu_checkbox(_context, "Disable phong shading", &d->argh_nocurve);
 			mu_checkbox(_context, "Dump patch info", &d->argh_dump);
-			//mu_checkbox(_context, "GL View", &d->argh_glView);
 			mu_checkbox(_context, "Stop pvs checking", &d->argh_nopvs);
 
 			DrawSliderWithLabel("Minimum radiosity cutoff", &d->argh_radmin, 0, 0.015f);
