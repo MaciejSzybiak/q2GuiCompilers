@@ -40,14 +40,14 @@ namespace Q2Compilers
 
 		//argh
 		int   argh_dump = false;
-		int   argh_bounce = 0;
+		int   argh_bounce = 8;
 		int   argh_verbose = false;
 		int   argh_extra = false;
 		int   argh_update = false;
 		int   argh_threads = 0;
 		int   argh_chop = 128;
 		float argh_scale = 1;
-		float argh_direct = 1;
+		float argh_direct = 0.4f;
 		float argh_entity = 1;
 		float argh_texscale = 1;
 		int   argh_glView = false;
@@ -56,9 +56,9 @@ namespace Q2Compilers
 		float argh_saturation = 1;
 		float argh_ambient = 0;
 		float argh_minlight = 0;
-		float argh_maxlight = 0;
+		float argh_maxlight = 196.f;
 		float argh_gamma = 1;
-		float argh_stylemin = 0;
+		float argh_stylemin = 1.0f;
 		float argh_radmin = 0;
 		int   argh_nobmodlight = false;
 		int   argh_nobouncefix = false;

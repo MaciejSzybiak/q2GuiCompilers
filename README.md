@@ -111,7 +111,7 @@ Radiosity is used to calculate lightmaps on the map. If VIS stage is skipped the
 |--------|--------------------|
 | Verbose output | Outputs more information in the console. |
 | Extra quality | Creates additional light samples to improve light quality. Slows down the compilation process. |
-| Light bounces | The amount of light bounces. 0 = auto |
+| Light bounces | The amount of light bounces. |
 | Threads | The number of threads to use. 0 = auto |
 | Chop size | Maximum light patch size. Bigger value = slower compilation. Small values tend to trigger the MAX_PATCHES error. |
 | Light brightness | Light brightness multiplier. |

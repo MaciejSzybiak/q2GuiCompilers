@@ -3319,7 +3319,7 @@ BLAPI int exec_blarghrad(BlarghData data)
 
     //get settings from data struct
     dumppatches = data.dump;
-    if (data.bounce > 0) numbounce = data.bounce;
+    numbounce = data.bounce;
     verbose = data.verbose;
     extrasamples = data.extra;
     onlyupdate = data.update;
