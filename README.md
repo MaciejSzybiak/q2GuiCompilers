@@ -146,3 +146,4 @@ Creating this application wouldn't be possible without using the following code:
 * [glfw](https://github.com/glfw/glfw)
 * [Quake 2 compiling utilities](http://home.insightbb.com/~gryndehl/q2compile/quake2.html) made by Geoffrey DeWan
 * [blarghrad](https://github.com/zzsort/blarghrad)
+* [q2tools-220](https://github.com/qbism/q2tools-220)
