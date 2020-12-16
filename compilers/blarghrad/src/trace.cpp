@@ -26,7 +26,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 #include "polylib.h"
 #include "blarghrad.h"
 
-#define	ON_EPSILON	0.01
+#ifndef ON_EPSILON
+#define	ON_EPSILON	0.01f
+#endif // !ON_EPSILON
 
 typedef struct tnode_s
 {

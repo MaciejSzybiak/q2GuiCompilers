@@ -30,7 +30,7 @@ typedef struct
 
 // you can define on_epsilon in the makefile as tighter
 #ifndef	ON_EPSILON
-#define	ON_EPSILON	0.01
+#define	ON_EPSILON	0.01f
 #endif
 
 winding_t	*AllocWinding(int points);

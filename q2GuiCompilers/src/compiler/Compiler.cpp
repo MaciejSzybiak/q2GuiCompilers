@@ -32,7 +32,7 @@ namespace Q2Compilers
 {
 	static QbspData GetQbspData(Compiler& c)
 	{
-		QbspData d;
+		QbspData d{};
 
 		CData& compileData = c.GetCompileData();
 
@@ -52,7 +52,7 @@ namespace Q2Compilers
 
 	static QvisData GetQvisData(Compiler& c)
 	{
-		QvisData d;
+		QvisData d{};
 
 		CData& compileData = c.GetCompileData();
 
@@ -69,7 +69,7 @@ namespace Q2Compilers
 
 	static BlarghData GetBlarghData(Compiler& c)
 	{
-		BlarghData d;
+		BlarghData d{};
 
 		CData& compileData = c.GetCompileData();
 

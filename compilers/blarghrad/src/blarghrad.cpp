@@ -413,7 +413,7 @@ bool RelativeFileExists(const char *path)
         pak_t *pak = (modOrGame == 0 ? moddir_paks : gamedir_paks);
         for (; pak; pak = pak->nextpak)
         {
-            for (int i = 0; i < pak->numdir; i++)
+            for (unsigned i = 0; i < pak->numdir; i++)
             {
                 // copy and ensure the name is null terminated
                 char local_440[sizeof(dpackfile_t::name) + 1];
@@ -1318,7 +1318,7 @@ float CollectLight(void)
     double total = 0;
 
     patch_t	*patch = patches;
-    for (int i = 0; i < num_patches; i++, patch++)
+    for (unsigned i = 0; i < num_patches; i++, patch++)
     {
         // skys never collect light, it is just dropped
         if ((texinfo[dfaces[patch->facenum].texinfo].flags & SURF_SKY))
@@ -1391,7 +1391,8 @@ WriteWorld
 */
 void WriteWorld(char *name)
 {
-    int		i, j;
+    int		    i;
+    unsigned    j;
     FILE		*out;
     patch_t		*patch;
     winding_t	*w;
@@ -1428,10 +1429,11 @@ BounceLight
 */
 void BounceLight(void)
 {
-    int		i, j;
-    float	added;
-    char	name[64];
-    patch_t	*p;
+    int         k;
+    unsigned	i, j;
+    float	    added;
+    char	    name[64];
+    patch_t	    *p;
 
     for (i = 0; i < num_patches; i++)
     {
@@ -1443,15 +1445,15 @@ void BounceLight(void)
         }
     }
 
-    for (i = 0; i < numbounce; i++)
+    for (k = 0; k < numbounce; k++)
     {
         RunThreadsOn(num_patches, false, ShootLight);
         added = CollectLight();
 
-        qprintf("bounce:%i added:%f\n", i, added);
-        if (dumppatches && (i == 0 || i == numbounce - 1))
+        qprintf("bounce:%i added:%f\n", k, added);
+        if (dumppatches && (k == 0 || k == numbounce - 1))
         {
-            sprintf(name, "bounce%i.txt", i);
+            sprintf(name, "bounce%i.txt", k);
             WriteWorld(name);
         }
     }
@@ -1467,7 +1469,7 @@ std::atomic<int> total_transfer;
 
 void MakeTransfers(int i)
 {
-    int			j;
+    unsigned	j;
     vec3_t		delta;
     int			itrans;
     patch_t		*patch2;
@@ -1634,7 +1636,7 @@ FreeTransfers
 */
 void FreeTransfers()
 {
-    for (int i = 0; i < num_patches; i++)
+    for (unsigned i = 0; i < num_patches; i++)
     {
         free(patches[i].transfers);
         patches[i].transfers = NULL;
@@ -1738,8 +1740,8 @@ void BuildFaceGroups()
 // NOTE: original arghrad comments out the Error() call, so it runs but no-ops.
 void CheckPatches(void)
 {
-    int		i;
-    patch_t	*patch;
+    unsigned	i;
+    patch_t	    *patch;
 
     for (i = 0; i < num_patches; i++)
     {
@@ -2592,7 +2594,7 @@ void CreateDirectLights()
         }
     }
 
-    for (int j = 0; j < num_patches; j++)
+    for (unsigned j = 0; j < num_patches; j++)
     {
         patch_t* patch = &patches[j];
         if (patch->cluster == -1) {
@@ -2615,7 +2617,7 @@ void CreateDirectLights()
         dl->m_next = directlights[patch->cluster];
         directlights[patch->cluster] = dl;
 
-        bool any_sun = false;
+        int any_sun = false;
         for (int u = 0; u < 9; u++) {
             any_sun |= the_9_suns[u].bool_maybe_sun_is_active;
         }
@@ -3115,8 +3117,6 @@ void GatherSampleLight(const vec3_t& pos, const vec3_t& realpt, const vec3_t& no
 
             // add some light to it
             VectorMA(bouncelight[offset], scale * lightscale, local_2184, bouncelight[offset]);
-
-        skipadd:;
         }
     }
 

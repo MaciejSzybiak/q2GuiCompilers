@@ -13,5 +13,5 @@ struct QvisData
 	int nosort = false;
 	int cullerror = false;
 
-	char mapPath[260];
+	char mapPath[260] = { 0 };
 };
