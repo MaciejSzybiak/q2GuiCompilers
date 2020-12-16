@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "q2GuiCompilers", "q2GuiCompilers\q2GuiCompilers.vcxproj", "{F76A93AC-F950-4C8A-AFFC-FB46E7F3AB6D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF} = {C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glfw", "external\glfw\glfw.vcxproj", "{12FAAD91-4C17-42CB-B786-2DA98D766704}"
 EndProject
@@ -17,6 +20,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qbsp", "compilers\qbsp\qbsp.vcxproj", "{EB2E18C2-F954-4502-AD5A-35DCF65EF166}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "qvis", "compilers\qvis\qvis.vcxproj", "{F4FB6E3B-2CE3-4E99-9225-B542526DC1FF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4bsp", "compilers\4bsp\4bsp.vcxproj", "{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +53,10 @@ Global
 		{F4FB6E3B-2CE3-4E99-9225-B542526DC1FF}.Debug|x64.Build.0 = Debug|x64
 		{F4FB6E3B-2CE3-4E99-9225-B542526DC1FF}.Release|x64.ActiveCfg = Release|x64
 		{F4FB6E3B-2CE3-4E99-9225-B542526DC1FF}.Release|x64.Build.0 = Release|x64
+		{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}.Debug|x64.ActiveCfg = Debug|x64
+		{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}.Debug|x64.Build.0 = Debug|x64
+		{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}.Release|x64.ActiveCfg = Release|x64
+		{C0A91BF6-52F4-4DE3-BBA9-88DCD70162CF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

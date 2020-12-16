@@ -48,8 +48,8 @@
 
 #define C_PATH_LENGTH MAX_PATH
 #define C_ARGS_LENGTH 512
-#define PROFILE_EXTENSION_STR ".m1"
-#define W_PROFILE_EXTENSION_STR L".m1"
+#define PROFILE_EXTENSION_STR ".m2"
+#define W_PROFILE_EXTENSION_STR L".m2"
 
 namespace Q2Compilers
 {

@@ -189,31 +189,61 @@ namespace Q2Compilers
 
 		//qbsp stage is mandatory
 		QbspData qbspData = GetQbspData(*this);
-		tasks.push([qbspData, this]()
+		if (compileData.is_v220)
 		{
-			try
+			tasks.push([qbspData, this]()
 			{
-				HINSTANCE handle = LoadLibraryA("compilers/qbsp.dll");
-				if (handle == nullptr)
+				try
 				{
-					throw std::exception("Failed to load qbsp.dll!");
+					HINSTANCE handle = LoadLibraryA("compilers/4bsp.dll");
+					if (handle == nullptr)
+					{
+						throw std::exception("Failed to load 4bsp.dll!");
+					}
+					QbspFunc func = (QbspFunc)GetProcAddress(handle, "exec_4bsp");
+					if (func == nullptr)
+					{
+						throw std::exception("Function \"exec_4bsp\" not found!");
+					}
+					func(qbspData);
+					FreeLibrary(handle);
+					allowNext = true;
 				}
-				QbspFunc func = (QbspFunc)GetProcAddress(handle, "exec_qbsp");
-				if (func == nullptr)
+				catch (const std::exception& e)
 				{
-					throw std::exception("Function \"exec_qbsp\" not found!");
+					LOG_ERROR("%s", e.what());
+					failed = true;
 				}
-				func(qbspData);
-				FreeLibrary(handle);
-				allowNext = true;
-			}
-			catch (const std::exception& e)
+			});
+		}
+		else
+		{
+			tasks.push([qbspData, this]()
 			{
-				LOG_ERROR("%s", e.what());
-				failed = true;
-			}
-		});
-		
+				try
+				{
+					HINSTANCE handle = LoadLibraryA("compilers/qbsp.dll");
+					if (handle == nullptr)
+					{
+						throw std::exception("Failed to load qbsp.dll!");
+					}
+					QbspFunc func = (QbspFunc)GetProcAddress(handle, "exec_qbsp");
+					if (func == nullptr)
+					{
+						throw std::exception("Function \"exec_qbsp\" not found!");
+					}
+					func(qbspData);
+					FreeLibrary(handle);
+					allowNext = true;
+				}
+				catch (const std::exception& e)
+				{
+					LOG_ERROR("%s", e.what());
+					failed = true;
+				}
+			});
+		}
+
 		if (compileData.enable_qvis)
 		{
 			QvisData qvisData = GetQvisData(*this);

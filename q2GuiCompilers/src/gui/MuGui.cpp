@@ -394,6 +394,9 @@ namespace Q2Compilers
 	{
 		const int l[] = { 100, -30, -1 };
 		static char out[C_PATH_LENGTH];
+
+		mu_checkbox(_context, "Enable BSP v220 support", &data->data->is_v220);
+
 		mu_layout_row(_context, 3, l, 0);
 
 		mu_label(_context, "Map file path");

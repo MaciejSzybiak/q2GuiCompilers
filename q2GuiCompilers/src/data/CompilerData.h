@@ -74,6 +74,8 @@ namespace Q2Compilers
 		int   enable_copy = true;
 		int   enable_exec = true;
 
+		int   is_v220 = true;
+
 		char q2_directory[C_PATH_LENGTH];
 		char q2_modname[C_PATH_LENGTH];
 		char q2_executable[C_PATH_LENGTH];

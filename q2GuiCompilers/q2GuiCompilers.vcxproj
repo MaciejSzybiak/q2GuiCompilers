@@ -59,7 +59,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\blarghrad\include\;$(SolutionDir)compilers\qbsp\include\;$(SolutionDir)compilers\qvis\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\common\;$(SolutionDir)compilers\qbsp\include\;$(SolutionDir)compilers\qvis\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Core.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -71,6 +71,7 @@
       <CreateHotPatchableImage>
       </CreateHotPatchableImage>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <StackReserveSize>4194304</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -81,7 +82,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\blarghrad\include\;$(SolutionDir)compilers\qbsp\include\;$(SolutionDir)compilers\qvis\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)external\glad\include\;$(ProjectDir)external\microui\src\;$(SolutionDir)external\glfw\include\;$(ProjectDir)src\;$(SolutionDir)compilers\common\;$(SolutionDir)compilers\qbsp\include\;$(SolutionDir)compilers\qvis\include\</AdditionalIncludeDirectories>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>Core.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
@@ -95,6 +96,7 @@
       <CreateHotPatchableImage>
       </CreateHotPatchableImage>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
+      <StackReserveSize>4194304</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
