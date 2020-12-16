@@ -56,6 +56,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)common\;$(SolutionDir)compilers\common\pch\;$(SolutionDir)compilers\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>QVIS_DLL</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PostBuildEvent>
       <Command>COPY /Y $(TargetPath) $(SolutionDir)bin\$(Platform)-$(Configuration)\compilers\$(TargetFileName)</Command>
@@ -68,6 +69,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(ProjectDir)common\;$(SolutionDir)compilers\common\pch\;$(SolutionDir)compilers\common\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>QVIS_DLL</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PostBuildEvent>
       <Command>COPY /Y $(TargetPath) $(SolutionDir)bin\$(Platform)-$(Configuration)\compilers\$(TargetFileName)</Command>

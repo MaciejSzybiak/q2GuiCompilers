@@ -56,6 +56,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>QBSP_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PostBuildEvent>
       <Command>COPY /Y $(TargetPath) $(SolutionDir)bin\$(Platform)-$(Configuration)\compilers\$(TargetFileName)</Command>
@@ -68,6 +69,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>QBSP_DLL;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <CompileAs>CompileAsCpp</CompileAs>
     </ClCompile>
     <PostBuildEvent>
       <Command>COPY /Y $(TargetPath) $(SolutionDir)bin\$(Platform)-$(Configuration)\compilers\$(TargetFileName)</Command>

@@ -5,15 +5,13 @@
 #define QVISAPI extern "C" __declspec(dllexport)
 #endif
 
-extern "C" {
-	struct QvisData
-	{
-		int threads = 0;
-		int fastvis = false;
-		int verbose = false;
-		int nosort = false;
-		int cullerror = false;
+struct QvisData
+{
+	int threads = 0;
+	int fastvis = false;
+	int verbose = false;
+	int nosort = false;
+	int cullerror = false;
 
-		char mapPath[260];
-	};
-}
+	char mapPath[260];
+};
