@@ -383,7 +383,7 @@ namespace Q2Compilers
 		mu_layout_row(_context, 2, l, 0);
 
 		mu_checkbox(_context, "Verbose output", &d->qbsp_verbose);
-		mu_checkbox(_context, "GL View", &d->qbsp_glView);
+		//mu_checkbox(_context, "GL View", &d->qbsp_glView);
 		mu_checkbox(_context, "No welding", &d->qbsp_noweld);
 		mu_checkbox(_context, "No detail", &d->qbsp_nodetail);
 		mu_checkbox(_context, "No water", &d->qbsp_nowater);

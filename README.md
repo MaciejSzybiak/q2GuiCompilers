@@ -84,7 +84,6 @@ This stage is mandatory since it converts a .map file to .bsp file.
 | Option | Description        |
 |--------|--------------------|
 | Verbose output | Outputs more information in the console. |
-| GL View | Outputs a .gl file. I have no idea what's the purpose of it. |
 | No welding | Stops vertex welding. Not recommended. |
 | No detail | Removes all detail flags from brushes. |
 | No water | Skips all water brushes. |
